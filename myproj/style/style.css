@@ -1,0 +1,17 @@
+body {
+    background-color: lightblue;
+}
+
+#logintable {
+  height: auto;
+  margin-top: 20%;
+}
+
+#logintable td {
+  padding: 2%;
+  width: auto;
+}
+
+#formtable td {
+    padding: 5%;
+}
