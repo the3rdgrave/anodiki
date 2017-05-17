@@ -1,3 +1,13 @@
 body {
-    background-color: green;
+    background-color: lightgreen;
+}
+
+#logintable {
+  height: auto;
+  margin-top: 20%;
+}
+
+#logintable td {
+
+  padding: 2%;
 }
