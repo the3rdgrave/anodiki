@@ -29,7 +29,7 @@
       </tr>
       <tr>
         <td colspan="2" style="text-align: center">
-          <button type="submit0">Είσοδος</button>
+          <button type="submit">Είσοδος</button>
         </td>
       </tr>
     </table>

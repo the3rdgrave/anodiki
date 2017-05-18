@@ -1,4 +1,4 @@
-<table id="formtable" align="center" frame="void" border="2px solid black">
+<table id="formtable" align="center" frame="void" border="2px solid black" cellspacing="10">
   <tr>
   <td colspan="3" style="text-align:center">
 <p>
@@ -67,7 +67,7 @@
   </tr>
   <tr>
     <td>
-      <input type="text" id="room" name="room">
+      <p>ΔΩΜΑΤΙΟ</p>
     </td>
     <td>
     <p>ΕΡΓΑΣΙΕΣ</p>
@@ -76,6 +76,23 @@
     <p>ΗΜΕΡΕΣ ΜΕΧΡΙ ΤΟΝ<br> ΕΠΟΜΕΝΟ ΕΛΕΓΧΟ</p>
     </td>
 
+  </tr>
+  <tr>
+    <td>
+      <input type="text" id="room" name="room">
+    </td>
+    <td>
+      <select>
+        <option value="filters">ΚΑΘΑΡΙΣΜΟΣ ΦΙΛΤΡΩΝ</option>
+        <option value="fcontrol">ΕΛΕΓΧΟΣ ΛΕΙΤΟΥΡΓΙΑΣ</option>
+      </select>
+    </td>
+    <td>
+      <select>
+        <option value="30">30</option>
+        <option value="15">15</option>
+      </select>
+    </td>
   </tr>
 
 

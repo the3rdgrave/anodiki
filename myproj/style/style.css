@@ -13,5 +13,10 @@ body {
 }
 
 #formtable td {
+    margin: 2%;
     padding: 5%;
+}
+
+#hoteldata {
+  margin-bottom: 5%;
 }
