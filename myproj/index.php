@@ -10,8 +10,10 @@
 
   <link href="style/style.css" rel="stylesheet">
 </head>
+
+
   <body>
-    <form method="post" action="mainpage.php">
+    <form method="post" action="verifyLogin.php">
     <table id="logintable" align="center">
       <tr>
         <td><label for="username">ΟΝΟΜΑ ΧΡΗΣΤΗ</label>
@@ -29,7 +31,7 @@
       </tr>
       <tr>
         <td colspan="2" style="text-align: center">
-          <button type="submit">Είσοδος</button>
+          <button name="loginbutton">Είσοδος</button>
         </td>
       </tr>
     </table>

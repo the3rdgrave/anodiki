@@ -7,16 +7,17 @@ body {
   margin-top: 20%;
 }
 
+#menutable {
+  height: auto;
+  margin-top: 20%;
+}
+
+
 #logintable td {
   padding: 2%;
   width: auto;
 }
 
-#formtable td {
-    margin: 2%;
-    padding: 5%;
-}
-
-#hoteldata {
-  margin-bottom: 5%;
+#formtable {
+    margin-top: 10%;
 }

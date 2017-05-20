@@ -1,3 +1,9 @@
+<head>
+  <link href="style/style.css" rel="stylesheet">
+</head>
+
+<body>
+<form method="post" action="addroom.php">
 <table id="formtable" align="center" frame="void" border="2px solid black" cellspacing="10">
   <tr>
   <td colspan="3" style="text-align:center">
@@ -55,45 +61,17 @@
       <input type="text" id="emailreport2" name="emailreport2">
     </td>
     </tr>
-  <tr>
-    <td colspan="3" style="text-align:center">
-      <p>ΕΙΣΑΓΩΓΗ ΣΤΟΙΧΕΙΩΝ ΣΥΝΤΗΡΗΣΗΣ</p>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="3" style="text-align:center">
-      <p>ΧΩΡΟΣ</p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <p>ΔΩΜΑΤΙΟ</p>
-    </td>
-    <td>
-    <p>ΕΡΓΑΣΙΕΣ</p>
-    </td>
-    <td>
-    <p>ΗΜΕΡΕΣ ΜΕΧΡΙ ΤΟΝ<br> ΕΠΟΜΕΝΟ ΕΛΕΓΧΟ</p>
-    </td>
-
-  </tr>
-  <tr>
-    <td>
-      <input type="text" id="room" name="room">
-    </td>
-    <td>
-      <select>
-        <option value="filters">ΚΑΘΑΡΙΣΜΟΣ ΦΙΛΤΡΩΝ</option>
-        <option value="fcontrol">ΕΛΕΓΧΟΣ ΛΕΙΤΟΥΡΓΙΑΣ</option>
-      </select>
-    </td>
-    <td>
-      <select>
-        <option value="30">30</option>
-        <option value="15">15</option>
-      </select>
-    </td>
-  </tr>
-
+    <tr>
+      <td style="border: 0">
+      </td>
+      <td style="text-align: center; border: 0">
+        <button type="submit">Υποβολή</button>
+      </td>
+      <td style="border: 0">
+      </td>
+    </tr>
 
 </table>
+</form>
+
+<body>
