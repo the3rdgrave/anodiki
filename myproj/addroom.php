@@ -1,6 +1,4 @@
-<head>
-  <link href="style/style.css" rel="stylesheet">
-</head>
+<?php include 'header.php'; ?>
 
 <body>
 <table align="center" frame="void" border="2px solid black" cellspacing="10">

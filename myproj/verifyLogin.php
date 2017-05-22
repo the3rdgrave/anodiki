@@ -12,7 +12,7 @@
   $login=loginUser($_POST['username'], $_POST['password']);
 
   if ($login==true) {
-    echo 'Hello '.$_POST['username'];
+    header('Location: mainmenu.php');
   }
   else{
     echo 'Invalid username or password';

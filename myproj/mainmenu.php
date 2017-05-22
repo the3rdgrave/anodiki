@@ -1,11 +1,9 @@
-<head>
-  <link href="style/style.css" rel="stylesheet">
-</head>
+<?php include 'header.php'; ?>
 
 
   <body>
     <form method="post" action="mainpage.php">
-    <table id="menutable" align="center">
+    <table id="menutable" align="center" style="text-align: center" cellspacing="10">
       <tr>
         <td>
           <button type="submit">Προσθήκη</button>
