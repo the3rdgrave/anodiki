@@ -21,4 +21,41 @@ function loginUser ($username, $password){
     }
 
 }
+
+function addWork($hotel, $address, $maintainer, $phone1, $phone2, $report1, $report2, $room, $device, $work, $days){
+    global $db;
+
+
+
+    try {
+        $results = $db->prepare("insert into Works (Hotel, Address, MaintainerId, Phone1, Phone2, EmailReport1, EmailReport2, Room, Device, Work, Days) values(?,?,?,?,?,?,?,?,?,?,?)");
+
+
+        $results->bindValue(1, $hotel);
+        $results->bindValue(2, $address);
+        $results->bindValue(3, $maintainer);
+        $results->bindValue(4, $phone1);
+        $results->bindValue(5, $phone2);
+        $results->bindValue(6, $report1);
+        $results->bindValue(7, $report2);
+        $results->bindValue(8, $room);
+        $results->bindValue(9, $device);
+        $results->bindValue(10, $work);
+        $results->bindValue(11, $days);
+
+
+        $results->execute();
+        $userid = $db->lastInsertId();
+
+
+        return "Work added";
+
+
+    }
+    catch(Exception $e) {
+        return "Error adding work".$e;
+    }
+
+}
+
 ?>
