@@ -58,4 +58,26 @@ function addWork($hotel, $address, $maintainer, $phone1, $phone2, $report1, $rep
 
 }
 
+function getWorks(){
+    global $db;
+    $results=$db->prepare("Select * from Works");
+    $results->execute();
+
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray;
+  }
+
+  function getWorkById($workid){
+    global $db;
+
+    $results=$db->prepare("Select * from Works WHERE Id=?");
+    $results->bindValue(1, $workid);
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray[0];
+
+}
+
 ?>

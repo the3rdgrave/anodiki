@@ -12,6 +12,8 @@
   $login=loginUser($_POST['username'], $_POST['password']);
 
   if ($login==true) {
+    $_SESSION['username']=$_POST['username'];
+    $_SESSION['password']=$_POST['password'];
     header('Location: mainmenu.php');
   }
   else{

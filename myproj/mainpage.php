@@ -1,7 +1,24 @@
 <?php
 session_start();
 include 'header.php';
+include 'db/dbfunctions.php';
 
+if(isset($_GET['id']) && $_GET['id']!=null){
+  $work=getWorkById($_GET['id']);
+  if ($work!=null){
+    $_SESSION['hotelname']=$work['Hotel'];
+    $_SESSION['address']=$work['Address'];
+    $_SESSION['phone1']=$work['Phone1'];
+    $_SESSION['phone2']=$work['Phone2'];
+    $_SESSION['emailreport']=$work['EmailReport1'];
+    $_SESSION['emailreport2']=$work['EmailReport2'];
+    $_SESSION['room']=$work['Room'];
+    $_SESSION['device']=$work['Device'];
+    $_SESSION['work']=$work['Work'];
+    $_SESSION['days']=$work['Days'];
+
+  }
+}
 ?>
 
 <body>
@@ -83,7 +100,7 @@ include 'header.php';
       <label for="room">ΔΩΜΑΤΙΟ</label>
     </td>
     <td>
-      <input type="text" id="room" name="room">
+      <input type="text" id="room" name="room" value=<?php echo (isset($_SESSION['room'])?$_SESSION['room']:"");?>>
     </td>
   </tr>
   <tr>
@@ -100,13 +117,13 @@ include 'header.php';
   </tr>
   <tr>
     <td>
-      <input type="text" id="device" name="device">
+      <input type="text" id="device" name="device" value=<?php echo (isset($_SESSION['device'])?$_SESSION['device']:"");?>>
     </td>
     <td>
-      <input type="text" id="work" name="work">
+      <input type="text" id="work" name="work" value=<?php echo (isset($_SESSION['work'])?$_SESSION['work']:"");?>>
     </td>
     <td>
-      <input type="text" id="days" name="days">
+      <input type="text" id="days" name="days" value=<?php echo (isset($_SESSION['days'])?$_SESSION['days']:"");?>>
     </td>
   </tr>
   <tr>
@@ -120,3 +137,16 @@ include 'header.php';
 </form>
 
 <body>
+
+  <?php
+  unset($_SESSION['hotelname']);
+  unset($_SESSION['address']);
+  unset($_SESSION['phone1']);
+  unset($_SESSION['phone2']);
+  unset($_SESSION['emailreport']);
+  unset($_SESSION['emailreport2']);
+  unset($_SESSION['room']);
+  unset($_SESSION['device']);
+  unset($_SESSION['work']);
+  unset($_SESSION['days']);
+  ?>

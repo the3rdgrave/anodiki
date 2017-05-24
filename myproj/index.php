@@ -1,4 +1,12 @@
-<?php include 'header.php'; ?>
+<?php
+session_start();
+include 'header.php';
+
+if(isset($_SESSION['username'])){
+    header('Location: mainmenu.php');
+}
+else {
+ ?>
 <body>
 
 
@@ -27,5 +35,5 @@
   </table>
 </form>
 </body>
-
+<?php } ?>
 </html>
