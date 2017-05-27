@@ -1,11 +1,15 @@
-<head>
-  <link href="style/style.css" rel="stylesheet">
-</head>
+<?php
+session_start();
+include 'header.php';
+include 'db/dbfunctions.php';
 
-<table id="maintaintable" frame="void" border="2px solid black" >
+$maintainer=getUserById($_SESSION['userid']);
+?>
+
+<table id="maintaintable" frame="void" border="2px solid black">
   <tr>
     <td>
-      <p>Συντηρητής</p>
+      <p>Συντηρητής: <?php echo $maintainer['FirstName'].' '.$maintainer['LastName'];?></p>
     </td>
   </tr>
   <tr>
@@ -15,11 +19,8 @@
     </td>
   </tr>
   <tr>
-    <td>
+    <td colspan="4">
       <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
-    </td>
-    <td>
-      <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ ΣΗΜΕΡΑ</p>
     </td>
   </tr>
   <tr>
@@ -27,24 +28,34 @@
       <p>ΗΜΕΡΟΜΗΝΙΑ/ΔΩΜΑΤΙΑ</p>
     </td>
     <td>
-      <p>ΔΩΜΑΤΙΟ</p>
+      <p>ΕΡΓΑΣΙΑ</p>
+    </td>
+    <td>
+      <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
+    </td>
+    <td>
+      <p>ΣΗΜΕΙΩΣΕΙΣ</p>
     </td>
   </tr>
+  <?php
+  $works=getWorksByMaintainer($maintainer['Id']);
+  foreach($works as $row) {?>
   <tr>
     <td>
+      <p><?php echo $row['Room'];?></p>
     </td>
     <td>
-      <p>ΚΛΙΜΑΤΙΣΜΟΣ</p>
+      <p><?php echo $row['Work'];?></p>
     </td>
-    <td>
-      <form>
-        <input type="checkbox" name="work" value="filters">ΚΑΘΑΡΙΣΜΟΣ ΦΙΛΤΡΟΥ<br>
-      </form>
+    <td style="text-align: center">
+        <input type="checkbox" name="confirmed" value="confirmed"><br>
     </td>
+
     <td>
         <input type="text" name="notes" placeholder="ΣΗΜΕΙΩΣΕΙΣ">
     </td>
   </tr>
+  <?php } ?>
   <tr>
     <td colspan="4" style="text-align: center; border: 0">
       <button type="submit">Αποστολή Αναφοράς</button>

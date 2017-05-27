@@ -60,7 +60,7 @@ function addWork($hotel, $address, $maintainer, $phone1, $phone2, $report1, $rep
 
 function getWorks(){
     global $db;
-    $results=$db->prepare("Select * from Works");
+    $results=$db->prepare("Select * from works");
     $results->execute();
 
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -77,6 +77,53 @@ function getWorks(){
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
     return $resultsArray[0];
+
+}
+
+function getUserByUsername($username){
+    global $db;
+
+    $results=$db->prepare("Select * from Users WHERE Username=?");
+    $results->bindValue(1, $username);
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray[0];
+
+}
+
+function getUserById($userid){
+    global $db;
+
+    $results=$db->prepare("Select * from Users WHERE Id=?");
+    $results->bindValue(1, $userid);
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray[0];
+
+}
+
+function getWorksByMaintainer($maintainerid){
+  global $db;
+
+  $results=$db->prepare("Select * from Works WHERE MaintainerId=?");
+  $results->bindValue(1, $maintainerid);
+  $results->execute();
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+  return $resultsArray;
+
+}
+
+function getMaintainers(){
+    global $db;
+
+    $results=$db->prepare("Select * from Users WHERE Role=2");
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray;
 
 }
 

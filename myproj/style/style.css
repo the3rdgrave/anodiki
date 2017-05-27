@@ -17,3 +17,11 @@ body {
   padding: 2%;
   width: auto;
 }
+
+#maintaintable td{
+  padding: .5%;
+}
+
+#worktable td {
+  padding: .5%;
+}

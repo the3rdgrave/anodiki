@@ -53,11 +53,11 @@ if(isset($_GET['id']) && $_GET['id']!=null){
     </td>
     <td colspan="2" style="border: 0">
       <select>
-    <option value="maintainer1">ΣΥΝΤΗΡΗΤΗΣ 1</option>
-    <option value="maintainer2">ΣΥΝΤΗΡΗΤΗΣ 2</option>
-    <option value="maintainer3">ΣΥΝΤΗΡΗΤΗΣ 3</option>
-    <option value="maintainer4">ΣΥΝΤΗΡΗΤΗΣ 4</option>
-    </select>
+        <?php $maintainers=getMaintainers();
+        foreach ($maintainers as $row) {?>
+          <option value="maintainer"><?php echo $row['FirstName'].' '.$row['LastName'];?></option>
+          <?php } ?>
+        </select>
     </td>
     </tr>
     <tr>

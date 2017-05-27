@@ -1,20 +1,29 @@
-<?php session_start(); ?>
+<?php session_start();
+include 'header.php';
+include 'db/dbfunctions.php';
+?>
 
-<head>
-  <link href="style/style.css" rel="stylesheet">
-</head>
+
 
 <body>
   <?php
-   include 'db/dbfunctions.php';
+
 
 
   $login=loginUser($_POST['username'], $_POST['password']);
 
   if ($login==true) {
-    $_SESSION['username']=$_POST['username'];
-    $_SESSION['password']=$_POST['password'];
+    $user=getUserByUsername($_POST['username']);
+    $_SESSION['userid']=$user['Id'];
+    $_SESSION['username']=$user['Username'];
+    $_SESSION['password']=$user['Password'];
+    $_SESSION['role']=$user['Role'];
+
+    if($_SESSION['role']==1){
     header('Location: mainmenu.php');
+    } else if ($_SESSION['role']==2){
+      header('Location: maintainer.php');
+    }
   }
   else{
     echo 'Invalid username or password';
