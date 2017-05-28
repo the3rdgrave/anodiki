@@ -6,7 +6,7 @@ include 'db/dbfunctions.php';
 $maintainer=getUserById($_SESSION['userid']);
 ?>
 
-<table id="maintaintable" frame="void" border="2px solid black">
+<table id="maintaintable" style="width:90%" frame="void" border="2px solid black">
   <tr>
     <td>
       <p>Συντηρητής: <?php echo $maintainer['FirstName'].' '.$maintainer['LastName'];?></p>
@@ -57,6 +57,10 @@ $maintainer=getUserById($_SESSION['userid']);
   </tr>
   <?php } ?>
   <tr>
-    <td colspan="4" style="text-align: center; border: 0">
+    <td colspan="3" style="text-align: center; border: 0">
       <button type="submit">Αποστολή Αναφοράς</button>
     </td>
+    <td style="text-align: right; border: 0">
+      <a href="logout.php">Έξοδος</a>
+    </td>
+  </tr>

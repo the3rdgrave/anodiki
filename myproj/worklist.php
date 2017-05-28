@@ -25,6 +25,9 @@ include 'db/dbfunctions.php';
       <p>ΗΜΕΡΕΣ</p>
     </td>
     <td>
+      <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
+    </td>
+    <td>
     </td>
 
   </tr>
@@ -51,8 +54,16 @@ include 'db/dbfunctions.php';
   <p><?php echo $row['Days'];?><p>
 </td>
 <td>
+  <p><?php echo getConfirmationById($row['Confirmation'])['Confirmation'];?><p>
+</td>
+
+<td>
   <a href="mainpage.php?id=<?php echo $row['Id'];?>">Τροποποίηση</a>
 </td>
-<tr>
+</tr>
   <?php } ?>
+<tr>
+  <td colspan="9" style="text-align: center; border: 0">
+    <a href="mainmenu.php">Πίσω</a>
+</tr>
   <table>

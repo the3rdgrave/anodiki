@@ -3,7 +3,7 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
-if(isset($_GET['id']) && $_GET['id']!=null){
+if(isset($_GET['id']) && $_GET['id']!=0){
   $work=getWorkById($_GET['id']);
   if ($work!=null){
     $_SESSION['hotelname']=$work['Hotel'];
@@ -22,7 +22,9 @@ if(isset($_GET['id']) && $_GET['id']!=null){
 ?>
 
 <body>
-<form method="post" action="validateNew.php">
+  <?php if (isset($_GET['id']) && ($_GET['id'])!=null){?>
+<form method="post" action="validateNew.php?id=<?php echo $_GET['id'];?>"><?php } else {?>
+  <form method="post" action="validateNew.php"><?php } ?>
 <table id="formtable" align="center" frame="void" border="2px solid black" cellspacing="10">
   <tr>
   <td colspan="3" style="text-align:center">
@@ -129,6 +131,15 @@ if(isset($_GET['id']) && $_GET['id']!=null){
   <tr>
     <td colspan="3" style="text-align: center; border: 0">
       <button type="submit">Υποβολή</button>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align: center; border: 0">
+      <?php if(isset($_GET['id']) && $_GET['id']!=0){?>
+        <a href="worklist.php">Πίσω</a>
+       <?php } else {?>
+        <a href="mainmenu.php">Πίσω</a>
+        <?php } ?>
     </td>
   </tr>
 

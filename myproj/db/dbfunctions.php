@@ -127,4 +127,50 @@ function getMaintainers(){
 
 }
 
+function getConfirmationById($confid){
+    global $db;
+
+    $results=$db->prepare("Select * from Confirmation WHERE Id=?");
+    $results->bindValue(1, $confid);
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray[0];
+
+}
+
+function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $report1, $report2, $room, $device, $work, $days){
+    global $db;
+
+    try {
+        $results = $db->prepare("Update Works Set Hotel=?, Address=?, MaintainerId=?, Phone1=?, Phone2=?, EmailReport1=?, EmailReport2=?, Room=?, Device=?, Work=?, Days=? WHERE Id=?");
+
+
+        $results->bindValue(1, $hotel);
+        $results->bindValue(2, $address);
+        $results->bindValue(3, $maintainer);
+        $results->bindValue(4, $phone1);
+        $results->bindValue(5, $phone2);
+        $results->bindValue(6, $report1);
+        $results->bindValue(7, $report2);
+        $results->bindValue(8, $room);
+        $results->bindValue(9, $device);
+        $results->bindValue(10, $work);
+        $results->bindValue(11, $days);
+        $results->bindValue(12, $workid);
+
+
+
+        $results->execute();
+        return "Work updated";
+
+
+    } catch (Exception $e) {
+        return "Error updating work" . $e;
+    }
+
+
+}
+
+
 ?>
