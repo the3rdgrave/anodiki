@@ -104,10 +104,23 @@ function getUserById($userid){
 
 }
 
-function getWorksByMaintainer($maintainerid){
+function getWorksByMaintainer($maintainerid, $hotel){
   global $db;
 
-  $results=$db->prepare("Select * from Works WHERE MaintainerId=?");
+  $results=$db->prepare("Select * from Works WHERE MaintainerId=? AND Hotel=?");
+  $results->bindValue(1, $maintainerid);
+  $results->bindValue(2, $hotel);
+  $results->execute();
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+  return $resultsArray;
+
+}
+
+function getHotelsByMaintainer($maintainerid){
+  global $db;
+
+  $results=$db->prepare("Select DISTINCT Hotel,Address from Works WHERE MaintainerId=?");
   $results->bindValue(1, $maintainerid);
   $results->execute();
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);

@@ -27,6 +27,7 @@ include 'db/dbfunctions.php';
   }
   else{
     echo 'Invalid username or password';
+    ?> <br><a href="index.php">Επιστροφή</a> <?php
   }
   ?>
 </body>
