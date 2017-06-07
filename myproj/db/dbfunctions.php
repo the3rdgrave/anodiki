@@ -185,5 +185,83 @@ function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $r
 
 }
 
+function addMaintainer($username, $password1, $password2, $firstname, $lastname){
+    global $db;
+    $fullname=$firstname.' '.$lastname;
+    $errormessage="";
+    if(checkUser($username, $fullname)==false){
+        $errormessage .="There is already a maintainer with this username or full name".'<br>';
+    }
+
+    if(strlen($username)<3 || strlen($username)>12){
+        $errormessage .="Username must be between 5 and 12 characters".'<br>';
+    }
+
+
+    if($password1!=$password2){
+        $errormessage .="Passwords don't match".'<br>';
+
+    }
+    else if(strlen($password1)<3 || strlen($password1)>15) {
+        $errormessage .="Password must be between 3 and 15 characters".'<br>';
+    }
+
+    if($errormessage=="")
+    {
+
+
+    try {
+        $results = $db->prepare("insert into Users (Username, Password, FirstName, LastName, Role) values(?,?,?,?,?)");
+
+
+        $results->bindValue(1, $username);
+        $results->bindValue(2, $password1);
+        $results->bindValue(3, $firstname);
+        $results->bindValue(4, $lastname);
+        $results->bindValue(5, 2);
+
+
+
+        $results->execute();
+
+        return "User created";
+
+
+
+    }
+    catch(Exception $e) {
+        return "Error creating user".$e;
+    }
+
+    }
+
+    else {
+        return $errormessage;
+    }
+
+
+}
+
+function checkUser($username, $fullname){
+  global $db;
+  $results=$db->prepare("Select * from users");
+  $results->execute();
+
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+  foreach ($resultsArray as $row){
+      if ($row["Username"]==$username){
+          return false;
+      }
+      if ($row["FirstName"].' '.$row['LastName']==$fullname){
+          return false;
+      }
+
+  }
+
+  return true;
+
+}
+
+
 
 ?>

@@ -21,6 +21,7 @@ $pass = "";
 
 try {
     $db = new PDO("mysql:host=$servername;dbname=anodiki", $user, $pass);
+    $db->exec("set names utf8");
 
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // echo "Connected successfully";
@@ -29,6 +30,7 @@ catch(PDOException $e)
     {
     echo "Connection failed: " . $e->getMessage();
     }
+
 
 
 ?>
