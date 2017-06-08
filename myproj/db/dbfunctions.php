@@ -152,6 +152,18 @@ function getConfirmationById($confid){
 
 }
 
+function getMaintainerId($fullname){
+    global $db;
+
+    $results=$db->prepare("Select * from users WHERE CONCAT_WS(' ',FirstName,LastName)=?");
+    $results->bindValue(1, $fullname);
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray[0];
+
+}
+
 function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $report1, $report2, $room, $device, $work, $days){
     global $db;
 
@@ -261,6 +273,8 @@ function checkUser($username, $fullname){
   return true;
 
 }
+
+
 
 
 

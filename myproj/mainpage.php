@@ -16,6 +16,8 @@ if(isset($_GET['id']) && $_GET['id']!=0){
     $_SESSION['device']=$work['Device'];
     $_SESSION['work']=$work['Work'];
     $_SESSION['days']=$work['Days'];
+    $_SESSION['maintainer']=getUserById($work['MaintainerId'])["FirstName"].' '.getUserById($work['MaintainerId'])["LastName"];
+    // echo $_SESSION['maintainer'];
 
   }
 }
@@ -54,11 +56,18 @@ if(isset($_GET['id']) && $_GET['id']!=0){
       <label for="maintainer">ΣΥΝΤΗΡΗΤΗΣ</label>
     </td>
     <td colspan="2" style="border: 0">
-      <select>
+      <select id="maintainer" name="maintainer">
         <?php $maintainers=getMaintainers();
         foreach ($maintainers as $row) {?>
-          <option value="maintainer"><?php echo $row['FirstName'].' '.$row['LastName'];?></option>
-          <?php } ?>
+          <option <?php
+          if (isset($_SESSION['maintainer']) && $row['FirstName'].' '.$row['LastName']==$_SESSION['maintainer']){
+             echo 'selected'; } ?>>
+           <?php
+          echo $row['FirstName'].' '.$row['LastName'];
+
+          ?></option>
+          <?php
+          } ?>
         </select>
     </td>
     </tr>
@@ -160,4 +169,5 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   unset($_SESSION['device']);
   unset($_SESSION['work']);
   unset($_SESSION['days']);
+  unset($_SESSION['maintainer']);
   ?>
