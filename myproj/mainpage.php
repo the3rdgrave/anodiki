@@ -40,7 +40,7 @@ if(isset($_GET['id']) && $_GET['id']!=0){
       <label for="hotelname">ΟΝΟΜΑ</label>
     </td>
     <td>
-      <input type="text" id="hotelname" name="hotelname" value=<?php echo (isset($_SESSION['hotelname'])?$_SESSION['hotelname']:"");?>>
+      <input type="text" id="hotelname" name="hotelname" value="<?php echo (isset($_SESSION['hotelname'])?$_SESSION['hotelname']:"");?>">
     </td>
     </tr>
     <tr>
@@ -48,7 +48,7 @@ if(isset($_GET['id']) && $_GET['id']!=0){
       <label for="address">ΔΙΕΥΘΥΝΣΗ</label>
     </td>
     <td>
-      <input type="text" id="address" name="address" value=<?php echo (isset($_SESSION['address'])?$_SESSION['address']:"");?>>
+      <input type="text" id="address" name="address" value="<?php echo (isset($_SESSION['address'])?$_SESSION['address']:"");?>">
     </td>
     </tr>
     <tr>
@@ -76,10 +76,10 @@ if(isset($_GET['id']) && $_GET['id']!=0){
       <label for="phone1">ΤΗΛΕΦΩΝΟ</label>
     </td>
     <td>
-      <input type="text" id="phone1" name="phone1" value=<?php echo (isset($_SESSION['phone1'])?$_SESSION['phone1']:"");?>>
+      <input type="text" id="phone1" name="phone1" value="<?php echo (isset($_SESSION['phone1'])?$_SESSION['phone1']:"");?>">
     </td>
     <td>
-      <input type="text" id="phone2" name="phone2" value=<?php echo (isset($_SESSION['phone2'])?$_SESSION['phone2']:"");?>>
+      <input type="text" id="phone2" name="phone2" value="<?php echo (isset($_SESSION['phone2'])?$_SESSION['phone2']:"");?>">
     </td>
     </tr>
     <tr>
@@ -87,10 +87,10 @@ if(isset($_GET['id']) && $_GET['id']!=0){
       <label for="emailreport">EMAIL REPORT</label>
     </td>
     <td>
-      <input type="text" id="emailreport" name="emailreport" value=<?php echo (isset($_SESSION['emailreport'])?$_SESSION['emailreport']:"");?>>
+      <input type="text" id="emailreport" name="emailreport" value="<?php echo (isset($_SESSION['emailreport'])?$_SESSION['emailreport']:"");?>">
     </td>
     <td>
-      <input type="text" id="emailreport2" name="emailreport2" value=<?php echo (isset($_SESSION['emailreport2'])?$_SESSION['emailreport2']:"");?>>
+      <input type="text" id="emailreport2" name="emailreport2" value="<?php echo (isset($_SESSION['emailreport2'])?$_SESSION['emailreport2']:"");?>">
     </td>
     </tr>
 
@@ -111,7 +111,7 @@ if(isset($_GET['id']) && $_GET['id']!=0){
       <label for="room">ΔΩΜΑΤΙΟ</label>
     </td>
     <td>
-      <input type="text" id="room" name="room" value=<?php echo (isset($_SESSION['room'])?$_SESSION['room']:"");?>>
+      <input type="text" id="room" name="room" value="<?php echo (isset($_SESSION['room'])?$_SESSION['room']:"");?>">
     </td>
   </tr>
   <tr>
@@ -128,13 +128,13 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   </tr>
   <tr>
     <td>
-      <input type="text" id="device" name="device" value=<?php echo (isset($_SESSION['device'])?$_SESSION['device']:"");?>>
+      <input type="text" id="device" name="device" value="<?php echo (isset($_SESSION['device'])?$_SESSION['device']:"");?>">
     </td>
     <td>
-      <input type="text" id="work" name="work" value=<?php echo (isset($_SESSION['work'])?$_SESSION['work']:"");?>>
+      <input type="text" id="work" name="work" value="<?php echo (isset($_SESSION['work'])?$_SESSION['work']:"");?>">
     </td>
     <td>
-      <input type="text" id="days" name="days" value=<?php echo (isset($_SESSION['days'])?$_SESSION['days']:"");?>>
+      <input type="text" id="days" name="days" value="<?php echo (isset($_SESSION['days'])?$_SESSION['days']:"");?>">
     </td>
   </tr>
   <tr>

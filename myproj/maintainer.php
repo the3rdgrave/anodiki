@@ -9,7 +9,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
 
 ?>
 <form id="maintainerform" action="verifyForm.php" method="post">
-<table id="maintaintable" style="width:90%" frame="void" border="2px solid black">
+<table id="maintaintable" style="width:90%" align="center" frame="void" border="2px solid black">
   <tr>
     <td>
       <p>Συντηρητής: <?php echo $maintainer['FirstName'].' '.$maintainer['LastName'];?></p>
@@ -20,7 +20,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
     <td>
       <p>ΣΤΟΙΧΕΙΑ ΞΕΝΟΔΟΧΕΙΟΥ</p>
     </td>
-    <td colspan ="4">
+    <td colspan ="5">
       <p><?php echo $row1['Hotel'].', '.$row1['Address'];?></p>
     </td>
   </tr>
@@ -33,7 +33,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
     <td>
       <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
     </td>
-    <td colspan="4" style="text-align: center">
+    <td colspan="5" style="text-align: center">
       <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ ΣΗΜΕΡΑ</p>
     </td>
   </tr>
@@ -55,6 +55,9 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
       <p>ΕΡΓΑΣΙΑ</p>
     </td>
     <td>
+      <p>ΕΝΑΠΟΜΕΙΝΑΣΕΣ ΜΕΡΕΣ</p>
+    </td>
+    <td>
       <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
     </td>
     <td>
@@ -74,6 +77,9 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
     <td>
       <p><?php echo $row['Work'];?></p>
     </td>
+    <td>
+      <p><?php echo $row['Days']-((strtotime($row['Date'])-time())/(24*60*60));?></p>
+    </td>
     <td style="text-align: center">
         <input type="checkbox" name="confirmed" value="confirmed"><br>
     </td>
@@ -84,13 +90,13 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
   </tr>
   <?php } ?>
   <tr>
-    <td colspan="4" style="border: 0">
+    <td colspan="5" style="border: 0">
       <p></p>
     </td>
   </tr>
   <?php } ?>
   <tr>
-    <td colspan="3" style="text-align: center; border: 0">
+    <td colspan="4" style="text-align: center; border: 0">
       <button type="submit">Αποστολή Αναφοράς</button>
     </td>
     <td style="text-align: right; border: 0">

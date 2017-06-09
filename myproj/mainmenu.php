@@ -22,7 +22,7 @@ include 'header.php'; ?>
       </tr>
       <tr>
         <td>
-          <a href="worklist.php">Τροποποίηση Συντηρητή</a>
+          <a href="maintainersList.php">Τροποποίηση Συντηρητή</a>
         </td>
       </tr>
       <tr>
