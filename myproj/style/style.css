@@ -29,3 +29,20 @@ body {
 #maintainerstable td{
   padding: .5%;
 }
+
+.deleteButton:link, .deleteButton:visited {
+    color: white;
+    text-decoration: none;
+    cursor: auto;
+    background-color: red;
+    text-decoration: none;
+   padding: 2px 6px 2px 6px;
+   border-top: 1px solid #CCCCCC;
+   border-right: 1px solid #333333;
+   border-bottom: 1px solid #333333;
+   border-left: 1px solid #CCCCCC;
+}
+
+.deleteButton:active, .deleteButton:visited:active {
+    color: white;
+}

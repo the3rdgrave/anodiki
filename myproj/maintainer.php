@@ -65,7 +65,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
     </td>
   </tr>
   <?php
-  $works=getWorksByMaintainer($maintainer['Id'],$row1['Hotel']);
+  $works=getWorksByMaintainerByHotel($maintainer['Id'],$row1['Hotel']);
   foreach($works as $row) {?>
 
   <tr>
@@ -78,7 +78,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
       <p><?php echo $row['Work'];?></p>
     </td>
     <td>
-      <p><?php echo $row['Days']-((strtotime($row['Date'])-time())/(24*60*60));?></p>
+      <p><?php echo $row['Days']+strtotime($row['Date'])/86400-time()/86400;?></p>
     </td>
     <td style="text-align: center">
         <input type="checkbox" name="confirmed" value="confirmed"><br>

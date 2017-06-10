@@ -49,4 +49,10 @@ include 'db/dbfunctions.php';
 
 
 <?php  } ?>
+    <tr>
+      <td colspan="5" style="text-align: center; border: 0">
+        <a href="mainmenu.php">Πίσω</a>
+      </td>
+    </tr>
+
 </table>

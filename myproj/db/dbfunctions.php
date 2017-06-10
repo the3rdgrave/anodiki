@@ -104,7 +104,7 @@ function getUserById($userid){
 
 }
 
-function getWorksByMaintainer($maintainerid, $hotel){
+function getWorksByMaintainerByHotel($maintainerid, $hotel){
   global $db;
 
   $results=$db->prepare("Select * from Works WHERE MaintainerId=? AND Hotel=?");
@@ -164,11 +164,11 @@ function getMaintainerId($fullname){
 
 }
 
-function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $report1, $report2, $room, $device, $work, $days){
+function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $report1, $report2, $room, $device, $work, $days, $date){
     global $db;
 
     try {
-        $results = $db->prepare("Update Works Set Hotel=?, Address=?, MaintainerId=?, Phone1=?, Phone2=?, EmailReport1=?, EmailReport2=?, Room=?, Device=?, Work=?, Days=? WHERE Id=?");
+        $results = $db->prepare("Update Works Set Hotel=?, Address=?, MaintainerId=?, Phone1=?, Phone2=?, EmailReport1=?, EmailReport2=?, Room=?, Device=?, Work=?, Days=?, Date=? WHERE Id=?");
 
 
         $results->bindValue(1, $hotel);
@@ -182,7 +182,8 @@ function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $r
         $results->bindValue(9, $device);
         $results->bindValue(10, $work);
         $results->bindValue(11, $days);
-        $results->bindValue(12, $workid);
+        $results->bindValue(12, $date);
+        $results->bindValue(13, $workid);
 
 
 
@@ -236,13 +237,71 @@ function addMaintainer($username, $password1, $password2, $firstname, $lastname)
 
         $results->execute();
 
-        return "User created";
+        return "User added";
 
 
 
     }
     catch(Exception $e) {
         return "Error creating user".$e;
+    }
+
+    }
+
+    else {
+        return $errormessage;
+    }
+
+
+}
+
+function updateMaintainer($maintainerid, $username, $password1, $password2, $firstname, $lastname){
+    global $db;
+    $fullname=$firstname.' '.$lastname;
+    $errormessage="";
+    if(checkUserOnUpdate($username, $fullname, $maintainerid)==false){
+        $errormessage .="There is already a maintainer with this username or full name".'<br>';
+    }
+
+    if(strlen($username)<3 || strlen($username)>12){
+        $errormessage .="Username must be between 5 and 12 characters".'<br>';
+    }
+
+
+    if($password1!=$password2){
+        $errormessage .="Passwords don't match".'<br>';
+
+    }
+    else if(strlen($password1)<3 || strlen($password1)>15) {
+        $errormessage .="Password must be between 3 and 15 characters".'<br>';
+    }
+
+    if($errormessage=="")
+    {
+
+
+    try {
+        $results = $db->prepare("Update users Set Username=?, Password=?, FirstName=?, LastName=?, Role=? WHERE Id=? ");
+
+
+        $results->bindValue(1, $username);
+        $results->bindValue(2, $password1);
+        $results->bindValue(3, $firstname);
+        $results->bindValue(4, $lastname);
+        $results->bindValue(5, 2);
+        $results->bindValue(6, $maintainerid);
+
+
+
+        $results->execute();
+
+        return "User updated";
+
+
+
+    }
+    catch(Exception $e) {
+        return "Error updating user".$e;
     }
 
     }
@@ -272,6 +331,61 @@ function checkUser($username, $fullname){
 
   return true;
 
+}
+
+function checkUserOnUpdate($username, $fullname, $maintainerid){
+  global $db;
+  $results=$db->prepare("Select * from users WHERE Id<>?");
+  $results->bindValue(1, $maintainerid);
+  $results->execute();
+
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+  foreach ($resultsArray as $row){
+      if ($row["Username"]==$username){
+          return false;
+      }
+      if ($row["FirstName"].' '.$row['LastName']==$fullname){
+          return false;
+      }
+
+  }
+
+  return true;
+
+}
+
+function deleteUser($userid){
+    global $db;
+
+    try {
+
+        $results = $db->prepare("Delete from Users WHERE Id=? ");
+        $results->bindValue(1, $userid);
+        $results->execute();
+
+        return "The user was deleted";
+
+    }
+    catch(Exception $e) {
+        return "Error deleting user".$e;
+    }
+}
+
+function deleteWorksByMaintainer($maintainerid){
+    global $db;
+
+    try {
+
+        $results = $db->prepare("Delete from Works WHERE MaintainerId=? ");
+        $results->bindValue(1, $maintainerid);
+        $results->execute();
+
+        return "The works are deleted";
+
+    }
+    catch(Exception $e) {
+        return "Error deleting works".$e;
+    }
 }
 
 

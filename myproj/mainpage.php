@@ -139,7 +139,11 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   </tr>
   <tr>
     <td colspan="3" style="text-align: center; border: 0">
-      <button type="submit">Υποβολή</button>
+      <?php if(isset($_GET['id']) && $_GET['id']!=0){ ?>
+      <button type="submit" name="updateworkbutton">Υποβολή</button>
+      <?php } else { ?>
+        <button type="submit" name="newworkbutton">Υποβολή</button>
+      <?php } ?>
     </td>
   </tr>
   <tr>
@@ -151,6 +155,13 @@ if(isset($_GET['id']) && $_GET['id']!=0){
         <?php } ?>
     </td>
   </tr>
+    <?php if(isset($_GET['id']) && $_GET['id']!=0){?>
+      <tr>
+        <td colspan="3" style="text-align: center; border: 0">
+          <a class="deleteButton" href="deleteWork.php?id=<?php echo $work['Id'];?>">Διαγραφή</a>
+        </td>
+      </tr>
+      <?php } ?>
 
 
 </table>
