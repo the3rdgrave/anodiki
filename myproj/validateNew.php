@@ -18,10 +18,10 @@ if (isset($_POST['newworkbutton'])){
   <a href="mainpage.php">Προσθήκη νέας εργασίας</a><br>
   <a href="mainmenu.php">Επιστροφή στο βασικό μενού</a>
 <?php
-} if (isset($_POST['updateworkbutton'])) {
+} else if (isset($_POST['updateworkbutton'])) {
   // echo 'Entry edited';
   $work=getWorkById($_GET['id']);
   echo updateWork($_GET['id'],$_POST['hotelname'],$_POST['address'],getMaintainerId($_POST['maintainer'])['Id'],$_POST['phone1'],$_POST['phone2'],$_POST['emailreport'],$_POST['emailreport2'],$_POST['room'],$_POST['device'],$_POST['work'],
-  $_POST['days'], $work['Date'];?><br>
+  $_POST['days'], $work['Date'], $work['Confirmation']);?><br>
   <a href="worklist.php">Πίσω στις εργασίες</a>
 <?php } ?>

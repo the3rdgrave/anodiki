@@ -1,6 +1,23 @@
 <?php
 session_start();
 include 'header.php';
+include 'db/dbfunctions.php';
+
+$works=getWorks();
+foreach ($works as $row){
+  $workdate=date_parse($row['Date'])['day'].'/'.date_parse($row['Date'])['month'].'/'.date_parse($row['Date'])['year'];
+  if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+".$row['Days']." days"))){
+    resetWorkDate($row['Id']);
+  }
+  if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+1 days"))){
+    if($row['Confirmation']==0 && checkPending($row['Id'],$row['Date'])==null){
+      addPendingWork($row['Id'],$row['Date']);
+    }
+    updateWorkConfirmation($row['Id']);
+  }
+
+}
+
 
 if(isset($_SESSION['role']) && $_SESSION['role']==1){
     header('Location: mainmenu.php');
