@@ -21,7 +21,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
     <td>
       <p>ΣΤΟΙΧΕΙΑ ΞΕΝΟΔΟΧΕΙΟΥ</p>
     </td>
-    <td colspan ="5">
+    <td colspan ="4">
       <p><?php echo $row1['Hotel'].', '.$row1['Address'];?></p>
     </td>
   </tr>
@@ -34,7 +34,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
     <td>
       <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
     </td>
-    <td colspan="5" style="text-align: center">
+    <td colspan="4" style="text-align: center">
       <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ ΣΗΜΕΡΑ</p>
     </td>
   </tr>
@@ -56,9 +56,6 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
       <p>ΕΡΓΑΣΙΑ</p>
     </td>
     <td>
-      <p>ΕΝΑΠΟΜΕΙΝΑΣΕΣ ΜΕΡΕΣ</p>
-    </td>
-    <td>
       <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
     </td>
     <td>
@@ -77,18 +74,87 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
     <td>
       <p><?php echo $row['Work'];?></p>
     </td>
-    <td>
-      <p><?php echo $row['Days']+strtotime($row['Date'])/86400-time()/86400;?></p>
-      <p><?php echo date('j-n-Y', strtotime($row['Date']."+".$row['Days']." days"));?></p>
-    </td>
     <td style="text-align: center">
         <input type="checkbox" name="confirmed[]" value="<?php echo $row['Id'];?>"><br>
     </td>
 
     <td>
-        <input type="text" name="notes" placeholder="ΣΗΜΕΙΩΣΕΙΣ">
+        <input type="text" name="notes[<?php echo $row['Id'];?>]" placeholder="ΣΗΜΕΙΩΣΕΙΣ">
     </td>
   </tr>
+  <?php } ?>
+  <tr>
+    <td colspan="5" style="border: 0">
+      <p></p>
+    </td>
+  </tr>
+
+
+
+
+  <?php }
+  $pendingworks=getPendingWorksByMaintainer($maintainer['Id']);
+  if($pendingworks!=null){ ?>
+    <tr>
+      <td style="border: 0">
+        <p></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
+      </td>
+      <td colspan="4" style="text-align: center">
+        <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ ΣΗΜΕΡΑ</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <br>ΔΩΜΑΤΙΟ:
+        <select>
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+        </select>
+      </td>
+      <td>
+        <p>ΣΥΣΚΕΥΗ</p>
+      </td>
+      <td>
+        <p>ΕΡΓΑΣΙΑ</p>
+      </td>
+      <td>
+        <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
+      </td>
+      <td>
+        <p>ΣΗΜΕΙΩΣΕΙΣ</p>
+      </td>
+    </tr>
+
+    <?php
+
+  foreach ($pendingworks as $row1) { ?>
+    <tr>
+      <td>
+        <p><?php echo date("j/n/Y", strtotime($row1['DueDate']));?></p>
+      </td>
+    <td>
+      <p><?php echo getWorkById($row1['WorkId'])['Device'];?></p>
+    </td>
+    <td>
+      <p><?php echo getWorkById($row1['WorkId'])['Work'];?></p>
+    </td>
+    <td style="text-align: center">
+        <input type="checkbox" name="confirmed[]" value="<?php echo $row1['WorkId'];?>"><br>
+    </td>
+
+    <td>
+        <input type="text" name="notes[<?php echo $row1['WorkId'];?>]" placeholder="ΣΗΜΕΙΩΣΕΙΣ">
+    </td>
+  </tr>
+
+
   <?php } ?>
   <tr>
     <td colspan="5" style="border: 0">

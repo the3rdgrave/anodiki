@@ -57,17 +57,18 @@ function addWork($hotel, $address, $maintainer, $phone1, $phone2, $report1, $rep
 
 }
 
-function addPendingWork($workid, $workdate){
+function addPendingWork($workid, $maintainerid, $workdate){
     global $db;
 
 
 
     try {
-        $results = $db->prepare("insert into pending (WorkId, DueDate) values(?,?)");
+        $results = $db->prepare("insert into pending (WorkId, MaintainerId, DueDate) values(?,?,?)");
 
 
         $results->bindValue(1, $workid);
-        $results->bindValue(2, $workdate);
+        $results->bindValue(2, $maintainerid);
+        $results->bindValue(3, $workdate);
 
 
         $results->execute();
@@ -140,6 +141,18 @@ function getWorksByMaintainerByHotel($maintainerid, $hotel){
 
 }
 
+function getPendingWorksByMaintainer($maintainerid){
+  global $db;
+
+  $results=$db->prepare("Select * from pending WHERE MaintainerId=?");
+  $results->bindValue(1, $maintainerid);
+  $results->execute();
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+  return $resultsArray;
+
+}
+
 
 function getHotelsByMaintainer($maintainerid){
   global $db;
@@ -188,11 +201,11 @@ function getMaintainerId($fullname){
 
 }
 
-function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $report1, $report2, $room, $device, $work, $days, $date, $confirmation){
+function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $report1, $report2, $room, $device, $work, $days, $date, $confirmation, $notes){
     global $db;
 
     try {
-        $results = $db->prepare("Update Works Set Hotel=?, Address=?, MaintainerId=?, Phone1=?, Phone2=?, EmailReport1=?, EmailReport2=?, Room=?, Device=?, Work=?, Days=?, Date=?, Confirmation=? WHERE Id=?");
+        $results = $db->prepare("Update Works Set Hotel=?, Address=?, MaintainerId=?, Phone1=?, Phone2=?, EmailReport1=?, EmailReport2=?, Room=?, Device=?, Work=?, Days=?, Date=?, Confirmation=?, Notes=? WHERE Id=?");
 
 
         $results->bindValue(1, $hotel);
@@ -208,7 +221,8 @@ function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $r
         $results->bindValue(11, $days);
         $results->bindValue(12, $date);
         $results->bindValue(13, $confirmation);
-        $results->bindValue(14, $workid);
+        $results->bindValue(14, $notes);
+        $results->bindValue(15, $workid);
 
 
 
@@ -228,8 +242,6 @@ function resetWorkDate($workid){
 
     try {
         $results = $db->prepare("Update Works Set Date=now() WHERE Id=?");
-
-
         $results->bindValue(1, $workid);
         $results->execute();
         return "Work updated";
@@ -246,7 +258,8 @@ function updateWorkConfirmation($workid){
     global $db;
 
     try {
-        $results = $db->prepare("Update Works Set Confirmation=0");
+        $results = $db->prepare("Update Works Set Confirmation=0 WHERE Id=?");
+        $results->bindValue(1, $workid);
         $results->execute();
         return "Work updated";
 
@@ -407,6 +420,17 @@ function checkPending($workid, $workdate){
 
 }
 
+function checkPendingByWorkId($workid){
+  global $db;
+  $results=$db->prepare("Select * from pending WHERE WorkId=?");
+  $results->bindValue(1, $workid);
+  $results->execute();
+
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+  return $resultsArray;
+
+}
+
 function checkUserOnUpdate($username, $fullname, $maintainerid){
   global $db;
   $results=$db->prepare("Select * from users WHERE Id<>?");
@@ -442,6 +466,23 @@ function deleteUser($userid){
     }
     catch(Exception $e) {
         return "Error deleting user".$e;
+    }
+}
+
+function deletePendingWork($workid){
+    global $db;
+
+    try {
+
+        $results = $db->prepare("Delete from pending WHERE WorkId=? ");
+        $results->bindValue(1, $workid);
+        $results->execute();
+
+        return "The work was deleted";
+
+    }
+    catch(Exception $e) {
+        return "Error deleting work".$e;
     }
 }
 

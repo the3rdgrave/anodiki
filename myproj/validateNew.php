@@ -12,9 +12,8 @@ $_SESSION['emailreport2']=$_POST['emailreport2'];
 $_SESSION['maintainer']=$_POST['maintainer'];
 
 if (isset($_POST['newworkbutton'])){
-// echo 'New entry';
-  echo $_POST['maintainer'];
-  echo addWork($_POST['hotelname'],$_POST['address'],getMaintainerId($_POST['maintainer'])['Id'],$_POST['phone1'],$_POST['phone2'],$_POST['emailreport'],$_POST['emailreport2'],$_POST['room'],$_POST['device'],$_POST['work'],$_POST['days']);?><br>
+  echo addWork($_POST['hotelname'],$_POST['address'],getMaintainerId($_POST['maintainer'])['Id'],$_POST['phone1'],$_POST['phone2'],$_POST['emailreport'],$_POST['emailreport2'],$_POST['room'],$_POST['device'],$_POST['work'],
+  $_POST['days']);?> για τον <?php echo $_POST['maintainer'];?><br>
   <a href="mainpage.php">Προσθήκη νέας εργασίας</a><br>
   <a href="mainmenu.php">Επιστροφή στο βασικό μενού</a>
 <?php
@@ -22,6 +21,6 @@ if (isset($_POST['newworkbutton'])){
   // echo 'Entry edited';
   $work=getWorkById($_GET['id']);
   echo updateWork($_GET['id'],$_POST['hotelname'],$_POST['address'],getMaintainerId($_POST['maintainer'])['Id'],$_POST['phone1'],$_POST['phone2'],$_POST['emailreport'],$_POST['emailreport2'],$_POST['room'],$_POST['device'],$_POST['work'],
-  $_POST['days'], $work['Date'], $work['Confirmation']);?><br>
+  $_POST['days'], $work['Date'], $work['Confirmation'], $work['Notes']);?><br>
   <a href="worklist.php">Πίσω στις εργασίες</a>
 <?php } ?>
