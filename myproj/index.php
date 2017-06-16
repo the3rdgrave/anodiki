@@ -9,14 +9,14 @@ foreach ($works as $row) {
   // $workdate=date_parse($row['Date'])['day'].'/'.date_parse($row['Date'])['month'].'/'.date_parse($row['Date'])['year'];
   if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+".$row['Days']." days"))){
     resetWorkDate($row['Id']);
-  }
-  if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+1 day"))){
     updateWorkConfirmation($row['Id']);
-    if($row['Confirmation']==0 && checkPending($row['Id'],$row['Date'])==null){
+
+  }
+  if(date("j/n/Y")!=date('j/n/Y', strtotime($row['Date']))){
+    // updateWorkConfirmation($row['Id']);
+    if($row['Confirmation']==0 && checkPending($row['Id'],$row['Date'])==null) {
       addPendingWork($row['Id'],$row['MaintainerId'],$row['Date']);
     }
-
-
   }
 
 }

@@ -66,7 +66,8 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
   $works=getWorksByMaintainerByHotel($maintainer['Id'],$row1['Hotel']);
   foreach($works as $row) { ?>
   <tr>
-      <td style="border: 0">
+      <td>
+          <p><?php echo 'ΔΩΜΑΤΙΟ: '.$row['Room'];?></p>
       </td>
     <td>
       <p><?php echo $row['Device'];?></p>
@@ -105,7 +106,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
       </td>
       <td colspan="4" style="text-align: center">
-        <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ ΣΗΜΕΡΑ</p>
+        <p>ΗΜΕΡΟΛΟΓΙΟ ΠΕΡΑΣΜΕΝΩΝ ΕΡΓΑΣΙΩΝ</p>
       </td>
     </tr>
     <tr>
@@ -137,7 +138,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
   foreach ($pendingworks as $row1) { ?>
     <tr>
       <td>
-        <p><?php echo date("j/n/Y", strtotime($row1['DueDate']));?></p>
+        <p><?php echo date("j/n/Y", strtotime($row1['DueDate'])).' ('.getWorkById($row1['WorkId'])['Room'].'/'.getWorkById($row1['Id'])['Hotel'].')';?></p>
       </td>
     <td>
       <p><?php echo getWorkById($row1['WorkId'])['Device'];?></p>

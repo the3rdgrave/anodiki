@@ -26,6 +26,11 @@ body {
   padding: .5%;
 }
 
+#reporttable td {
+  padding: .5%;
+}
+
+
 #maintainerstable td{
   padding: .5%;
 }
