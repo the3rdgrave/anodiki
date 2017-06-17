@@ -138,7 +138,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
   foreach ($pendingworks as $row1) { ?>
     <tr>
       <td>
-        <p><?php echo date("j/n/Y", strtotime($row1['DueDate'])).' ('.getWorkById($row1['WorkId'])['Room'].'/'.getWorkById($row1['Id'])['Hotel'].')';?></p>
+        <p><?php echo date("j/n/Y", strtotime($row1['DueDate'])).' ('.getWorkById($row1['WorkId'])['Room'].'/'.getWorkById($row1['WorkId'])['Hotel'].')';?></p>
       </td>
     <td>
       <p><?php echo getWorkById($row1['WorkId'])['Device'];?></p>

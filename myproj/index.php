@@ -3,16 +3,31 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
+
 $works=getWorks();
 foreach ($works as $row) {
-  // echo $row['Work'].' '.$row['Date'].'<br>';
-  // $workdate=date_parse($row['Date'])['day'].'/'.date_parse($row['Date'])['month'].'/'.date_parse($row['Date'])['year'];
-  if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+".$row['Days']." days"))){
+
+  // echo $row['Id'].' '.strtotime("now").' '.strtotime(date('Y/n/j', strtotime("now"))).' '.strtotime(date('Y/n/j', strtotime($row['Date']))).' '.strtotime($row['Date']).'<br>';
+
+
+  // if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+".$row['Days']." days"))){
+
+$a=1;
+
+  while(strtotime(date('Y/n/j', strtotime("now")))<=strtotime(date('Y/n/j',strtotime($row['Date'])))+intval($a*$row['Days']*86400)){
+   if(strtotime(date('Y/n/j', strtotime("now")))==strtotime(date('Y/n/j',strtotime($row['Date']))) + intval($a*$row['Days']*86400)){
     resetWorkDate($row['Id']);
     updateWorkConfirmation($row['Id']);
+    deletePendingWork($row['Id']);
+    break;
+
+
 
   }
-  if(date("j/n/Y")!=date('j/n/Y', strtotime($row['Date']))){
+  $a++;
+}
+
+  if(strtotime(date('Y/n/j', strtotime("now")))!=strtotime(date('Y/n/j',strtotime($row['Date'])))) {
     // updateWorkConfirmation($row['Id']);
     if($row['Confirmation']==0 && checkPending($row['Id'],$row['Date'])==null) {
       addPendingWork($row['Id'],$row['MaintainerId'],$row['Date']);
