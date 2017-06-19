@@ -13,9 +13,9 @@ foreach ($works as $row) {
   // if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+".$row['Days']." days"))){
 
 $a=1;
-
-  while(strtotime(date('Y/n/j', strtotime("now")))<=strtotime(date('Y/n/j',strtotime($row['Date'])))+intval($a*$row['Days']*86400)){
-   if(strtotime(date('Y/n/j', strtotime("now")))==strtotime(date('Y/n/j',strtotime($row['Date']))) + intval($a*$row['Days']*86400)){
+  
+  while (strtotime(date('Y/n/j', strtotime("now")))<=strtotime(date('Y/n/j', strtotime($row['Date'])))+intval($a*$row['Days']*86400)){
+   if(strtotime(date('Y/n/j', strtotime("now")))==strtotime(date('Y/n/j', strtotime($row['Date']))) + intval($a*$row['Days']*86400)){
     resetWorkDate($row['Id']);
     updateWorkConfirmation($row['Id']);
     deletePendingWork($row['Id']);
