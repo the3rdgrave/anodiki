@@ -43,6 +43,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
       <?php echo date("j/n/Y");?>
       <br>ΔΩΜΑΤΙΟ:
       <select id="roomselect">
+        <option>ΟΛΑ</option>
         <?php $rooms=getRoomsByHotelByMaintainer($maintainer['Id'],$row1['Hotel'],$row1['Address']);
         foreach ($rooms as $row2){ ?>
             <option><?php echo $row2['Room'];?></option>
@@ -101,7 +102,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
         <p></p>
       </td>
     </tr>
-    <tr>
+    <tr style="background-color: red">
       <td>
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
       </td>
@@ -111,13 +112,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
     </tr>
     <tr>
       <td>
-        <br>ΔΩΜΑΤΙΟ:
-        <select>
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
-        </select>
+        <br>ΗΜΕΡΟΜΗΝΙΑ (ΔΩΜΑΤΙΟ/ΞΕΝΟΔ.)
       </td>
       <td>
         <p>ΣΥΣΚΕΥΗ</p>
@@ -173,5 +168,5 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
   </tr>
 </table>
 </form>
-<button id="tablegone">Εξαφάνιση</button>
+<!-- <button id="tablegone">Εξαφάνιση</button> -->
 <?php include 'footer.php'; ?>

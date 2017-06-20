@@ -1,13 +1,13 @@
+
+
 $("#roomselect").change(function() {
   var sel=$("#roomselect option:selected" ).text();
   // alert(sel);
+  if (sel!="ΟΛΑ"){
   $('#maintaintable .work:not(.'+sel+')').hide();
   $('#maintaintable .work.'+sel).show();
-});
-
-$("#tablegone").click(function() {
-
-    $('.maintaintable tr').hide();
-    $('#tablegone').hide();
-
+}
+else {
+  $('#maintaintable .work').show();
+}
 });

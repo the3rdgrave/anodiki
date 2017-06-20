@@ -169,7 +169,7 @@ function getHotelsByMaintainer($maintainerid){
 function getRoomsByHotelByMaintainer($maintainerid, $hotel, $address){
   global $db;
 
-  $results=$db->prepare("Select * from Works WHERE MaintainerId=? AND Confirmation=0 AND DATE(Date)=CURDATE() AND  CONCAT_WS(' ',Hotel, Address)=?");
+  $results=$db->prepare("Select DISTINCT Room from Works WHERE MaintainerId=? AND Confirmation=0 AND DATE(Date)=CURDATE() AND  CONCAT_WS(' ',Hotel, Address)=?");
   $results->bindValue(1, $maintainerid);
   $results->bindValue(2, $hotel.' '.$address);
   $results->execute();
