@@ -516,6 +516,23 @@ function deleteWorksByMaintainer($maintainerid){
     }
 }
 
+function deleteWork($workid){
+    global $db;
+
+    try {
+
+        $results = $db->prepare("Delete from works WHERE Id=? ");
+        $results->bindValue(1, $workid);
+        $results->execute();
+
+        return "The work is deleted";
+
+    }
+    catch(Exception $e) {
+        return "Error deleting work".$e;
+    }
+}
+
 
 
 
