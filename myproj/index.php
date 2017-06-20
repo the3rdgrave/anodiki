@@ -13,12 +13,11 @@ foreach ($works as $row) {
   // if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+".$row['Days']." days"))){
 
 $a=1;
-  
   while (strtotime(date('Y/n/j', strtotime("now")))<=strtotime(date('Y/n/j', strtotime($row['Date'])))+intval($a*$row['Days']*86400)){
    if(strtotime(date('Y/n/j', strtotime("now")))==strtotime(date('Y/n/j', strtotime($row['Date']))) + intval($a*$row['Days']*86400)){
     resetWorkDate($row['Id']);
     updateWorkConfirmation($row['Id']);
-    deletePendingWork($row['Id']);
+
     break;
 
 
@@ -33,6 +32,9 @@ $a=1;
       addPendingWork($row['Id'],$row['MaintainerId'],$row['Date']);
     }
   }
+  else {
+    deletePendingWork($row['Id']);
+  }
 
 }
 
@@ -44,7 +46,6 @@ if(isset($_SESSION['role']) && $_SESSION['role']==1){
 }
 else {
  ?>
-<body>
 
 
 
@@ -71,6 +72,8 @@ else {
     </tr>
   </table>
 </form>
-</body>
-<?php } ?>
-</html>
+
+
+<?php }
+include 'footer.php';
+?>

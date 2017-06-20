@@ -67,3 +67,4 @@ include 'db/dbfunctions.php';
     <a href="mainmenu.php">Πίσω</a>
 </tr>
   <table>
+<?php include 'footer.php'; ?>

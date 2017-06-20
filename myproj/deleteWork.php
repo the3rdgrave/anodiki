@@ -3,6 +3,10 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
+if($_SESSION['role']!=1){
+  header('Location: index.php');
+} else {
+
 $work=getWorkById($_GET['id']);
 ?>
 <table align="center">
@@ -19,3 +23,6 @@ $work=getWorkById($_GET['id']);
       </td>
     </tr>
   </table>
+
+  <?php }
+  include 'footer.php'; ?>

@@ -1,9 +1,14 @@
 <?php
 session_start();
-include 'header.php'; ?>
+include 'header.php';
+
+if($_SESSION['role']!=1){
+  header('Location: index.php');
+} else {
+  ?>
 
 
-  <body>
+
     <table id="menutable" align="center" style="text-align: center" cellspacing="10">
       <tr>
         <td>
@@ -40,4 +45,7 @@ unset($_SESSION['failedln']);
 unset($_SESSION['failedun']);
 unset($_SESSION['failedpw']);
 unset($_SESSION['failedrpw']);
+
+}
+include 'footer.php';
 ?>

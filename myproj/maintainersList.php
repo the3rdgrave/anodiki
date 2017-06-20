@@ -3,6 +3,10 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
+if($_SESSION['role']!=1){
+  header('Location: index.php');
+} else {
+
 ?>
 
 <table id="maintainerstable" style="width: 90%" align="center" frame="void" border="2px solid black">
@@ -56,3 +60,5 @@ include 'db/dbfunctions.php';
     </tr>
 
 </table>
+<?php }
+include 'footer.php'; ?>

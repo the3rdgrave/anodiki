@@ -3,6 +3,7 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
+
 if(isset($_POST['submitreport'])){
 
   if(!empty($_POST['notes'])){
@@ -78,5 +79,5 @@ if(isset($_POST['submitreport'])){
 
 }
 
-
+include 'footer.php';
 ?>

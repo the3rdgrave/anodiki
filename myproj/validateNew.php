@@ -3,6 +3,10 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
+if($_SESSION['role']!=1){
+  header('Location: index.php');
+} else {
+
 $_SESSION['hotelname']=$_POST['hotelname'];
 $_SESSION['address']=$_POST['address'];
 $_SESSION['phone1']=$_POST['phone1'];
@@ -23,4 +27,7 @@ if (isset($_POST['newworkbutton'])){
   echo updateWork($_GET['id'],$_POST['hotelname'],$_POST['address'],getMaintainerId($_POST['maintainer'])['Id'],$_POST['phone1'],$_POST['phone2'],$_POST['emailreport'],$_POST['emailreport2'],$_POST['room'],$_POST['device'],$_POST['work'],
   $_POST['days'], $work['Date'], $work['Confirmation'], $work['Notes']);?><br>
   <a href="worklist.php">Πίσω στις εργασίες</a>
-<?php } ?>
+<?php }
+}
+
+include 'footer.php'; ?>

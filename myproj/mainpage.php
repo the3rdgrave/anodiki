@@ -3,6 +3,11 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
+if($_SESSION['role']!=1){
+  header('Location: index.php');
+}
+else{
+
 if(isset($_GET['id']) && $_GET['id']!=0){
   $work=getWorkById($_GET['id']);
   if ($work!=null){
@@ -181,4 +186,7 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   unset($_SESSION['work']);
   unset($_SESSION['days']);
   unset($_SESSION['maintainer']);
+}
+
+  include 'footer.php';
   ?>

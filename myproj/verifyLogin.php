@@ -29,5 +29,6 @@ include 'db/dbfunctions.php';
     echo 'Invalid username or password';
     ?> <br><a href="index.php">Επιστροφή</a> <?php
   }
+
+  include 'footer.php';
   ?>
-</body>

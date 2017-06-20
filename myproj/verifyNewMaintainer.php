@@ -48,4 +48,5 @@ if(isset($_POST['submitupdatemain'])) {
   }
 
 }
+  include 'footer.php';
   ?>

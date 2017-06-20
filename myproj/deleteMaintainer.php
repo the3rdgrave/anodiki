@@ -3,6 +3,10 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
+if($_SESSION['role']!=1){
+  header('Location: index.php');
+}else {
+
 if(isset($_POST['deletemaitainerbutton'])){
   deleteUser($_GET['id']);
   deleteWorksByMaintainer($_GET['id']);
@@ -34,3 +38,6 @@ $hotels=sizeof(getHotelsByMaintainer($_GET['id']));
     </tr>
   </table>
 </form>
+
+<?php }
+include 'footer.php'; ?>

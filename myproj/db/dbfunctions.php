@@ -166,6 +166,19 @@ function getHotelsByMaintainer($maintainerid){
 
 }
 
+function getRoomsByHotelByMaintainer($maintainerid, $hotel, $address){
+  global $db;
+
+  $results=$db->prepare("Select * from Works WHERE MaintainerId=? AND Confirmation=0 AND DATE(Date)=CURDATE() AND  CONCAT_WS(' ',Hotel, Address)=?");
+  $results->bindValue(1, $maintainerid);
+  $results->bindValue(2, $hotel.' '.$address);
+  $results->execute();
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+  return $resultsArray;
+
+}
+
 function getMaintainers(){
     global $db;
 
@@ -478,11 +491,11 @@ function deletePendingWork($workid){
         $results->bindValue(1, $workid);
         $results->execute();
 
-        return "The work was deleted";
+        return "Works deleted";
 
     }
     catch(Exception $e) {
-        return "Error deleting work".$e;
+        return "Error deleting works".$e;
     }
 }
 

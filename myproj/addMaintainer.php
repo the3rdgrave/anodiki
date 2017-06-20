@@ -3,6 +3,10 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
+if($_SESSION['role']!=1){
+  header('Location: index.php');
+} else {
+
 if(isset($_GET['id']) && $_GET['id']!=0){
   $maintainer=getUserById($_GET['id']);
   if($maintainer!=null){
@@ -92,4 +96,7 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   unset($_SESSION['failedun']);
   unset($_SESSION['failedpw']);
   unset($_SESSION['failedrpw']);
+
+}
+include 'footer.php';
 ?>
