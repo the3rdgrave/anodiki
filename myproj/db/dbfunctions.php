@@ -250,12 +250,13 @@ function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $r
 
 }
 
-function resetWorkDate($workid){
+function resetWorkDate($workid, $date){
     global $db;
 
     try {
-        $results = $db->prepare("Update Works Set Date=now() WHERE Id=?");
-        $results->bindValue(1, $workid);
+        $results = $db->prepare("Update Works Set Date=? WHERE Id=?");
+        $results->bindValue(1, $date);
+        $results->bindValue(2, $workid);
         $results->execute();
         return "Work updated";
 

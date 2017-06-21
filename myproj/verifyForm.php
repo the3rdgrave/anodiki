@@ -47,7 +47,7 @@ if(isset($_POST['submitreport'])){
     // echo $currentdate=date("j/n/Y");
     $work=getWorkById($row);
     updateWork($work['Id'], $work['Hotel'], $work['Address'], $work['MaintainerId'], $work['Phone1'], $work['Phone2'], $work['EmailReport1'], $work['EmailReport2'], $work['Room'], $work['Device'], $work['Work'], $work['Days'],
-    date("Y-m-d",time()), 1, $work['Notes']);
+    $work['Date'], 1, array_key_exists($work['Id'], $_POST['notes'])?$_POST['notes'][$work['Id']]:null);
     if(checkPendingByWorkId($work['Id'])==true){
       deletePendingWork($work['Id']);
     } ?>

@@ -40,8 +40,10 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
   </tr>
   <tr>
     <td>
-      <?php echo date("j/n/Y");?>
-      <br>ΔΩΜΑΤΙΟ:
+      <?php echo date("j/n/Y");
+      if (sizeof($hotels)<2) { ?>
+      <br>
+      ΔΩΜΑΤΙΟ:
       <select id="roomselect">
         <option>ΟΛΑ</option>
         <?php $rooms=getRoomsByHotelByMaintainer($maintainer['Id'],$row1['Hotel'],$row1['Address']);
@@ -49,6 +51,7 @@ $hotels=getHotelsByMaintainer($maintainer['Id']);
             <option><?php echo $row2['Room'];?></option>
         <?php } ?>
       </select>
+      <?php } ?>
     </td>
     <td>
       <p>ΣΥΣΚΕΥΗ</p>
