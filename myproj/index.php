@@ -14,6 +14,7 @@ foreach ($works as $row) {
 
 $a=1;
   while(true){
+    // echo $a;
   // while (strtotime(date('Y/n/j', strtotime("now")))>=strtotime(date('Y/n/j', strtotime($row['Date'])))+intval($a*$row['Days']*86400)){
    if(strtotime(date('Y/n/j', strtotime("now")))==strtotime(date('Y/n/j', strtotime($row['Date']))) + intval($a*$row['Days']*86400)){
     resetWorkDate($row['Id'], date('Y/m/d'));
@@ -24,9 +25,8 @@ $a=1;
   if(strtotime(date('Y/n/j', strtotime("now")))<strtotime(date('Y/n/j', strtotime($row['Date']))) + intval($a*$row['Days']*86400)){
     if ($a>1){
       updateWorkConfirmation($row['Id']);
-    }
-
-   resetWorkDate($row['Id'], date('Y/m/d', strtotime($row['Date']."+".intval(($a-1)*$row['Days'])." days")));
+      resetWorkDate($row['Id'], date('Y/m/d', strtotime($row['Date']."+".intval(($a-1)*$row['Days'])." days")));
+ }
    break;
 
 
@@ -36,7 +36,6 @@ $a=1;
 }
 
   if(strtotime(date('Y/n/j', strtotime("now")))!=strtotime(date('Y/n/j',strtotime($row['Date'])))) {
-
     // updateWorkConfirmation($row['Id']);
     if($row['Confirmation']==0 && checkPending($row['Id'])==null) {
       addPendingWork($row['Id'],$row['MaintainerId'], $row['Date']);
