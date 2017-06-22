@@ -420,11 +420,10 @@ function checkUser($username, $fullname){
 
 }
 
-function checkPending($workid, $workdate){
+function checkPending($workid){
   global $db;
-  $results=$db->prepare("Select * from pending WHERE WorkId=? AND DueDate=?");
+  $results=$db->prepare("Select * from pending WHERE WorkId=?");
   $results->bindValue(1, $workid);
-  $results->bindValue(2, $workdate);
   $results->execute();
 
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);

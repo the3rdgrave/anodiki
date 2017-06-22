@@ -9,6 +9,7 @@ if($_SESSION['role']!=1){
 
   if(isset($_POST['deleteworkbutton'])){
     deleteWork($_GET['id']);
+    deletePendingWork($_GET['id']);
     header('Location: worklist.php');
   }
 
