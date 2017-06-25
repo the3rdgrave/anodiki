@@ -28,6 +28,9 @@ if (isset($_POST['newworkbutton'])){
   $_POST['days'], $work['Date'], $work['Confirmation'], $work['Notes']);?><br>
   <a href="worklist.php">Πίσω στις εργασίες</a>
 <?php }
+else{
+  header('Location: mainpage.php');
+}
 }
 
 include 'footer.php'; ?>

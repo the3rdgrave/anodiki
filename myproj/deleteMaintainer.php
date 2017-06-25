@@ -5,11 +5,12 @@ include 'db/dbfunctions.php';
 
 if($_SESSION['role']!=1){
   header('Location: index.php');
-}else {
+} else {
 
 if(isset($_POST['deletemaitainerbutton'])){
   deleteUser($_GET['id']);
   deleteWorksByMaintainer($_GET['id']);
+  deletePendingWorksByMaintainer($_GET['id']);
   header('Location: mainmenu.php');
 
 }

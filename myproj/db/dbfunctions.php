@@ -504,11 +504,28 @@ function deleteWorksByMaintainer($maintainerid){
 
     try {
 
-        $results = $db->prepare("Delete from Works WHERE MaintainerId=? ");
+        $results = $db->prepare("Delete from works WHERE MaintainerId=? ");
         $results->bindValue(1, $maintainerid);
         $results->execute();
 
-        return "The works are deleted";
+        return "The works were deleted";
+
+    }
+    catch(Exception $e) {
+        return "Error deleting works".$e;
+    }
+}
+
+function deletePendingWorksByMaintainer($maintainerid){
+    global $db;
+
+    try {
+
+        $results = $db->prepare("Delete from pending WHERE MaintainerId=? ");
+        $results->bindValue(1, $maintainerid);
+        $results->execute();
+
+        return "The works were deleted";
 
     }
     catch(Exception $e) {

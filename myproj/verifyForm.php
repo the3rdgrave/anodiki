@@ -6,14 +6,14 @@ include 'db/dbfunctions.php';
 
 if(isset($_POST['submitreport'])){
 
-  if(!empty($_POST['notes'])){
-
-  foreach($_POST['notes'] as $row1){
-    $work1=getWorkById(array_search($row1, $_POST['notes']));
-    updateWork($work1['Id'], $work1['Hotel'], $work1['Address'], $work1['MaintainerId'], $work1['Phone1'], $work1['Phone2'], $work1['EmailReport1'], $work1['EmailReport2'], $work1['Room'], $work1['Device'], $work1['Work'], $work1['Days'],
-    $work1['Date'], $work1['Confirmation'], $row1);
-    }
-  }
+  // if(!empty($_POST['notes'])){
+  //
+  // foreach($_POST['notes'] as $row1){
+  //   $work1=getWorkById(array_search($row1, $_POST['notes']));
+  //   updateWork($work1['Id'], $work1['Hotel'], $work1['Address'], $work1['MaintainerId'], $work1['Phone1'], $work1['Phone2'], $work1['EmailReport1'], $work1['EmailReport2'], $work1['Room'], $work1['Device'], $work1['Work'], $work1['Days'],
+  //   $work1['Date'], $work1['Confirmation'], $row1);
+  //   }
+  // }
 
 
   if(!empty($_POST['confirmed'])){?>
