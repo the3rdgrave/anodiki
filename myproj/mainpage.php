@@ -11,19 +11,13 @@ else{
 if(isset($_GET['id']) && $_GET['id']!=0){
   $work=getWorkById($_GET['id']);
   if ($work!=null){
-    $_SESSION['hotelname']=$work['Hotel'];
-    $_SESSION['address']=$work['Address'];
-    $_SESSION['phone1']=$work['Phone1'];
-    $_SESSION['phone2']=$work['Phone2'];
+    $_SESSION['hotelname']=getHotelById($work['HotelId'])['HotelName'];
     $_SESSION['emailreport']=$work['EmailReport1'];
     $_SESSION['emailreport2']=$work['EmailReport2'];
     $_SESSION['room']=$work['Room'];
     $_SESSION['device']=$work['Device'];
     $_SESSION['work']=$work['Work'];
     $_SESSION['days']=$work['Days'];
-    $_SESSION['maintainer']=getUserById($work['MaintainerId'])["FirstName"].' '.getUserById($work['MaintainerId'])["LastName"];
-    // echo $_SESSION['maintainer'];
-
   }
 }
 
@@ -39,17 +33,17 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   </td>
 </tr>
       <td>
-      <label for="maintainer">ΣΥΝΤΗΡΗΤΗΣ</label>
+      <label for="maintainer">ΞΕΝΟΔΟΧΕΙΟ</label>
     </td>
     <td colspan="2" style="border: 0">
-      <select id="maintainer" name="maintainer">
-        <?php $maintainers=getMaintainers();
-        foreach ($maintainers as $row) {?>
+      <select id="hotel" name="hotel">
+        <?php $hotels=getHotels();
+        foreach ($hotels as $row) {?>
           <option <?php
-          if (isset($_SESSION['maintainer']) && $row['FirstName'].' '.$row['LastName']==$_SESSION['maintainer']){
+          if (isset($_SESSION['hotelname']) && $row['HotelName']==$_SESSION['hotelname']){
              echo 'selected'; } ?>>
            <?php
-          echo $row['FirstName'].' '.$row['LastName'];
+          echo $row['HotelName'];
 
           ?></option>
           <?php
@@ -145,9 +139,6 @@ if(isset($_GET['id']) && $_GET['id']!=0){
 
   <?php
   unset($_SESSION['hotelname']);
-  unset($_SESSION['address']);
-  unset($_SESSION['phone1']);
-  unset($_SESSION['phone2']);
   unset($_SESSION['emailreport']);
   unset($_SESSION['emailreport2']);
   unset($_SESSION['room']);

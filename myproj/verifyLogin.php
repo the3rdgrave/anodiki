@@ -22,7 +22,7 @@ include 'db/dbfunctions.php';
     if($_SESSION['role']==1){
     header('Location: mainmenu.php');
     } else if ($_SESSION['role']==2){
-      header('Location: maintainer.php');
+      header('Location: hotel.php');
     }
   }
   else{

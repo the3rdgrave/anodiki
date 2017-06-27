@@ -10,9 +10,6 @@ include 'db/dbfunctions.php';
       <p>ΞΕΝΟΔΟΧΕΙΟ</p>
     </td>
     <td>
-      <p>ΣΥΝΤΗΡΗΤΗΣ</p>
-    </td>
-    <td>
       <p>ΔΩΜΑΤΙΟ</p>
     </td>
     <td>
@@ -36,10 +33,7 @@ include 'db/dbfunctions.php';
   foreach ($works as $row){?>
 <tr>
   <td>
-  <p><?php echo $row['Hotel'];?></p>
-</td>
-<td>
-  <p><?php echo getUserById($row['MaintainerId'])["FirstName"].' '.getUserById($row['MaintainerId'])["LastName"];?></p>
+  <p><?php echo getHotelById($row['HotelId'])['HotelName'];?></p>
 </td>
 <td>
   <p><?php echo $row['Room'];?></p>
@@ -63,7 +57,7 @@ include 'db/dbfunctions.php';
 </tr>
   <?php } ?>
 <tr>
-  <td colspan="9" style="text-align: center; border: 0">
+  <td colspan="8" style="text-align: center; border: 0">
     <a href="mainmenu.php">Πίσω</a>
 </tr>
   <table>

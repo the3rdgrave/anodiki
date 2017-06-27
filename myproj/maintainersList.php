@@ -9,9 +9,9 @@ if($_SESSION['role']!=1){
 
 ?>
 
-<table id="maintainerstable" style="width: 90%" align="center" frame="void" border="2px solid black">
+<table id="maintainerstable" style="width: 60%" align="center" frame="void" border="2px solid black">
   <tr>
-    <th colspan="5">
+    <th colspan="3">
       <p>ΛΙΣΤΑ ΣΥΝΤΗΡΗΤΩΝ</p>
     </th>
   </tr>
@@ -21,12 +21,6 @@ if($_SESSION['role']!=1){
     </th>
     <th>
       <p>ΟΝΟΜΑ</p>
-    </th>
-    <th>
-      <p>ΟΝΟΜΑ ΧΡΗΣΤΗ</p>
-    </th>
-    <th>
-      <p>ΚΩΔΙΚΟΣ</p>
     </th>
     <th>
     </th>
@@ -41,12 +35,6 @@ if($_SESSION['role']!=1){
         <p><?php echo $row['FirstName'];?></p>
       </td>
       <td>
-        <p><?php echo $row['Username'];?></p>
-      </td>
-      <td>
-        <p><?php echo $row['Password'];?></p>
-      </td>
-      <td>
         <a href="addMaintainer.php?id=<?php echo $row['Id'];?>">Τροποποίηση</a>
       </td>
     </tr>
@@ -54,11 +42,15 @@ if($_SESSION['role']!=1){
 
 <?php  } ?>
     <tr>
-      <td colspan="5" style="text-align: center; border: 0">
+      <td colspan="3" style="text-align: center; border: 0">
         <a href="mainmenu.php">Πίσω</a>
       </td>
     </tr>
 
 </table>
 <?php }
+
+unset($_SESSION['failedfn']);
+unset($_SESSION['failedln']);
+
 include 'footer.php'; ?>

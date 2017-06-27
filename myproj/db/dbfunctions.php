@@ -22,26 +22,22 @@ function loginUser ($username, $password){
 
 }
 
-function addWork($hotel, $address, $maintainer, $phone1, $phone2, $report1, $report2, $room, $device, $work, $days){
+function addWork($hotel, $report1, $report2, $room, $device, $work, $days){
     global $db;
 
 
 
     try {
-        $results = $db->prepare("insert into Works (Hotel, Address, MaintainerId, Phone1, Phone2, EmailReport1, EmailReport2, Room, Device, Work, Days) values(?,?,?,?,?,?,?,?,?,?,?)");
+        $results = $db->prepare("insert into works (HotelId, EmailReport1, EmailReport2, Room, Device, Work, Days) values(?,?,?,?,?,?,?,?,?,?,?)");
 
 
         $results->bindValue(1, $hotel);
-        $results->bindValue(2, $address);
-        $results->bindValue(3, $maintainer);
-        $results->bindValue(4, $phone1);
-        $results->bindValue(5, $phone2);
-        $results->bindValue(6, $report1);
-        $results->bindValue(7, $report2);
-        $results->bindValue(8, $room);
-        $results->bindValue(9, $device);
-        $results->bindValue(10, $work);
-        $results->bindValue(11, $days);
+        $results->bindValue(2, $report1);
+        $results->bindValue(3, $report2);
+        $results->bindValue(4, $room);
+        $results->bindValue(5, $device);
+        $results->bindValue(6, $work);
+        $results->bindValue(7, $days);
 
 
         $results->execute();
@@ -57,13 +53,102 @@ function addWork($hotel, $address, $maintainer, $phone1, $phone2, $report1, $rep
 
 }
 
-function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3, $phone1, $phone2){
+function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3, $phone1, $phone2, $username, $passowrd1, $password2){
     global $db;
+    $errormessage="";
+    if(strlen($username)<3 || strlen($username)>12){
+        $errormessage .="Username must be between 5 and 12 characters".'<br>';
+    }
 
-    if (checkHotel($hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3)==true){
+
+    if($password1!=$password2){
+        $errormessage .="Passwords don't match".'<br>';
+
+    }
+    else if(strlen($password1)<3 || strlen($password1)>15) {
+        $errormessage .="Password must be between 3 and 15 characters".'<br>';
+    }
+
+
+    if (checkHotel($hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3)==false){
+      $errormessage .="Invalid entries".'<br>';
+    }
+
+    if(checkUser($username)==false){
+      $errormessage .="Username already exists".'<br>';
+    }
+
+    if ($errormessage==""){
+
+      try {
+          $results = $db->prepare("insert into hotels (HotelName, Address, Maintainer1, Maintainer2, Maintainer3, Phone1, Phone2) values(?,?,?,?,?,?,?)");
+
+
+          $results->bindValue(1, $hotelname);
+          $results->bindValue(2, $address);
+          $results->bindValue(3, $maintainer1);
+          $results->bindValue(4, $maintainer2);
+          $results->bindValue(5, $maintainer3);
+          $results->bindValue(6, $phone1);
+          $results->bindValue(7, $phone2);
+
+          $results->execute();
+
+
+
+          $results1 = $db->prepare("insert into users (Username, Password, FirstName, LastName, Role) values(?,?,?,?,?)");
+
+
+          $results1->bindValue(1, $username);
+          $results1->bindValue(2, $password1);
+          $results1->bindValue(3, $hotelname);
+          $results1->bindValue(4, $hotelname);
+          $results1->bindValue(5, 2);
+
+          $results1->execute();
+
+      return "Hotel added";
+
+      }
+      catch(Exception $e) {
+          return "Error adding hotel. ".$e;
+      }
+  }
+  else {
+    return $errormessage;
+  }
+
+}
+
+function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2, $maintainer3, $phone1, $phone2, $username, $password1, $password2){
+    global $db;
+    $errormessage="";
+    if (checkHotelOnUpdate($hotelid, $hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3)==false){
+      $errormessage .="Invalid entries".'<br>';
+    }
+    if(checkUserOnUpdate($username, $hotelid)==false){
+        $errormessage .="Username already exists".'<br>';
+    }
+
+    if(strlen($username)<3 || strlen($username)>12){
+        $errormessage .="Username must be between 5 and 12 characters".'<br>';
+    }
+
+
+    if($password1!=$password2){
+        $errormessage .="Passwords don't match".'<br>';
+
+    }
+    else if(strlen($password1)<3 || strlen($password1)>15) {
+        $errormessage .="Password must be between 3 and 15 characters".'<br>';
+    }
+
+
+    if ($errormessage==""){
+
 
     try {
-        $results = $db->prepare("insert into hotels (HotelName, Address, Maintainer1, Maintainer2, Maintainer3, Phone1, Phone2) values(?,?,?,?,?,?,?)");
+        $results = $db->prepare("update hotels SET HotelName=?, Address=?, Maintainer1=?, Maintainer2=?, Maintainer3=?, Phone1=?, Phone2=? WHERE Id=?");
 
 
         $results->bindValue(1, $hotelname);
@@ -73,18 +158,31 @@ function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3
         $results->bindValue(5, $maintainer3);
         $results->bindValue(6, $phone1);
         $results->bindValue(7, $phone2);
+        $results->bindValue(8, $hotelid);
+
 
         $results->execute();
 
-        return "Hotel added";
+        $results1 = $db->prepare("Update users Set Username=?, Password=?, FirstName=?, LastName=?, Role=? WHERE HotelId=? ");
+
+        $results1->bindValue(1, $username);
+        $results1->bindValue(2, $password1);
+        $results1->bindValue(3, $hotelname);
+        $results1->bindValue(4, $hotelname);
+        $results1->bindValue(5, 2);
+        $results1->bindValue(6, $hotelid);
+
+        $results1->execute();
+
+        return "Hotel updated";
 
     }
     catch(Exception $e) {
-        return "Error adding hotel".$e;
+        return "Error updating hotel. ".$e;
     }
   }
   else {
-    return "Invalid entries";
+    return $errormessage;
   }
 
 }
@@ -158,11 +256,35 @@ function getUserByUsername($username){
 
 }
 
+function getUserByHotelId($hotelid){
+    global $db;
+
+    $results=$db->prepare("Select * from Users WHERE HotelId=?");
+    $results->bindValue(1, $hotelid);
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray[0];
+
+}
+
 function getUserById($userid){
     global $db;
 
     $results=$db->prepare("Select * from users WHERE Id=?");
     $results->bindValue(1, $userid);
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray[0];
+
+}
+
+function getMaintainerById($maintainerid){
+    global $db;
+
+    $results=$db->prepare("Select * from maintainers WHERE Id=?");
+    $results->bindValue(1, $maintainerid);
     $results->execute();
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
@@ -182,12 +304,11 @@ function getHotelById($hotelid){
 
 }
 
-function getWorksByMaintainerByHotel($maintainerid, $hotel){
+function getWorksByHotel($hotelid){
   global $db;
 
-  $results=$db->prepare("Select * from Works WHERE MaintainerId=? AND Hotel=? AND Confirmation=0 AND DATE(Date)=CURDATE()");
-  $results->bindValue(1, $maintainerid);
-  $results->bindValue(2, $hotel);
+  $results=$db->prepare("Select * from Works WHERE HotelId=? AND Confirmation=0 AND DATE(Date)=CURDATE()");
+  $results->bindValue(1, $hotelid);
   $results->execute();
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
@@ -220,12 +341,11 @@ function getHotelsByMaintainer($maintainerid){
 
 }
 
-function getRoomsByHotelByMaintainer($maintainerid, $hotel, $address){
+function getRoomsByHotel($hotelid){
   global $db;
 
-  $results=$db->prepare("Select DISTINCT Room from Works WHERE MaintainerId=? AND Confirmation=0 AND DATE(Date)=CURDATE() AND  CONCAT_WS(' ',Hotel, Address)=?");
-  $results->bindValue(1, $maintainerid);
-  $results->bindValue(2, $hotel.' '.$address);
+  $results=$db->prepare("Select DISTINCT Room from works WHERE HotelId=? AND Confirmation=0 AND DATE(Date)=CURDATE() AND  CONCAT_WS(' ',Hotel, Address)=?");
+  $results->bindValue(1, $hotelid);
   $results->execute();
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
@@ -236,7 +356,7 @@ function getRoomsByHotelByMaintainer($maintainerid, $hotel, $address){
 function getMaintainers(){
     global $db;
 
-    $results=$db->prepare("Select * from Users WHERE Role=2");
+    $results=$db->prepare("Select * from maintainers");
     $results->execute();
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
@@ -259,7 +379,7 @@ function getConfirmationById($confid){
 function getMaintainerId($fullname){
     global $db;
 
-    $results=$db->prepare("Select * from users WHERE CONCAT_WS(' ',FirstName,LastName)=?");
+    $results=$db->prepare("Select * from maintainers WHERE CONCAT_WS(' ',FirstName,LastName)=?");
     $results->bindValue(1, $fullname);
     $results->execute();
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -268,28 +388,36 @@ function getMaintainerId($fullname){
 
 }
 
-function updateWork($workid, $hotel, $address, $maintainer, $phone1, $phone2, $report1, $report2, $room, $device, $work, $days, $date, $confirmation, $notes){
+function getHotelId($hotelname){
+    global $db;
+
+    $results=$db->prepare("Select * from hotels WHERE HotelName=?");
+    $results->bindValue(1, $hotelname);
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray[0];
+
+}
+
+function updateWork($workid, $hotel, $report1, $report2, $room, $device, $work, $days, $date, $confirmation, $notes){
     global $db;
 
     try {
-        $results = $db->prepare("Update Works Set Hotel=?, Address=?, MaintainerId=?, Phone1=?, Phone2=?, EmailReport1=?, EmailReport2=?, Room=?, Device=?, Work=?, Days=?, Date=?, Confirmation=?, Notes=? WHERE Id=?");
+        $results = $db->prepare("Update Works Set HotelId=?, EmailReport1=?, EmailReport2=?, Room=?, Device=?, Work=?, Days=?, Date=?, Confirmation=?, Notes=? WHERE Id=?");
 
 
         $results->bindValue(1, $hotel);
-        $results->bindValue(2, $address);
-        $results->bindValue(3, $maintainer);
-        $results->bindValue(4, $phone1);
-        $results->bindValue(5, $phone2);
-        $results->bindValue(6, $report1);
-        $results->bindValue(7, $report2);
-        $results->bindValue(8, $room);
-        $results->bindValue(9, $device);
-        $results->bindValue(10, $work);
-        $results->bindValue(11, $days);
-        $results->bindValue(12, $date);
-        $results->bindValue(13, $confirmation);
-        $results->bindValue(14, $notes);
-        $results->bindValue(15, $workid);
+        $results->bindValue(2, $report1);
+        $results->bindValue(3, $report2);
+        $results->bindValue(4, $room);
+        $results->bindValue(5, $device);
+        $results->bindValue(6, $work);
+        $results->bindValue(7, $days);
+        $results->bindValue(8, $date);
+        $results->bindValue(9, $confirmation);
+        $results->bindValue(10, $notes);
+        $results->bindValue(11, $workid);
 
 
 
@@ -339,25 +467,12 @@ function updateWorkConfirmation($workid){
 
 }
 
-function addMaintainer($username, $password1, $password2, $firstname, $lastname){
+function addMaintainer($firstname, $lastname){
     global $db;
     $fullname=$firstname.' '.$lastname;
     $errormessage="";
-    if(checkUser($username, $fullname)==false){
-        $errormessage .="There is already a maintainer with this username or full name".'<br>';
-    }
-
-    if(strlen($username)<3 || strlen($username)>12){
-        $errormessage .="Username must be between 5 and 12 characters".'<br>';
-    }
-
-
-    if($password1!=$password2){
-        $errormessage .="Passwords don't match".'<br>';
-
-    }
-    else if(strlen($password1)<3 || strlen($password1)>15) {
-        $errormessage .="Password must be between 3 and 15 characters".'<br>';
+    if(checkMaintainer($fullname)==false){
+        $errormessage .="There is already a maintainer with this name".'<br>';
     }
 
     if($errormessage=="")
@@ -365,26 +480,62 @@ function addMaintainer($username, $password1, $password2, $firstname, $lastname)
 
 
     try {
-        $results = $db->prepare("insert into Users (Username, Password, FirstName, LastName, Role) values(?,?,?,?,?)");
+        $results = $db->prepare("insert into maintainers (FirstName, LastName) values(?,?)");
 
 
-        $results->bindValue(1, $username);
-        $results->bindValue(2, $password1);
-        $results->bindValue(3, $firstname);
-        $results->bindValue(4, $lastname);
-        $results->bindValue(5, 2);
-
-
+        $results->bindValue(1, $firstname);
+        $results->bindValue(2, $lastname);
 
         $results->execute();
-
-        return "User added";
+        return "Maintainer added";
 
 
 
     }
     catch(Exception $e) {
-        return "Error creating user".$e;
+        return "Error creating maintainer. ".$e;
+    }
+
+    }
+
+    else {
+        return $errormessage;
+    }
+
+}
+
+
+function updateMaintainer($maintainerid, $firstname, $lastname){
+    global $db;
+    $fullname=$firstname.' '.$lastname;
+    $errormessage="";
+    if(checkMaintainerOnUpdate($fullname, $maintainerid)==false){
+        $errormessage .="There is already a maintainer with this name".'<br>';
+    }
+
+
+    if($errormessage=="")
+    {
+
+
+    try {
+        $results = $db->prepare("Update maintainers Set FirstName=?, LastName=? WHERE Id=? ");
+
+        $results->bindValue(1, $firstname);
+        $results->bindValue(2, $lastname);
+        $results->bindValue(3, $maintainerid);
+
+
+
+        $results->execute();
+
+        return "Maintainer updated";
+
+
+
+    }
+    catch(Exception $e) {
+        return "Error updating maintainer. ".$e;
     }
 
     }
@@ -396,65 +547,8 @@ function addMaintainer($username, $password1, $password2, $firstname, $lastname)
 
 }
 
-function updateMaintainer($maintainerid, $username, $password1, $password2, $firstname, $lastname){
-    global $db;
-    $fullname=$firstname.' '.$lastname;
-    $errormessage="";
-    if(checkUserOnUpdate($username, $fullname, $maintainerid)==false){
-        $errormessage .="There is already a maintainer with this username or full name".'<br>';
-    }
 
-    if(strlen($username)<3 || strlen($username)>12){
-        $errormessage .="Username must be between 5 and 12 characters".'<br>';
-    }
-
-
-    if($password1!=$password2){
-        $errormessage .="Passwords don't match".'<br>';
-
-    }
-    else if(strlen($password1)<3 || strlen($password1)>15) {
-        $errormessage .="Password must be between 3 and 15 characters".'<br>';
-    }
-
-    if($errormessage=="")
-    {
-
-
-    try {
-        $results = $db->prepare("Update users Set Username=?, Password=?, FirstName=?, LastName=?, Role=? WHERE Id=? ");
-
-
-        $results->bindValue(1, $username);
-        $results->bindValue(2, $password1);
-        $results->bindValue(3, $firstname);
-        $results->bindValue(4, $lastname);
-        $results->bindValue(5, 2);
-        $results->bindValue(6, $maintainerid);
-
-
-
-        $results->execute();
-
-        return "User updated";
-
-
-
-    }
-    catch(Exception $e) {
-        return "Error updating user".$e;
-    }
-
-    }
-
-    else {
-        return $errormessage;
-    }
-
-
-}
-
-function checkUser($username, $fullname){
+function checkUser($username){
   global $db;
   $results=$db->prepare("Select * from users");
   $results->execute();
@@ -464,7 +558,21 @@ function checkUser($username, $fullname){
       if ($row["Username"]==$username){
           return false;
       }
-      if ($row["FirstName"].' '.$row['LastName']==$fullname){
+
+  }
+
+  return true;
+
+}
+
+function checkMaintainer($fullname){
+  global $db;
+  $results=$db->prepare("Select * from maintainers");
+  $results->execute();
+
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+  foreach ($resultsArray as $row){
+      if ($fullname==$row["FirstName"].' '.$row["LastName"]){
           return false;
       }
 
@@ -477,6 +585,51 @@ function checkUser($username, $fullname){
 function checkHotel($hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3){
   global $db;
   $results=$db->prepare("Select * from hotels");
+  $results->execute();
+
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+  if ($maintainer1!=null){
+    if ($maintainer1==$maintainer2 || $maintainer1==$maintainer3){
+      return false;
+    }
+  }
+
+  if ($maintainer2!=null){
+    if ($maintainer2==$maintainer1 || $maintainer2==$maintainer3){
+      return false;
+    }
+  }
+
+  if ($maintainer3!=null){
+    if ($maintainer3==$maintainer1 || $maintainer3==$maintainer2){
+      return false;
+    }
+  }
+
+  foreach ($resultsArray as $row){
+
+      if ($row["Address"]==$address){
+          return false;
+      }
+      if ($phone1==$row["Phone1"] || $phone1==$row["Phone2"]){
+          return false;
+      }
+      if($phone2!=null){
+        if ($phone2==$row["Phone1"] || $phone2==$row["Phone2"]){
+            return false;
+        }
+      }
+    }
+
+  return true;
+
+  }
+
+function checkHotelOnUpdate($hotelid, $hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3){
+  global $db;
+  $results=$db->prepare("Select * from hotels WHERE Id<>?");
+  $results->bindValue(1, $hotelid);
   $results->execute();
 
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -516,8 +669,6 @@ function checkHotel($hotelname, $address, $phone1, $phone2, $maintainer1, $maint
 
   }
 
-
-
   return true;
 
 }
@@ -546,10 +697,10 @@ function checkPendingByWorkId($workid){
 
 }
 
-function checkUserOnUpdate($username, $fullname, $maintainerid){
+function checkUserOnUpdate($username, $hotelid){
   global $db;
-  $results=$db->prepare("Select * from users WHERE Id<>?");
-  $results->bindValue(1, $maintainerid);
+  $results=$db->prepare("Select * from users WHERE HotelId<>?");
+  $results->bindValue(1, $hotelid);
   $results->execute();
 
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -557,7 +708,22 @@ function checkUserOnUpdate($username, $fullname, $maintainerid){
       if ($row["Username"]==$username){
           return false;
       }
-      if ($row["FirstName"].' '.$row['LastName']==$fullname){
+
+  }
+
+  return true;
+
+}
+
+function checkMaintainerOnUpdate($fullname, $maintainerid){
+  global $db;
+  $results=$db->prepare("Select * from maintainers WHERE Id<>?");
+  $results->bindValue(1, $maintainerid);
+  $results->execute();
+
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+  foreach ($resultsArray as $row){
+      if ($fullname==$row['FirstName'].' '.$row['LastName']){
           return false;
       }
 

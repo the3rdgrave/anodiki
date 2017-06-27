@@ -15,20 +15,25 @@ else{
       if(!isset($_SESSION['failedad']))
         $_SESSION['failedad']=$hotel['Address'];
       if(!isset($_SESSION['failedm1']))
-        $_SESSION['failedm1']=$hotel['Maintainer1']==null?"":getUserById($hotel['Maintainer1'])["FirstName"].' '.getUserById($hotel['Maintainer1'])["LastName"];
+        $_SESSION['failedm1']=$hotel['Maintainer1']==null?"":getMaintainerById($hotel['Maintainer1'])["FirstName"].' '.getMaintainerById($hotel['Maintainer1'])["LastName"];
       if(!isset($_SESSION['failedm2']))
-        $_SESSION['failedm2']=$hotel['Maintainer2']==null?"":getUserById($hotel['Maintainer2'])["FirstName"].' '.getUserById($hotel['Maintainer2'])["LastName"];
+        $_SESSION['failedm2']=$hotel['Maintainer2']==null?"":getMaintainerById($hotel['Maintainer2'])["FirstName"].' '.getMaintainerById($hotel['Maintainer2'])["LastName"];
       if(!isset($_SESSION['failedm3']))
-        $_SESSION['failedm3']=$hotel['Maintainer3']==null?"":getUserById($hotel['Maintainer3'])["FirstName"].' '.getUserById($hotel['Maintainer3'])["LastName"];
+        $_SESSION['failedm3']=$hotel['Maintainer3']==null?"":getMaintainerById($hotel['Maintainer3'])["FirstName"].' '.getMaintainerById($hotel['Maintainer3'])["LastName"];
       if(!isset($_SESSION['failedp1']))
         $_SESSION['failedp1']=$hotel['Phone1'];
       if(!isset($_SESSION['failedp2']))
         $_SESSION['failedp2']=$hotel['Phone2'];
+      if(!isset($_SESSION['failedun']))
+        $_SESSION['failedun']=getUserByHotelId($hotel['Id'])['Username'];
+      if(!isset($_SESSION['failedpw']))
+        $_SESSION['failedpw']=getUserByHotelId($hotel['Id'])['Password'];
+      if(!isset($_SESSION['failedrpw']))
+        $_SESSION['failedrpw']=getUserByHotelId($hotel['Id'])['Password'];
     }
   }
-  ?>
 
-<?php if (isset($_GET['id']) && ($_GET['id'])!=null){?>
+ if (isset($_GET['id']) && ($_GET['id'])!=null){?>
 <form method="post" action="validateNewHotel.php?id=<?php echo $_GET['id'];?>"><?php } else {?>
 <form method="post" action="validateNewHotel.php"><?php } ?>
 <table id="formtable" align="center" frame="void" border="2px solid black" cellspacing="10">
@@ -57,7 +62,7 @@ else{
     </tr>
     <tr>
       <td>
-      <label for="maintainer1">ΣΥΝΤΗΡΗΤΗΣ</label>
+      <label for="maintainer1">ΣΥΝΤΗΡΗΤΕΣ</label>
     </td>
     <td style="border: 0">
       <select id="maintainer1" name="maintainer1">
@@ -111,6 +116,30 @@ else{
     </td>
     </tr>
     <tr>
+      <td>
+      <label for="un">ΟΝΟΜΑ ΧΡΗΣΤΗ</label>
+    </td>
+    <td style="border: 0">
+      <input type="text" id="un" name="un" value="<?php echo (isset($_SESSION['failedun'])?$_SESSION['failedun']:"");?>">
+    </td>
+    </tr>
+    <tr>
+      <td>
+      <label for="pw">ΚΩΔΙΚΟΣ</label>
+    </td>
+    <td style="border: 0">
+      <input type="text" id="pw" name="pw" value="<?php echo (isset($_SESSION['failedpw'])?$_SESSION['failedpw']:"");?>">
+    </td>
+    </tr>
+    <tr>
+      <td>
+      <label for="rpw">ΕΠΑΝ.ΚΩΔΙΚΟΥ</label>
+    </td>
+    <td style="border: 0">
+      <input type="text" id="rpw" name="rpw" value="<?php echo (isset($_SESSION['failedrpw'])?$_SESSION['failedrpw']:"");?>">
+    </td>
+    </tr>
+    <tr>
       <td colspan="4" style="text-align: center; border: 0">
         <?php if(isset($_GET['id']) && $_GET['id']!=0){ ?>
         <button type="submit" name="updatehotelbutton">Υποβολή</button>
@@ -139,5 +168,8 @@ else{
     unset($_SESSION['failedm1']);
     unset($_SESSION['failedm2']);
     unset($_SESSION['failedm3']);
+    unset($_SESSION['failedun']);
+    unset($_SESSION['failedpw']);
+    unset($_SESSION['failedrpw']);
 
     ?>

@@ -8,18 +8,13 @@ if($_SESSION['role']!=1){
 } else {
 
 if(isset($_GET['id']) && $_GET['id']!=0){
-  $maintainer=getUserById($_GET['id']);
+  $maintainer=getMaintainerById($_GET['id']);
   if($maintainer!=null){
     if(!isset($_SESSION['failedfn']))
       $_SESSION['failedfn']=$maintainer['FirstName'];
     if(!isset($_SESSION['failedln']))
       $_SESSION['failedln']=$maintainer['LastName'];
-    if(!isset($_SESSION['failedun']))
-      $_SESSION['failedun']=$maintainer['Username'];
-    if(!isset($_SESSION['failedpw']))
-      $_SESSION['failedpw']=$maintainer['Password'];
-    if(!isset($_SESSION['failedrpw']))
-      $_SESSION['failedrpw']=$maintainer['Password'];
+
   }
 }
 
@@ -44,26 +39,6 @@ if(isset($_GET['id']) && $_GET['id']!=0){
     </td>
   </tr>
   <tr>
-    <td><label for="un">ONOMA ΧΡΗΣΤΗ</label>
-    </td>
-    <td>
-      <input type="text" id="un" name="un" value="<?php echo (isset($_SESSION['failedun'])?$_SESSION['failedun']:"");?>">
-    </td>
-  </tr>
-  <tr>
-    <td><label for="pw">ΚΩΔΙΚΟΣ</label>
-    </td>
-    <td>
-      <input type="text" id="pw" name="pw" value="<?php echo (isset($_SESSION['failedpw'])?$_SESSION['failedpw']:"");?>">
-    </td>
-  </tr>
-  <tr>
-    <td><label for="prw">ΕΠΑΝΑΛΗΨΗ ΚΩΔΙΚΟΥ</label>
-    </td>
-    <td>
-      <input type="text" id="rpw" name="rpw" value="<?php echo (isset($_SESSION['failedrpw'])?$_SESSION['failedrpw']:"");?>">
-    </td>
-  </tr>
   <tr>
     <td style="text-align: center">
       <?php if(isset($_GET['id']) && $_GET['id']!=0) { ?>
@@ -93,10 +68,6 @@ if(isset($_GET['id']) && $_GET['id']!=0){
 <?php
   unset($_SESSION['failedfn']);
   unset($_SESSION['failedln']);
-  unset($_SESSION['failedun']);
-  unset($_SESSION['failedpw']);
-  unset($_SESSION['failedrpw']);
-
 }
 include 'footer.php';
 ?>

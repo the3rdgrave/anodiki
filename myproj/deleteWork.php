@@ -19,7 +19,7 @@ $work=getWorkById($_GET['id']);
 <table align="center">
   <tr>
     <td colspan="2">
-      <p>Διαγραφή της εργασίας <?php echo $work['Work'];?> στο δωμάτιο <?php echo $work['Room'].'/'.$work['Hotel'];?>;</p>
+      <p>Διαγραφή της εργασίας <?php echo $work['Work'];?> στο δωμάτιο <?php echo $work['Room'].'/'.getHotelById($work['HotelId'])['HotelName'];?>;</p>
     </td>
     <tr>
       <td style="text-align: center">
