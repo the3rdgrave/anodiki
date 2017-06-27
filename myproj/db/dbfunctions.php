@@ -187,17 +187,17 @@ function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2,
 
 }
 
-function addPendingWork($workid, $maintainerid, $workdate){
+function addPendingWork($workid, $hotelid, $workdate){
     global $db;
 
 
 
     try {
-        $results = $db->prepare("insert into pending (WorkId, MaintainerId, DueDate) values(?,?,?)");
+        $results = $db->prepare("insert into pending (WorkId, HotelId, DueDate) values(?,?,?)");
 
 
         $results->bindValue(1, $workid);
-        $results->bindValue(2, $maintainerid);
+        $results->bindValue(2, $hotelid);
         $results->bindValue(3, $workdate);
 
 
@@ -316,11 +316,11 @@ function getWorksByHotel($hotelid){
 
 }
 
-function getPendingWorksByMaintainer($maintainerid){
+function getPendingWorksByHotel($hotelid){
   global $db;
 
-  $results=$db->prepare("Select * from pending WHERE MaintainerId=?");
-  $results->bindValue(1, $maintainerid);
+  $results=$db->prepare("Select * from pending WHERE HotelId=?");
+  $results->bindValue(1, $hotelid);
   $results->execute();
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
@@ -344,7 +344,7 @@ function getHotelsByMaintainer($maintainerid){
 function getRoomsByHotel($hotelid){
   global $db;
 
-  $results=$db->prepare("Select DISTINCT Room from works WHERE HotelId=? AND Confirmation=0 AND DATE(Date)=CURDATE() AND  CONCAT_WS(' ',Hotel, Address)=?");
+  $results=$db->prepare("Select DISTINCT Room from works WHERE HotelId=? AND Confirmation=0 AND DATE(Date)=CURDATE()");
   $results->bindValue(1, $hotelid);
   $results->execute();
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -784,13 +784,13 @@ function deleteWorksByMaintainer($maintainerid){
     }
 }
 
-function deletePendingWorksByMaintainer($maintainerid){
+function deletePendingWorksByHotel($hotelid){
     global $db;
 
     try {
 
-        $results = $db->prepare("Delete from pending WHERE MaintainerId=? ");
-        $results->bindValue(1, $maintainerid);
+        $results = $db->prepare("Delete from pending WHERE HotelId=? ");
+        $results->bindValue(1, $hotelid);
         $results->execute();
 
         return "The works were deleted";

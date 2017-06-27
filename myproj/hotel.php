@@ -17,7 +17,7 @@ if ($_SESSION['role']==2){
         <p>ΣΤΟΙΧΕΙΑ ΞΕΝΟΔΟΧΕΙΟΥ</p>
       </td>
       <td colspan ="4">
-        <p><?php echo getHotelById($user['Id'])['HotelName'].', '.getHotelById($user['Id'])['Address'];?></p>
+        <p><?php echo getHotelById($user['HotelId'])['HotelName'].', '.getHotelById($user['HotelId'])['Address'];?></p>
       </td>
     </tr>
     <tr>
@@ -25,6 +25,7 @@ if ($_SESSION['role']==2){
         <p></p>
       </td>
     </tr>
+    <?php if ($works!=null) {?>
     <tr>
       <td>
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
@@ -40,7 +41,7 @@ if ($_SESSION['role']==2){
         ΔΩΜΑΤΙΟ:
         <select id="roomselect">
           <option>ΟΛΑ</option>
-          <?php $rooms=getRoomsByHotel(getHotelById($user['Id'])['HotelId']);
+          <?php $rooms=getRoomsByHotel(getHotelById($user['HotelId']));
           foreach ($rooms as $row2){ ?>
               <option><?php echo $row2['Room'];?></option>
           <?php } ?>
@@ -61,7 +62,6 @@ if ($_SESSION['role']==2){
       </td>
     </tr>
     <?php
-    $works=getWorksByHotel(getHotelById($user['Id'])['HotelId']);
     foreach($works as $row) { ?>
     <tr class="work <?php echo $row['Room'];?>">
         <td>
@@ -88,11 +88,9 @@ if ($_SESSION['role']==2){
       </td>
     </tr>
 
-
-
-
     <?php
-    $pendingworks=getPendingWorksByHotel(getHotelById($user['Id'])['HotelId']);
+  }
+    $pendingworks=getPendingWorksByHotel($user['HotelId']);
     if($pendingworks!=null){ ?>
       <tr>
         <td style="border: 0">
@@ -130,7 +128,7 @@ if ($_SESSION['role']==2){
     foreach ($pendingworks as $row1) { ?>
       <tr>
         <td>
-          <p><?php echo date("j/n/Y", strtotime($row1['DueDate'])).' ('.getWorkById($row1['WorkId'])['Room'].'/'.getWorkById($row1['WorkId'])['Hotel'].')';?></p>
+          <p><?php echo date("j/n/Y", strtotime($row1['DueDate'])).' ('.getWorkById($row1['WorkId'])['Room'].'/'.getHotelById(getWorkById($row1['WorkId'])['HotelId'])['HotelName'].')';?></p>
         </td>
       <td>
         <p><?php echo getWorkById($row1['WorkId'])['Device'];?></p>

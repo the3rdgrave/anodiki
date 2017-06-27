@@ -38,7 +38,7 @@ $a=1;
   if(strtotime(date('Y/n/j', strtotime("now")))!=strtotime(date('Y/n/j',strtotime($row['Date'])))) {
     // updateWorkConfirmation($row['Id']);
     if($row['Confirmation']==0 && checkPending($row['Id'])==null) {
-      addPendingWork($row['Id'],$row['MaintainerId'], $row['Date']);
+      addPendingWork($row['Id'],$row['HotelId'], $row['Date']);
     }
   }
   else {
