@@ -22,6 +22,16 @@ if($_SESSION['role']!=1){
       </tr>
       <tr>
         <td>
+          <a href="addHotel.php">Προσθήκη Ξενοδοχείου</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="hotellist.php">Τροποποίηση Ξενοδοχείου</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
           <a href="addMaintainer.php">Προσθήκη Συντηρητή</a>
         </td>
       </tr>

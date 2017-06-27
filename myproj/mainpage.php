@@ -26,37 +26,18 @@ if(isset($_GET['id']) && $_GET['id']!=0){
 
   }
 }
-?>
 
-<body>
-  <?php if (isset($_GET['id']) && ($_GET['id'])!=null){?>
+ if (isset($_GET['id']) && ($_GET['id'])!=null){?>
 <form method="post" action="validateNew.php?id=<?php echo $_GET['id'];?>"><?php } else {?>
   <form method="post" action="validateNew.php"><?php } ?>
 <table id="formtable" align="center" frame="void" border="2px solid black" cellspacing="10">
   <tr>
   <td colspan="3" style="text-align:center">
 <p>
-  ΕΙΣΑΓΩΓΗ ΣΤΟΙΧΕΙΩΝ ΞΕΝΟΔΟΧΕΙΟΥ
+  ΕΙΣΑΓΩΓΗ ΣΤΟΙΧΕΙΩΝ ΕΡΓΑΣΙΑΣ
 </p>
   </td>
 </tr>
-    <tr>
-      <td>
-      <label for="hotelname">ΟΝΟΜΑ</label>
-    </td>
-    <td>
-      <input type="text" id="hotelname" name="hotelname" value="<?php echo (isset($_SESSION['hotelname'])?$_SESSION['hotelname']:"");?>">
-    </td>
-    </tr>
-    <tr>
-      <td>
-      <label for="address">ΔΙΕΥΘΥΝΣΗ</label>
-    </td>
-    <td>
-      <input type="text" id="address" name="address" value="<?php echo (isset($_SESSION['address'])?$_SESSION['address']:"");?>">
-    </td>
-    </tr>
-    <tr>
       <td>
       <label for="maintainer">ΣΥΝΤΗΡΗΤΗΣ</label>
     </td>
@@ -74,17 +55,6 @@ if(isset($_GET['id']) && $_GET['id']!=0){
           <?php
           } ?>
         </select>
-    </td>
-    </tr>
-    <tr>
-      <td>
-      <label for="phone1">ΤΗΛΕΦΩΝΟ</label>
-    </td>
-    <td>
-      <input type="text" id="phone1" name="phone1" value="<?php echo (isset($_SESSION['phone1'])?$_SESSION['phone1']:"");?>">
-    </td>
-    <td>
-      <input type="text" id="phone2" name="phone2" value="<?php echo (isset($_SESSION['phone2'])?$_SESSION['phone2']:"");?>">
     </td>
     </tr>
     <tr>
@@ -172,7 +142,6 @@ if(isset($_GET['id']) && $_GET['id']!=0){
 </table>
 </form>
 
-<body>
 
   <?php
   unset($_SESSION['hotelname']);

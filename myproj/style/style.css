@@ -9,7 +9,7 @@ body {
 
 #menutable {
   height: auto;
-  margin-top: 20%;
+  margin-top: 14%;
 }
 
 
@@ -23,6 +23,10 @@ body {
 }
 
 #worktable td {
+  padding: .5%;
+}
+
+#hoteltable td {
   padding: .5%;
 }
 

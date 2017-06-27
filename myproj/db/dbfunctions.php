@@ -57,6 +57,38 @@ function addWork($hotel, $address, $maintainer, $phone1, $phone2, $report1, $rep
 
 }
 
+function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3, $phone1, $phone2){
+    global $db;
+
+    if (checkHotel($hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3)==true){
+
+    try {
+        $results = $db->prepare("insert into hotels (HotelName, Address, Maintainer1, Maintainer2, Maintainer3, Phone1, Phone2) values(?,?,?,?,?,?,?)");
+
+
+        $results->bindValue(1, $hotelname);
+        $results->bindValue(2, $address);
+        $results->bindValue(3, $maintainer1);
+        $results->bindValue(4, $maintainer2);
+        $results->bindValue(5, $maintainer3);
+        $results->bindValue(6, $phone1);
+        $results->bindValue(7, $phone2);
+
+        $results->execute();
+
+        return "Hotel added";
+
+    }
+    catch(Exception $e) {
+        return "Error adding hotel".$e;
+    }
+  }
+  else {
+    return "Invalid entries";
+  }
+
+}
+
 function addPendingWork($workid, $maintainerid, $workdate){
     global $db;
 
@@ -90,7 +122,17 @@ function getWorks(){
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
     return $resultsArray;
-  }
+}
+
+function getHotels(){
+    global $db;
+    $results=$db->prepare("Select * from hotels");
+    $results->execute();
+
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray;
+}
 
   function getWorkById($workid){
     global $db;
@@ -119,8 +161,20 @@ function getUserByUsername($username){
 function getUserById($userid){
     global $db;
 
-    $results=$db->prepare("Select * from Users WHERE Id=?");
+    $results=$db->prepare("Select * from users WHERE Id=?");
     $results->bindValue(1, $userid);
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray[0];
+
+}
+
+function getHotelById($hotelid){
+    global $db;
+
+    $results=$db->prepare("Select * from hotels WHERE Id=?");
+    $results->bindValue(1, $hotelid);
     $results->execute();
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
@@ -415,6 +469,54 @@ function checkUser($username, $fullname){
       }
 
   }
+
+  return true;
+
+}
+
+function checkHotel($hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3){
+  global $db;
+  $results=$db->prepare("Select * from hotels");
+  $results->execute();
+
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+  if ($maintainer1!=null){
+    if ($maintainer1==$maintainer2 || $maintainer1==$maintainer3){
+      return false;
+    }
+  }
+
+  if ($maintainer2!=null){
+    if ($maintainer2==$maintainer1 || $maintainer2==$maintainer3){
+      return false;
+    }
+  }
+
+  if ($maintainer3!=null){
+    if ($maintainer3==$maintainer1 || $maintainer3==$maintainer2){
+      return false;
+    }
+  }
+
+
+  foreach ($resultsArray as $row){
+
+      if ($row["Address"]==$address){
+          return false;
+      }
+      if ($phone1==$row["Phone1"] || $phone1==$row["Phone2"]){
+          return false;
+      }
+      if($phone2!=null){
+        if ($phone2==$row["Phone1"] || $phone2==$row["Phone2"]){
+            return false;
+        }
+      }
+
+  }
+
+
 
   return true;
 
