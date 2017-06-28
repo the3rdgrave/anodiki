@@ -70,7 +70,15 @@ if(isset($_POST['submitreport'])){
    </tr>
   </table> <?php
   }
-echo number_format((time()-$_SESSION['logintime'])/60,2);
+  // echo $_SESSION['logintime'].'<br>';
+  // echo strtotime($_SESSION['logintime']).'<br><br>';
+  //
+  // echo time().'<br>';
+  // echo date('Y-m-d H:i:s', time()).'<br>';
+
+  $duration=time()-$_SESSION['logintime'];
+  $mins=intval($duration/60);
+echo $mins.' mins '.($duration-$mins*60).' secs';
 }
 
 include 'footer.php';

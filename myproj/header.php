@@ -11,3 +11,5 @@
   <link href="style/style.css" rel="stylesheet">
 </head>
 <body>
+
+<?php date_default_timezone_set("Europe/Athens"); ?>

@@ -19,7 +19,14 @@ include 'db/dbfunctions.php';
     $_SESSION['hotname']=$user['HotelName'];
     $_SESSION['password']=$user['Password'];
     $_SESSION['role']=$user['Role'];
-    $_SESSION['logintime']=time();
+
+
+    if (date('Y/n/j', strtotime($user['LoginTime']))!=date('Y/n/j', strtotime("now"))){
+      updateLoginTime($user['Id']);
+    }
+
+    $_SESSION['logintime']=strtotime(getUserByUsername($_POST['username'])['LoginTime']);
+    // $_SESSION['logintime']=time();
 
     if($_SESSION['role']==1){
     header('Location: mainmenu.php');

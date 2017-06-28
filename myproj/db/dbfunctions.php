@@ -395,11 +395,28 @@ function resetWorkDate($workid, $date){
     global $db;
 
     try {
-        $results = $db->prepare("Update Works Set Date=? WHERE Id=?");
+        $results = $db->prepare("Update works Set Date=? WHERE Id=?");
         $results->bindValue(1, $date);
         $results->bindValue(2, $workid);
         $results->execute();
         return "Work updated";
+
+
+    } catch (Exception $e) {
+        return "Error updating work" . $e;
+    }
+
+
+}
+
+function updateLoginTime($userid){
+    global $db;
+
+    try {
+        $results = $db->prepare("Update hotels Set LoginTime=now() WHERE Id=?");
+        $results->bindValue(1, $userid);
+        $results->execute();
+        return "Time updated";
 
 
     } catch (Exception $e) {
