@@ -3,7 +3,7 @@
 
 function loginUser ($username, $password){
     global $db;
-    $results=$db->prepare("SELECT * FROM Users WHERE Username = ? AND Password = ?");
+    $results=$db->prepare("SELECT * FROM hotels WHERE Username = ? AND Password = ?");
     $results->bindValue(1, $username);
     $results->bindValue(2, $password);
     $results->execute();
@@ -28,7 +28,7 @@ function addWork($hotel, $report1, $report2, $room, $device, $work, $days){
 
 
     try {
-        $results = $db->prepare("insert into works (HotelId, EmailReport1, EmailReport2, Room, Device, Work, Days) values(?,?,?,?,?,?,?,?,?,?,?)");
+        $results = $db->prepare("insert into works (HotelId, EmailReport1, EmailReport2, Room, Device, Work, Days) values(?,?,?,?,?,?,?)");
 
 
         $results->bindValue(1, $hotel);
@@ -53,7 +53,7 @@ function addWork($hotel, $report1, $report2, $room, $device, $work, $days){
 
 }
 
-function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3, $phone1, $phone2, $username, $passowrd1, $password2){
+function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3, $phone1, $phone2, $username, $password1, $password2){
     global $db;
     $errormessage="";
     if(strlen($username)<3 || strlen($username)>12){
@@ -81,7 +81,7 @@ function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3
     if ($errormessage==""){
 
       try {
-          $results = $db->prepare("insert into hotels (HotelName, Address, Maintainer1, Maintainer2, Maintainer3, Phone1, Phone2) values(?,?,?,?,?,?,?)");
+          $results = $db->prepare("insert into hotels (HotelName, Address, Maintainer1, Maintainer2, Maintainer3, Phone1, Phone2, Username, Password) values(?,?,?,?,?,?,?,?,?)");
 
 
           $results->bindValue(1, $hotelname);
@@ -91,21 +91,12 @@ function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3
           $results->bindValue(5, $maintainer3);
           $results->bindValue(6, $phone1);
           $results->bindValue(7, $phone2);
+          $results->bindValue(8, $username);
+          $results->bindValue(9, $password1);
+
 
           $results->execute();
 
-
-
-          $results1 = $db->prepare("insert into users (Username, Password, FirstName, LastName, Role) values(?,?,?,?,?)");
-
-
-          $results1->bindValue(1, $username);
-          $results1->bindValue(2, $password1);
-          $results1->bindValue(3, $hotelname);
-          $results1->bindValue(4, $hotelname);
-          $results1->bindValue(5, 2);
-
-          $results1->execute();
 
       return "Hotel added";
 
@@ -148,7 +139,7 @@ function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2,
 
 
     try {
-        $results = $db->prepare("update hotels SET HotelName=?, Address=?, Maintainer1=?, Maintainer2=?, Maintainer3=?, Phone1=?, Phone2=? WHERE Id=?");
+        $results = $db->prepare("update hotels SET HotelName=?, Address=?, Maintainer1=?, Maintainer2=?, Maintainer3=?, Phone1=?, Phone2=?, Username=?, Password=? WHERE Id=?");
 
 
         $results->bindValue(1, $hotelname);
@@ -158,21 +149,12 @@ function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2,
         $results->bindValue(5, $maintainer3);
         $results->bindValue(6, $phone1);
         $results->bindValue(7, $phone2);
-        $results->bindValue(8, $hotelid);
+        $results->bindValue(8, $username);
+        $results->bindValue(9, $password1);
+        $results->bindValue(10, $hotelid);
 
 
         $results->execute();
-
-        $results1 = $db->prepare("Update users Set Username=?, Password=?, FirstName=?, LastName=?, Role=? WHERE HotelId=? ");
-
-        $results1->bindValue(1, $username);
-        $results1->bindValue(2, $password1);
-        $results1->bindValue(3, $hotelname);
-        $results1->bindValue(4, $hotelname);
-        $results1->bindValue(5, 2);
-        $results1->bindValue(6, $hotelid);
-
-        $results1->execute();
 
         return "Hotel updated";
 
@@ -224,7 +206,7 @@ function getWorks(){
 
 function getHotels(){
     global $db;
-    $results=$db->prepare("Select * from hotels");
+    $results=$db->prepare("Select * from hotels WHERE Role=2");
     $results->execute();
 
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -244,41 +226,6 @@ function getHotels(){
 
 }
 
-function getUserByUsername($username){
-    global $db;
-
-    $results=$db->prepare("Select * from Users WHERE Username=?");
-    $results->bindValue(1, $username);
-    $results->execute();
-    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
-
-    return $resultsArray[0];
-
-}
-
-function getUserByHotelId($hotelid){
-    global $db;
-
-    $results=$db->prepare("Select * from Users WHERE HotelId=?");
-    $results->bindValue(1, $hotelid);
-    $results->execute();
-    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
-
-    return $resultsArray[0];
-
-}
-
-function getUserById($userid){
-    global $db;
-
-    $results=$db->prepare("Select * from users WHERE Id=?");
-    $results->bindValue(1, $userid);
-    $results->execute();
-    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
-
-    return $resultsArray[0];
-
-}
 
 function getMaintainerById($maintainerid){
     global $db;
@@ -297,6 +244,18 @@ function getHotelById($hotelid){
 
     $results=$db->prepare("Select * from hotels WHERE Id=?");
     $results->bindValue(1, $hotelid);
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray[0];
+
+}
+
+function getUserByUsername($userid){
+    global $db;
+
+    $results=$db->prepare("Select * from hotels WHERE Username=?");
+    $results->bindValue(1, $userid);
     $results->execute();
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
@@ -367,7 +326,7 @@ function getMaintainers(){
 function getConfirmationById($confid){
     global $db;
 
-    $results=$db->prepare("Select * from Confirmation WHERE Id=?");
+    $results=$db->prepare("Select * from confirmation WHERE Id=?");
     $results->bindValue(1, $confid);
     $results->execute();
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -550,7 +509,7 @@ function updateMaintainer($maintainerid, $firstname, $lastname){
 
 function checkUser($username){
   global $db;
-  $results=$db->prepare("Select * from users");
+  $results=$db->prepare("Select * from hotels");
   $results->execute();
 
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -699,7 +658,7 @@ function checkPendingByWorkId($workid){
 
 function checkUserOnUpdate($username, $hotelid){
   global $db;
-  $results=$db->prepare("Select * from users WHERE HotelId<>?");
+  $results=$db->prepare("Select * from hotels WHERE Id<>?");
   $results->bindValue(1, $hotelid);
   $results->execute();
 
@@ -733,13 +692,13 @@ function checkMaintainerOnUpdate($fullname, $maintainerid){
 
 }
 
-function deleteUser($userid){
+function deleteHotel($hotelid){
     global $db;
 
     try {
 
-        $results = $db->prepare("Delete from Users WHERE Id=? ");
-        $results->bindValue(1, $userid);
+        $results = $db->prepare("Delete from hotels WHERE Id=? ");
+        $results->bindValue(1, $hotelid);
         $results->execute();
 
         return "The user was deleted";
@@ -747,6 +706,23 @@ function deleteUser($userid){
     }
     catch(Exception $e) {
         return "Error deleting user".$e;
+    }
+}
+
+function deleteMaintainer($maintainerid){
+    global $db;
+
+    try {
+
+        $results = $db->prepare("Delete from maintainers WHERE Id=? ");
+        $results->bindValue(1, $maintainerid);
+        $results->execute();
+
+        return "The maintainer was deleted";
+
+    }
+    catch(Exception $e) {
+        return "Error deleting maintainer".$e;
     }
 }
 

@@ -5,19 +5,19 @@ include 'db/dbfunctions.php';
 
 if ($_SESSION['role']==2){
 
-  $user=getUserById($_SESSION['userid']);
+  $user=getHotelById($_SESSION['userid']);
 
-  $works=getWorksByHotel($user['HotelId']);
+  $works=getWorksByHotel($user['Id']);
   ?>
   <form id="hotelform" action="verifyForm.php" method="post">
-  <table id="hoteltable" style="width:90%" align="center" frame="void" border="2px solid black">
+  <table id="workshoteltable" style="width:90%" align="center" frame="void" border="2px solid black">
 
     <tr>
       <td>
         <p>ΣΤΟΙΧΕΙΑ ΞΕΝΟΔΟΧΕΙΟΥ</p>
       </td>
       <td colspan ="4">
-        <p><?php echo getHotelById($user['HotelId'])['HotelName'].', '.getHotelById($user['HotelId'])['Address'];?></p>
+        <p><?php echo $user['HotelName'].', '.$user['Address'];?></p>
       </td>
     </tr>
     <tr>
@@ -41,7 +41,7 @@ if ($_SESSION['role']==2){
         ΔΩΜΑΤΙΟ:
         <select id="roomselect">
           <option>ΟΛΑ</option>
-          <?php $rooms=getRoomsByHotel(getHotelById($user['HotelId']));
+          <?php $rooms=getRoomsByHotel($user['Id']);
           foreach ($rooms as $row2){ ?>
               <option><?php echo $row2['Room'];?></option>
           <?php } ?>
@@ -90,7 +90,7 @@ if ($_SESSION['role']==2){
 
     <?php
   }
-    $pendingworks=getPendingWorksByHotel($user['HotelId']);
+    $pendingworks=getPendingWorksByHotel($user['Id']);
     if($pendingworks!=null){ ?>
       <tr>
         <td style="border: 0">
@@ -128,7 +128,7 @@ if ($_SESSION['role']==2){
     foreach ($pendingworks as $row1) { ?>
       <tr>
         <td>
-          <p><?php echo date("j/n/Y", strtotime($row1['DueDate'])).' ('.getWorkById($row1['WorkId'])['Room'].'/'.getHotelById(getWorkById($row1['WorkId'])['HotelId'])['HotelName'].')';?></p>
+          <p><?php echo date("j/n/Y", strtotime($row1['DueDate'])).' ('.getWorkById($row1['WorkId'])['Room'].'/'.getWorkById($row1['WorkId'])['HotelId'].')';?></p>
         </td>
       <td>
         <p><?php echo getWorkById($row1['WorkId'])['Device'];?></p>
@@ -154,8 +154,24 @@ if ($_SESSION['role']==2){
     </tr>
     <?php } ?>
     <tr>
-      <td colspan="4" style="text-align: center; border: 0">
+      <td colspan="3" style="text-align: center; border: 0">
         <button name="submitreport" type="submit">Αποστολή Αναφοράς</button>
+      </td>
+      <td style="text-align: left; border: 0">
+        <?php if ($user['Maintainer1']!=null || $user['Maintainer2']!=null || $user['Maintainer3']!=null){ ?>
+        <select id="maintainerselect" name="maintainerselect">
+            <?php if ($user['Maintainer1']!=null){?>
+            <option><?php echo getMaintainerById($user['Maintainer1'])['FirstName'].' '.getMaintainerById($user['Maintainer1'])['LastName'];?></option>
+            <?php } if ($user['Maintainer2']!=null){ ?>
+            <option><?php echo getMaintainerById($user['Maintainer2'])['FirstName'].' '.getMaintainerById($user['Maintainer2'])['LastName'];?></option>
+            <?php } if ($user['Maintainer3']!=null){?>
+            <option><?php echo getMaintainerById($user['Maintainer3'])['FirstName'].' '.getMaintainerById($user['Maintainer3'])['LastName'];?></option>
+            <?php } ?>
+        </select>
+        <?php } else {?>
+          <p>ΔΕΝ ΥΠΑΡΧΟΥΝ ΣΥΝΤΗΡΗΤΕΣ<p>
+          <?php } ?>
+        </td>
       </td>
       <td style="text-align: right; border: 0">
         <a href="logout.php">Έξοδος</a>

@@ -8,15 +8,12 @@ if($_SESSION['role']!=1){
 } else {
 
 if(isset($_POST['deletemaitainerbutton'])){
-  deleteUser($_GET['id']);
-  deleteWorksByMaintainer($_GET['id']);
-  deletePendingWorksByMaintainer($_GET['id']);
+  deleteMaintainer($_GET['id']);
   header('Location: mainmenu.php');
 
 }
 
-$user=getUserById($_GET['id']);
-$hotels=sizeof(getHotelsByMaintainer($_GET['id']));
+$maintainer=getMaintainerById($_GET['id']);
 
 
 ?>
@@ -24,17 +21,14 @@ $hotels=sizeof(getHotelsByMaintainer($_GET['id']));
 <table align="center">
   <tr>
     <td colspan="2" style="text-align:center">
-      <p>Διαγραφή του χρήστη <?php echo $user['Username'];?> (<?php echo $user['FirstName'].' '.$user['LastName'];?>);</p>
-      <?php if($hotels>0) {?>
-        <p>ΠΡΟΣΟΧΗ: Οι εργασίες που του έχουν ανατεθεί θα διαγραφούν!!!</p>
-      <?php } ?>
+      <p>Διαγραφή του συντηρητή <?php echo $maintainer['FirstName'].' '.$maintainer['LastName'];?>;</p>
     </td>
     <tr>
       <td style="text-align: center">
         <button type="submit" name="deletemaintainerbutton">Ναι</button>
       </td>
       <td style="text-align: center">
-        <a href="addMaintainer.php?id=<?php echo $user['Id'];?>">Όχι</a>
+        <a href="addMaintainer.php?id=<?php echo $maintainer['Id'];?>">Όχι</a>
       </td>
     </tr>
   </table>

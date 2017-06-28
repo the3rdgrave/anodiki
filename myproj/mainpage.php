@@ -33,10 +33,10 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   </td>
 </tr>
       <td>
-      <label for="maintainer">ΞΕΝΟΔΟΧΕΙΟ</label>
+      <label for="hotelname">ΞΕΝΟΔΟΧΕΙΟ</label>
     </td>
     <td colspan="2" style="border: 0">
-      <select id="hotel" name="hotel">
+      <select id="hotelname" name="hotelname">
         <?php $hotels=getHotels();
         foreach ($hotels as $row) {?>
           <option <?php

@@ -25,11 +25,11 @@ else{
       if(!isset($_SESSION['failedp2']))
         $_SESSION['failedp2']=$hotel['Phone2'];
       if(!isset($_SESSION['failedun']))
-        $_SESSION['failedun']=getUserByHotelId($hotel['Id'])['Username'];
+        $_SESSION['failedun']=$hotel['Username'];
       if(!isset($_SESSION['failedpw']))
-        $_SESSION['failedpw']=getUserByHotelId($hotel['Id'])['Password'];
+        $_SESSION['failedpw']=$hotel['Password'];
       if(!isset($_SESSION['failedrpw']))
-        $_SESSION['failedrpw']=getUserByHotelId($hotel['Id'])['Password'];
+        $_SESSION['failedrpw']=$hotel['Password'];
     }
   }
 
@@ -119,24 +119,24 @@ else{
       <td>
       <label for="un">ΟΝΟΜΑ ΧΡΗΣΤΗ</label>
     </td>
-    <td style="border: 0">
-      <input type="text" id="un" name="un" value="<?php echo (isset($_SESSION['failedun'])?$_SESSION['failedun']:"");?>">
+    <td style="border: 0" colspan="2">
+      <input type="text" id="un" name="un" style="width:100%" value="<?php echo (isset($_SESSION['failedun'])?$_SESSION['failedun']:"");?>">
     </td>
     </tr>
     <tr>
       <td>
       <label for="pw">ΚΩΔΙΚΟΣ</label>
     </td>
-    <td style="border: 0">
-      <input type="text" id="pw" name="pw" value="<?php echo (isset($_SESSION['failedpw'])?$_SESSION['failedpw']:"");?>">
+    <td style="border: 0" colspan="2">
+      <input type="text" id="pw" name="pw" style="width:100%" value="<?php echo (isset($_SESSION['failedpw'])?$_SESSION['failedpw']:"");?>">
     </td>
     </tr>
     <tr>
       <td>
       <label for="rpw">ΕΠΑΝ.ΚΩΔΙΚΟΥ</label>
     </td>
-    <td style="border: 0">
-      <input type="text" id="rpw" name="rpw" value="<?php echo (isset($_SESSION['failedrpw'])?$_SESSION['failedrpw']:"");?>">
+    <td style="border: 0" colspan="2">
+      <input type="text" id="rpw" name="rpw" style="width:100%" value="<?php echo (isset($_SESSION['failedrpw'])?$_SESSION['failedrpw']:"");?>">
     </td>
     </tr>
     <tr>
