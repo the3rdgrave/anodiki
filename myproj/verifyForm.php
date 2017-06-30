@@ -16,9 +16,9 @@ if(isset($_POST['submitreport'])){
   //
 
   if(!empty($_POST['confirmed'])){?>
-    <table id="reporttable" frame="void" border="2px solid black" align="center">
+    <table id="reporttable" style="width: 80%" frame="void" border="2px solid black" align="center">
       <tr>
-        <td>
+        <td colspan="2">
           <p><?php echo $_POST['maintainerselect'];?></p>
         </td>
         <td>
@@ -29,6 +29,9 @@ if(isset($_POST['submitreport'])){
         </td>
         <tr>
           <tr>
+            <th>
+              <p>ΣΥΣΚΕΥΗ</p>
+            </th>
             <th>
               <p>ΕΡΓΑΣΙΑ</p>
             </th>
@@ -50,6 +53,9 @@ if(isset($_POST['submitreport'])){
     } ?>
     <tr>
       <td>
+        <p><?php echo getWorkById($row)['Device'];?></p>
+      </td>
+      <td>
         <p><?php echo getWorkById($row)['Work'];?></p>
       </td>
       <td>
@@ -64,21 +70,20 @@ if(isset($_POST['submitreport'])){
   }
   ?>
   <tr>
-    <td colspan="3" style="text-align: center; border: 0">
+    <td colspan="4" style="text-align: center; border: 0">
        <a href="hotel.php">Επιστροφή στις εργασίες</a>
      </td>
    </tr>
   </table> <?php
   }
-  // echo $_SESSION['logintime'].'<br>';
-  // echo strtotime($_SESSION['logintime']).'<br><br>';
-  //
-  // echo time().'<br>';
-  // echo date('Y-m-d H:i:s', time()).'<br>';
 
   $duration=time()-$_SESSION['logintime'];
-  $mins=intval($duration/60);
-echo $mins.' mins '.($duration-$mins*60).' secs';
+  $hours=intval($duration/3600);
+  $durationleft=$duration-$hours*3600;
+  $mins=intval($durationleft/60);
+  $secs=$durationleft-$mins*60;
+  // echo $duration.'<br>';
+  echo $hours.' hours '.$mins.' mins '.$secs.' secs';
 }
 
 include 'footer.php';

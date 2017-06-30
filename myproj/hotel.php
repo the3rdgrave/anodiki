@@ -107,7 +107,7 @@ if ($_SESSION['role']==2){
       </tr>
       <tr>
         <td>
-          <br>ΗΜΕΡΟΜΗΝΙΑ (ΔΩΜΑΤΙΟ/ΞΕΝΟΔ.)
+          <br>ΗΜΕΡΟΜΗΝΙΑ (ΔΩΜΑΤΙΟ)
         </td>
         <td>
           <p>ΣΥΣΚΕΥΗ</p>
@@ -128,7 +128,7 @@ if ($_SESSION['role']==2){
     foreach ($pendingworks as $row1) { ?>
       <tr>
         <td>
-          <p><?php echo date("j/n/Y", strtotime($row1['DueDate'])).' ('.getWorkById($row1['WorkId'])['Room'].'/'.getWorkById($row1['WorkId'])['HotelId'].')';?></p>
+          <p><?php echo date("j/n/Y", strtotime($row1['DueDate'])).' ('.getWorkById($row1['WorkId'])['Room'].')';?></p>
         </td>
       <td>
         <p><?php echo getWorkById($row1['WorkId'])['Device'];?></p>

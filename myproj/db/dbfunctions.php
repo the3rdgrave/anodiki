@@ -811,7 +811,23 @@ function deleteWork($workid){
     }
 }
 
+function searchWork($key)
+{
+    global $db;
 
+    $key = '%' . $key . '%';
+    $results = $db->prepare("SELECT * from works t1 JOIN hotels t2 ON t1.HotelId=t2.Id WHERE Work LIKE ? OR Device LIKE ? OR Room LIKE ? OR HotelName LIKE ?");
+    $results->bindValue(1, $key);
+    $results->bindValue(2, $key);
+    $results->bindValue(3, $key);
+    $results->bindValue(4, $key);
+
+    $results->execute();
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray;
+
+}
 
 
 

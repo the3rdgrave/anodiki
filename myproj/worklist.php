@@ -3,8 +3,11 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
+
+$works=isset($_GET['searchfield']) && $_GET['searchfield']!=""?searchWork($_GET['searchfield']):getWorks();
+
 ?>
-<table id="worktable" style="width: 90%" align="center" frame="void" border="2px solid black">
+<table id="worktable" style="width: 96%" align="center" frame="void" border="2px solid black">
   <tr>
     <td>
       <p>ΞΕΝΟΔΟΧΕΙΟ</p>
@@ -25,11 +28,15 @@ include 'db/dbfunctions.php';
       <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
     </td>
     <td>
+      <form method="get" action="worklist.php">
+      <input type="text" id="searchfield" name="searchfield" placeholder = "ΑΝΑΖΗΤΗΣΗ">
+      <button id = "searchbutton" name="searchbutton" type="submit"><img src="images/lens1.png" id="lens"></button >
+      </form>
     </td>
 
   </tr>
   <?php
-  $works=getWorks();
+  // $works=getWorks();
   foreach ($works as $row){?>
 <tr>
   <td>
