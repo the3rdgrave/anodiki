@@ -28,8 +28,8 @@ if (isset($_POST['newworkbutton'])){
 } else if (isset($_POST['updateworkbutton'])) {
   // echo 'Entry edited';
   $work=getWorkById($_GET['id']);
-  echo updateWork($_GET['id'], getHotelId($_POST['hotelname'])['Id'],$_POST['emailreport'],$_POST['emailreport2'],$_POST['room'],$_POST['device'],$_POST['work'],
-  $_POST['days'], $work['Date'], $work['Confirmation'], $work['Notes']);?><br>
+  echo updateWork($_GET['id'], getHotelId($_POST['hotelname'])['Id'],$_POST['emailreport'],$_POST['emailreport2'],$_POST['room'],$_POST['device'][0],$_POST['work'][0],
+  $_POST['days'][0], $work['Date'], $work['Confirmation'], $work['Notes']);?><br>
   <a href="worklist.php">Πίσω στις εργασίες</a>
 <?php }
 else{
