@@ -13,9 +13,16 @@ $_SESSION['emailreport2']=$_POST['emailreport2'];
 
 
 if (isset($_POST['newworkbutton'])){
-  echo addWork(getHotelId($_POST['hotelname'])['Id'], $_POST['emailreport'],$_POST['emailreport2'],$_POST['room'],$_POST['device'],$_POST['work'],
-  $_POST['days']);?> για το ξενοδοχείο <?php echo $_POST['hotelname'];?><br>
-  <a href="mainpage.php">Προσθήκη νέας εργασίας</a><br>
+  for($i = 0; $i < sizeof($_POST['device']); ++$i){
+  if ($_POST['device'][$i]==""){
+    break;
+  }
+  echo addWork(getHotelId($_POST['hotelname'])['Id'], $_POST['emailreport'],$_POST['emailreport2'],$_POST['room'],$_POST['device'][$i],$_POST['work'][$i],
+  $_POST['days'][$i]);?> για το ξενοδοχείο <?php echo $_POST['hotelname'];?><br>
+  <?php
+
+  } ?>
+  <a href="mainpage.php">Προσθήκη περισσοτέρων εργασιών</a><br>
   <a href="mainmenu.php">Επιστροφή στο βασικό μενού</a>
 <?php
 } else if (isset($_POST['updateworkbutton'])) {

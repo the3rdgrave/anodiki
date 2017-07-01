@@ -95,17 +95,23 @@ if(isset($_GET['id']) && $_GET['id']!=0){
     </td>
 
   </tr>
+  <?php $numberofworks=isset($_GET['id']) && $_GET['id']!=0?1:5;
+    $loop=1;
+    while($loop<=$numberofworks){?>
   <tr>
     <td>
-      <input type="text" id="device" name="device" value="<?php echo (isset($_SESSION['device'])?$_SESSION['device']:"");?>">
+      <input type="text" id="device" name="device[]" value="<?php echo (isset($_SESSION['device'])?$_SESSION['device']:"");?>">
     </td>
     <td>
-      <input type="text" id="work" name="work" value="<?php echo (isset($_SESSION['work'])?$_SESSION['work']:"");?>">
+      <input type="text" id="work" name="work[]" value="<?php echo (isset($_SESSION['work'])?$_SESSION['work']:"");?>">
     </td>
     <td>
-      <input type="text" id="days" name="days" value="<?php echo (isset($_SESSION['days'])?$_SESSION['days']:"");?>">
+      <input type="text" id="days" name="days[]" value="<?php echo (isset($_SESSION['days'])?$_SESSION['days']:"");?>">
     </td>
   </tr>
+  <?php
+  $loop++;
+  } ?>
   <tr>
     <td colspan="3" style="text-align: center; border: 0">
       <?php if(isset($_GET['id']) && $_GET['id']!=0){ ?>
