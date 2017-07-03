@@ -18,8 +18,9 @@ $work=getWorkById($_GET['id']);
 <form method="post" action="deleteWork.php?id=<?php echo $_GET['id'];?>">
 <table align="center">
   <tr>
-    <td colspan="2">
-      <p>Διαγραφή της εργασίας <?php echo $work['Work'];?> στο δωμάτιο <?php echo $work['Room'].'/'.getHotelById($work['HotelId'])['HotelName'];?>;</p>
+    <td colspan="2" style="text-align: center">
+      <p>Διαγραφή της εργασίας <?php echo $work['Device'].': '.$work['Work'];?></p>
+      <p>στο δωμάτιο <?php echo $work['Room'].'/'.getHotelById($work['HotelId'])['HotelName'];?>;</p>
     </td>
     <tr>
       <td style="text-align: center">

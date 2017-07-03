@@ -25,8 +25,6 @@ function loginUser ($username, $password){
 function addWork($hotel, $report1, $report2, $room, $device, $work, $days){
     global $db;
 
-
-
     try {
         $results = $db->prepare("insert into works (HotelId, EmailReport1, EmailReport2, Room, Device, Work, Days) values(?,?,?,?,?,?,?)");
 
