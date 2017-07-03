@@ -155,7 +155,9 @@ if ($_SESSION['role']==2){
     <?php } ?>
     <tr>
       <td colspan="3" style="text-align: center; border: 0">
+        <?php if ($user['Maintainer1']!=null || $user['Maintainer2']!=null || $user['Maintainer3']!=null){?>
         <button name="submitreport" type="submit">Αποστολή Αναφοράς</button>
+        <?php } ?>
       </td>
       <td style="text-align: left; border: 0">
         <?php if ($user['Maintainer1']!=null || $user['Maintainer2']!=null || $user['Maintainer3']!=null){ ?>

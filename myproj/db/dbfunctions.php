@@ -196,7 +196,7 @@ function addPendingWork($workid, $hotelid, $workdate){
 
 function getWorks(){
     global $db;
-    $results=$db->prepare("Select * from works");
+    $results=$db->prepare("SELECT * from works");
     $results->execute();
 
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -816,7 +816,7 @@ function searchWork($key)
     global $db;
 
     $key = '%' . $key . '%';
-    $results = $db->prepare("SELECT * from works t1 JOIN hotels t2 ON t1.HotelId=t2.Id WHERE Work LIKE ? OR Device LIKE ? OR Room LIKE ? OR HotelName LIKE ?");
+    $results = $db->prepare("SELECT t1.* from works t1 JOIN hotels t2 ON t1.HotelId=t2.Id WHERE Work LIKE ? OR Device LIKE ? OR Room LIKE ? OR HotelName LIKE ?");
     $results->bindValue(1, $key);
     $results->bindValue(2, $key);
     $results->bindValue(3, $key);
