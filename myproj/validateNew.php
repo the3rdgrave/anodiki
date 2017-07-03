@@ -18,7 +18,7 @@ if (isset($_POST['newworkbutton'])){
   echo addWork(getHotelId($_POST['hotelname'])['Id'], $_POST['emailreport'],$_POST['emailreport2'],$_POST['room'],$_POST['device'][$i],$_POST['work'][$i],
   $_POST['days'][$i]);?> :<?php echo $_POST['work'][$i];?><br>
   <?php
-} else if(trim($_POST['room'])!="" || trim($_POST['device'][$i])!="" || trim($_POST['work'][$i])!=""|| $_POST['days'][$i]>0){
+} else if(trim($_POST['device'][$i])!="" || trim($_POST['work'][$i])!=""|| $_POST['days'][$i]>0){
   echo 'Ελλειπή στοιχεία. Η εργασία '.($i+1).' δεν προστέθηκε.<br>';
 }
   } ?>
