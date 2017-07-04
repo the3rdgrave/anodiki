@@ -11,6 +11,7 @@ foreach ($works as $row) {
 
 
   // if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+".$row['Days']." days"))){
+if(strtotime(date('Y/n/j', strtotime("now")))>=strtotime(date('Y/n/j', strtotime($row['Date'])))){
 
 $a=1;
   while(true){
@@ -33,6 +34,7 @@ $a=1;
 
  }
   $a++;
+
 }
 
   if(strtotime(date('Y/n/j', strtotime("now")))!=strtotime(date('Y/n/j',strtotime($row['Date'])))) {
@@ -45,6 +47,7 @@ $a=1;
     deletePendingWork($row['Id']);
   }
 
+}
 }
 
 

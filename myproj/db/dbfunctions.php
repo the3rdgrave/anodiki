@@ -22,20 +22,19 @@ function loginUser ($username, $password){
 
 }
 
-function addWork($hotel, $report1, $report2, $room, $device, $work, $days){
+function addWork($hotel, $room, $device, $work, $days, $date){
     global $db;
 
     try {
-        $results = $db->prepare("insert into works (HotelId, EmailReport1, EmailReport2, Room, Device, Work, Days) values(?,?,?,?,?,?,?)");
+        $results = $db->prepare("insert into works (HotelId, Room, Device, Work, Days, Date) values(?,?,?,?,?,?)");
 
 
         $results->bindValue(1, $hotel);
-        $results->bindValue(2, $report1);
-        $results->bindValue(3, $report2);
-        $results->bindValue(4, $room);
-        $results->bindValue(5, $device);
-        $results->bindValue(6, $work);
-        $results->bindValue(7, $days);
+        $results->bindValue(2, $room);
+        $results->bindValue(3, $device);
+        $results->bindValue(4, $work);
+        $results->bindValue(5, $days);
+        $results->bindValue(6, $date);
 
 
         $results->execute();
@@ -51,7 +50,7 @@ function addWork($hotel, $report1, $report2, $room, $device, $work, $days){
 
 }
 
-function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3, $phone1, $phone2, $username, $password1, $password2){
+function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3, $phone1, $phone2, $emailreport1, $emailreport2, $date, $username, $password1, $password2){
     global $db;
     $errormessage="";
     if(strlen($username)<3 || strlen($username)>12){
@@ -68,7 +67,7 @@ function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3
     }
 
 
-    if (checkHotel($hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3)==false){
+    if (checkHotel($hotelname, $address, $phone1, $phone2, $emailreport1, $emailreport2, $maintainer1, $maintainer2, $maintainer3)==false){
       $errormessage .="Invalid entries".'<br>';
     }
 
@@ -79,7 +78,7 @@ function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3
     if ($errormessage==""){
 
       try {
-          $results = $db->prepare("insert into hotels (HotelName, Address, Maintainer1, Maintainer2, Maintainer3, Phone1, Phone2, Username, Password) values(?,?,?,?,?,?,?,?,?)");
+          $results = $db->prepare("insert into hotels (HotelName, Address, Maintainer1, Maintainer2, Maintainer3, Phone1, Phone2, EmailReport1, EmailReport2, Username, Password, StartingDate) values(?,?,?,?,?,?,?,?,?,?,?,?)");
 
 
           $results->bindValue(1, $hotelname);
@@ -89,8 +88,11 @@ function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3
           $results->bindValue(5, $maintainer3);
           $results->bindValue(6, $phone1);
           $results->bindValue(7, $phone2);
-          $results->bindValue(8, $username);
-          $results->bindValue(9, $password1);
+          $results->bindValue(8, $emailreport1);
+          $results->bindValue(9, $emailreport2);
+          $results->bindValue(10, $username);
+          $results->bindValue(11, $password1);
+          $results->bindValue(12, $date);
 
 
           $results->execute();
@@ -109,10 +111,10 @@ function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3
 
 }
 
-function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2, $maintainer3, $phone1, $phone2, $username, $password1, $password2){
+function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2, $maintainer3, $phone1, $phone2, $emailreport1, $emailreport2, $date, $username, $password1, $password2){
     global $db;
     $errormessage="";
-    if (checkHotelOnUpdate($hotelid, $hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3)==false){
+    if (checkHotelOnUpdate($hotelid, $hotelname, $address, $phone1, $phone2, $emailreport1, $emailreport2, $maintainer1, $maintainer2, $maintainer3)==false){
       $errormessage .="Invalid entries".'<br>';
     }
     if(checkUserOnUpdate($username, $hotelid)==false){
@@ -122,7 +124,6 @@ function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2,
     if(strlen($username)<3 || strlen($username)>12){
         $errormessage .="Username must be between 5 and 12 characters".'<br>';
     }
-
 
     if($password1!=$password2){
         $errormessage .="Passwords don't match".'<br>';
@@ -137,7 +138,7 @@ function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2,
 
 
     try {
-        $results = $db->prepare("update hotels SET HotelName=?, Address=?, Maintainer1=?, Maintainer2=?, Maintainer3=?, Phone1=?, Phone2=?, Username=?, Password=? WHERE Id=?");
+        $results = $db->prepare("update hotels SET HotelName=?, Address=?, Maintainer1=?, Maintainer2=?, Maintainer3=?, Phone1=?, Phone2=?, EmailReport1=?, EmailReport2=?, StartingDate=?, Username=?, Password=? WHERE Id=?");
 
 
         $results->bindValue(1, $hotelname);
@@ -147,9 +148,12 @@ function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2,
         $results->bindValue(5, $maintainer3);
         $results->bindValue(6, $phone1);
         $results->bindValue(7, $phone2);
-        $results->bindValue(8, $username);
-        $results->bindValue(9, $password1);
-        $results->bindValue(10, $hotelid);
+        $results->bindValue(8, $emailreport1);
+        $results->bindValue(9, $emailreport2);
+        $results->bindValue(10, $date);
+        $results->bindValue(11, $username);
+        $results->bindValue(12, $password1);
+        $results->bindValue(13, $hotelid);
 
 
         $results->execute();
@@ -215,7 +219,7 @@ function getHotels(){
   function getWorkById($workid){
     global $db;
 
-    $results=$db->prepare("Select * from Works WHERE Id=?");
+    $results=$db->prepare("Select * from works WHERE Id=?");
     $results->bindValue(1, $workid);
     $results->execute();
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -264,7 +268,7 @@ function getUserByUsername($userid){
 function getWorksByHotel($hotelid){
   global $db;
 
-  $results=$db->prepare("Select * from Works WHERE HotelId=? AND Confirmation=0 AND DATE(Date)=CURDATE()");
+  $results=$db->prepare("Select * from works WHERE HotelId=? AND Confirmation=0 AND DATE(Date)=CURDATE()");
   $results->bindValue(1, $hotelid);
   $results->execute();
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -289,7 +293,7 @@ function getPendingWorksByHotel($hotelid){
 function getHotelsByMaintainer($maintainerid){
   global $db;
 
-  $results=$db->prepare("Select DISTINCT Hotel,Address from Works WHERE MaintainerId=? AND Confirmation=0 AND DATE(Date)=CURDATE()");
+  $results=$db->prepare("Select DISTINCT Hotel,Address from works WHERE MaintainerId=? AND Confirmation=0 AND DATE(Date)=CURDATE()");
   $results->bindValue(1, $maintainerid);
   $results->execute();
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
@@ -357,24 +361,22 @@ function getHotelId($hotelname){
 
 }
 
-function updateWork($workid, $hotel, $report1, $report2, $room, $device, $work, $days, $date, $confirmation, $notes){
+function updateWork($workid, $hotel, $room, $device, $work, $days, $date, $confirmation, $notes){
     global $db;
 
     try {
-        $results = $db->prepare("Update Works Set HotelId=?, EmailReport1=?, EmailReport2=?, Room=?, Device=?, Work=?, Days=?, Date=?, Confirmation=?, Notes=? WHERE Id=?");
+        $results = $db->prepare("Update works Set HotelId=?, Room=?, Device=?, Work=?, Days=?, Date=?, Confirmation=?, Notes=? WHERE Id=?");
 
 
         $results->bindValue(1, $hotel);
-        $results->bindValue(2, $report1);
-        $results->bindValue(3, $report2);
-        $results->bindValue(4, $room);
-        $results->bindValue(5, $device);
-        $results->bindValue(6, $work);
-        $results->bindValue(7, $days);
-        $results->bindValue(8, $date);
-        $results->bindValue(9, $confirmation);
-        $results->bindValue(10, $notes);
-        $results->bindValue(11, $workid);
+        $results->bindValue(2, $room);
+        $results->bindValue(3, $device);
+        $results->bindValue(4, $work);
+        $results->bindValue(5, $days);
+        $results->bindValue(6, $date);
+        $results->bindValue(7, $confirmation);
+        $results->bindValue(8, $notes);
+        $results->bindValue(9, $workid);
 
 
 
@@ -428,7 +430,7 @@ function updateWorkConfirmation($workid){
     global $db;
 
     try {
-        $results = $db->prepare("Update Works Set Confirmation=0 WHERE Id=?");
+        $results = $db->prepare("Update works Set Confirmation=0 WHERE Id=?");
         $results->bindValue(1, $workid);
         $results->execute();
         return "Work updated";
@@ -556,7 +558,7 @@ function checkMaintainer($fullname){
 
 }
 
-function checkHotel($hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3){
+function checkHotel($hotelname, $address, $phone1, $phone2, $emailreport1, $emailreport2, $maintainer1, $maintainer2, $maintainer3){
   global $db;
   $results=$db->prepare("Select * from hotels");
   $results->execute();
@@ -594,13 +596,21 @@ function checkHotel($hotelname, $address, $phone1, $phone2, $maintainer1, $maint
             return false;
         }
       }
+      if ($emailreport1==$row["EmailReport1"] || $phone1==$row["EmailReport2"]){
+          return false;
+      }
+      if($emailreport2!=null){
+        if ($emailreport2==$row["EmailReport1"] || $phone2==$row["EmailReport2"]){
+            return false;
+        }
+      }
     }
 
   return true;
 
   }
 
-function checkHotelOnUpdate($hotelid, $hotelname, $address, $phone1, $phone2, $maintainer1, $maintainer2, $maintainer3){
+function checkHotelOnUpdate($hotelid, $hotelname, $address, $phone1, $phone2, $emailreport1, $emailreport2, $maintainer1, $maintainer2, $maintainer3){
   global $db;
   $results=$db->prepare("Select * from hotels WHERE Id<>?");
   $results->bindValue(1, $hotelid);
@@ -637,6 +647,14 @@ function checkHotelOnUpdate($hotelid, $hotelname, $address, $phone1, $phone2, $m
       }
       if($phone2!=null){
         if ($phone2==$row["Phone1"] || $phone2==$row["Phone2"]){
+            return false;
+        }
+      }
+      if ($emailreport1==$row["EmailReport1"] || $phone1==$row["EmailReport2"]){
+          return false;
+      }
+      if($emailreport2!=null){
+        if ($emailreport2==$row["EmailReport1"] || $phone2==$row["EmailReport2"]){
             return false;
         }
       }

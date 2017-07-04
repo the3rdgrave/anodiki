@@ -12,8 +12,6 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   $work=getWorkById($_GET['id']);
   if ($work!=null){
     $_SESSION['hotelname']=getHotelById($work['HotelId'])['HotelName'];
-    $_SESSION['emailreport']=$work['EmailReport1'];
-    $_SESSION['emailreport2']=$work['EmailReport2'];
     $_SESSION['room']=$work['Room'];
     $_SESSION['device']=$work['Device'];
     $_SESSION['work']=$work['Work'];
@@ -51,33 +49,17 @@ if(isset($_GET['id']) && $_GET['id']!=0){
         </select>
     </td>
     </tr>
-    <tr>
-      <td>
-      <label for="emailreport">EMAIL REPORT</label>
-    </td>
-    <td>
-      <input type="text" id="emailreport" name="emailreport" value="<?php echo (isset($_SESSION['emailreport'])?$_SESSION['emailreport']:"");?>">
-    </td>
-    <td>
-      <input type="text" id="emailreport2" name="emailreport2" value="<?php echo (isset($_SESSION['emailreport2'])?$_SESSION['emailreport2']:"");?>">
-    </td>
-    </tr>
+
 
     <tr>
       <td colspan="3" style="text-align:center">
         <p>ΕΙΣΑΓΩΓΗ ΣΤΟΙΧΕΙΩΝ ΣΥΝΤΗΡΗΣΗΣ</p>
       </td>
     </tr>
-  <tr>
-    <td style="border: 0"></td>
-    <td style="text-align:center">
-      <p>ΧΩΡΟΣ</p>
-    </td>
-    <td style="border: 0"></td>
-  </tr>
+
   <tr>
     <td>
-      <label for="room">ΔΩΜΑΤΙΟ</label>
+      <label for="room">ΧΩΡΟΣ</label>
     </td>
     <td>
       <input type="text" id="room" name="room" value="<?php echo (isset($_SESSION['room'])?$_SESSION['room']:"");?>">
@@ -95,7 +77,7 @@ if(isset($_GET['id']) && $_GET['id']!=0){
     </td>
 
   </tr>
-  <?php $numberofworks=isset($_GET['id']) && $_GET['id']!=0?1:5;
+  <?php $numberofworks=isset($_GET['id']) && $_GET['id']!=0?1:10;
     $loop=1;
     while($loop<=$numberofworks){?>
   <tr>
@@ -145,13 +127,10 @@ if(isset($_GET['id']) && $_GET['id']!=0){
 
   <?php
   unset($_SESSION['hotelname']);
-  unset($_SESSION['emailreport']);
-  unset($_SESSION['emailreport2']);
   unset($_SESSION['room']);
   unset($_SESSION['device']);
   unset($_SESSION['work']);
   unset($_SESSION['days']);
-  unset($_SESSION['maintainer']);
 }
 
   include 'footer.php';

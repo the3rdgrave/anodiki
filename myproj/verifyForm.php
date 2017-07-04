@@ -10,12 +10,18 @@ if(isset($_POST['submitreport'])){
   //
   // foreach($_POST['notes'] as $row1){
   //   $work1=getWorkById(array_search($row1, $_POST['notes']));
-  //   updateWork($work1['Id'], $work1['Hotel'], $work1['Address'], $work1['MaintainerId'], $work1['Phone1'], $work1['Phone2'], $work1['EmailReport1'], $work1['EmailReport2'], $work1['Room'], $work1['Device'], $work1['Work'], $work1['Days'],
+  //   updateWork($work1['Id'], $work1['HotelId'], $work1['Room'], $work1['Device'], $work1['Work'], $work1['Days'],
   //   $work1['Date'], $work1['Confirmation'], $row1);
   //   }
-  //
+  // }
+  $duration=time()-$_SESSION['logintime'];
+  $hours=intval($duration/3600);
+  $durationleft=$duration-$hours*3600;
+  $mins=intval($durationleft/60);
+  $secs=$durationleft-$mins*60;
 
-  if(!empty($_POST['confirmed'])){?>
+  // if(!empty($_POST['confirmed'])){
+  ?>
     <table id="reporttable" style="width: 80%" frame="void" border="2px solid black" align="center">
       <tr>
         <td colspan="2">
@@ -27,7 +33,10 @@ if(isset($_POST['submitreport'])){
         <td>
           <?php echo date("j/n/Y");?>
         </td>
-        <tr>
+        <td>
+          <p><?php echo $hours.' hours '.$mins.' mins '.$secs.' secs';?></p>
+        </td>
+      </tr>
           <tr>
             <th>
               <p>ΣΥΣΚΕΥΗ</p>
@@ -38,31 +47,39 @@ if(isset($_POST['submitreport'])){
             <th>
               <p>ΔΩΜΑΤΙΟ</p>
             </th>
+            <th>
+              <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
+            </th>
 
             <th>
               <p>ΣΗΜΕΙΩΣΕΙΣ</p>
             </th>
-      <?php
-  foreach($_POST['confirmed'] as $row){
 
-    $work=getWorkById($row);
-    updateWork($work['Id'], $work['HotelId'], $work['EmailReport1'], $work['EmailReport2'], $work['Room'], $work['Device'], $work['Work'], $work['Days'],
-    $work['Date'], 1, array_key_exists($work['Id'], $_POST['notes'])?$_POST['notes'][$work['Id']]:null);
+      <?php
+  foreach($_POST['notes'] as $row){
+    // echo array_search($row, $_POST['notes']);
+    $work=getWorkById(array_search($row, $_POST['notes']));
+    updateWork($work['Id'], $work['HotelId'], $work['Room'], $work['Device'], $work['Work'], $work['Days'],
+    $work['Date'], !empty($_POST['confirmed']) && in_array($work['Id'], $_POST['confirmed'])?1:0, $_POST['notes'][$work['Id']]);
     if(checkPendingByWorkId($work['Id'])==true){
       deletePendingWork($work['Id']);
-    } ?>
+    }
+    $work=getWorkById(array_search($row, $_POST['notes']));?>
     <tr>
       <td>
-        <p><?php echo getWorkById($row)['Device'];?></p>
+        <p><?php echo $work['Device'];?></p>
       </td>
       <td>
-        <p><?php echo getWorkById($row)['Work'];?></p>
+        <p><?php echo $work['Work'];?></p>
       </td>
       <td>
-        <p><?php echo getWorkById($row)['Room'];?></p>
+        <p><?php echo $work['Room'];?></p>
       </td>
       <td>
-        <p><?php echo getWorkById($row)['Notes'];?></p>
+        <p><?php echo getConfirmationById($work['Confirmation'])['Confirmation'];?></p>
+      </td>
+      <td>
+        <p><?php echo $work['Notes'];?></p>
       </td>
     </tr>
 
@@ -75,15 +92,9 @@ if(isset($_POST['submitreport'])){
      </td>
    </tr>
   </table> <?php
-  }
+  // }
 
-  $duration=time()-$_SESSION['logintime'];
-  $hours=intval($duration/3600);
-  $durationleft=$duration-$hours*3600;
-  $mins=intval($durationleft/60);
-  $secs=$durationleft-$mins*60;
-  // echo $duration.'<br>';
-  echo $hours.' hours '.$mins.' mins '.$secs.' secs';
+
 }
 
 include 'footer.php';

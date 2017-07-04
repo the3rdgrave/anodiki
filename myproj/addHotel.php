@@ -24,12 +24,18 @@ else{
         $_SESSION['failedp1']=$hotel['Phone1'];
       if(!isset($_SESSION['failedp2']))
         $_SESSION['failedp2']=$hotel['Phone2'];
+      if(!isset($_SESSION['faileder1']))
+        $_SESSION['faileder1']=$hotel['EmailReport1'];
+      if(!isset($_SESSION['faileder2']))
+        $_SESSION['faileder2']=$hotel['EmailReport2'];
       if(!isset($_SESSION['failedun']))
         $_SESSION['failedun']=$hotel['Username'];
       if(!isset($_SESSION['failedpw']))
         $_SESSION['failedpw']=$hotel['Password'];
       if(!isset($_SESSION['failedrpw']))
         $_SESSION['failedrpw']=$hotel['Password'];
+      if(!isset($_SESSION['faileddate']))
+        $_SESSION['faileddate']=$hotel['StartingDate'];
     }
   }
 
@@ -117,6 +123,26 @@ else{
     </tr>
     <tr>
       <td>
+      <label for="emailreport">EMAIL REPORT</label>
+    </td>
+    <td style="border: 0">
+      <input type="text" id="emailreport" name="emailreport" value="<?php echo (isset($_SESSION['faileder1'])?$_SESSION['faileder1']:"");?>">
+    </td>
+    <td style="border: 0">
+      <input type="text" id="emailreport2" name="emailreport2" value="<?php echo (isset($_SESSION['faileder2'])?$_SESSION['faileder2']:"");?>">
+    </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="day">ΗΜΕΡΟΜΗΝΙΑ ΕΝΑΡΞΗΣ<br>ΕΡΓΑΣΙΩΝ</label>
+      </td>
+      <td style="border: 0">
+        <input type="date" id="date" name="date" style="width:100%" value="<?php echo (isset ($_SESSION['faileddate'])?date('Y-m-d', strtotime($_SESSION['faileddate'])):date('Y-m-d'));?>">
+      </td>
+    </tr>
+
+    <tr>
+      <td>
       <label for="un">ΟΝΟΜΑ ΧΡΗΣΤΗ</label>
     </td>
     <td style="border: 0" colspan="2">
@@ -171,5 +197,8 @@ else{
     unset($_SESSION['failedun']);
     unset($_SESSION['failedpw']);
     unset($_SESSION['failedrpw']);
+    unset($_SESSION['faileddate']);
+    unset($_SESSION['faileder1']);
+    unset($_SESSION['faileder2']);
 
     ?>

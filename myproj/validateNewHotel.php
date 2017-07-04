@@ -22,7 +22,7 @@ if($_SESSION['role']!=1){
 if (isset($_POST['newhotelbutton'])){
 
   $newhotel=addHotel($_POST['hotelname'],$_POST['address'],$_POST['maintainer1']==""?null:getMaintainerId($_POST['maintainer1'])['Id'], $_POST['maintainer2']==""?null:getMaintainerId($_POST['maintainer2'])['Id'],
-    $_POST['maintainer3']==""?null:getMaintainerId($_POST['maintainer1'])['Id'], $_POST['phone1'],$_POST['phone2'], $_POST['un'],
+    $_POST['maintainer3']==""?null:getMaintainerId($_POST['maintainer3'])['Id'], $_POST['phone1'],$_POST['phone2'], $_POST['emailreport'],$_POST['emailreport2'], $_POST['date'],$_POST['un'],
     $_POST['pw'],$_POST['rpw']);
   echo $newhotel.'<br>'; ?>
   <?php if($newhotel!="Hotel added"){?>
@@ -39,12 +39,15 @@ if($newhotel!="Hotel added"){
   $_SESSION['failedad']=$_POST['address'];
   $_SESSION['failedp1']=$_POST['phone1'];
   $_SESSION['failedp2']=$_POST['phone2'];
+  $_SESSION['failedp1']=$_POST['emailreport'];
+  $_SESSION['failedp2']=$_POST['emailreport2'];
   $_SESSION['failedm1']=$_POST['maintainer1'];
   $_SESSION['failedm2']=$_POST['maintainer2'];
   $_SESSION['failedm3']=$_POST['maintainer3'];
   $_SESSION['failedun']=$_POST['un'];
   $_SESSION['failedpw']=$_POST['pw'];
   $_SESSION['failedrpw']=$_POST['rpw'];
+  $_SESSION['faileddate']=$_POST['date'];
 }
 
 
@@ -54,7 +57,7 @@ if($newhotel!="Hotel added"){
   // echo 'Entry edited';
   $hotel=getHotelById($_GET['id']);
   $updatedhotel=updateHotel($_GET['id'], $_POST['hotelname'],$_POST['address'],$_POST['maintainer1']==""?null:getMaintainerId($_POST['maintainer1'])['Id'], $_POST['maintainer2']==""?null:getMaintainerId($_POST['maintainer2'])['Id'],
-    $_POST['maintainer3']==""?null:getMaintainerId($_POST['maintainer1'])['Id'], $_POST['phone1'],$_POST['phone2'], $_POST['un'],
+    $_POST['maintainer3']==""?null:getMaintainerId($_POST['maintainer3'])['Id'], $_POST['phone1'], $_POST['phone2'], $_POST['emailreport'], $_POST['emailreport2'], $_POST['date'], $_POST['un'],
     $_POST['pw'],$_POST['rpw']);
   echo $updatedhotel.'<br>';
 
@@ -71,12 +74,15 @@ if($updatedhotel!="Hotel updated"){
   $_SESSION['failedad']=$_POST['address'];
   $_SESSION['failedp1']=$_POST['phone1'];
   $_SESSION['failedp2']=$_POST['phone2'];
+  $_SESSION['faileder1']=$_POST['emailreport'];
+  $_SESSION['faileder2']=$_POST['emailreport2'];
   $_SESSION['failedm1']=$_POST['maintainer1'];
   $_SESSION['failedm2']=$_POST['maintainer2'];
   $_SESSION['failedm3']=$_POST['maintainer3'];
   $_SESSION['failedun']=$_POST['un'];
   $_SESSION['failedpw']=$_POST['pw'];
   $_SESSION['failedrpw']=$_POST['rpw'];
+  $_SESSION['faileddate']=$_POST['date'];
   }
 
 }
