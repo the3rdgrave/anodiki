@@ -162,12 +162,12 @@ if ($_SESSION['role']==2){
       <td style="text-align: left; border: 0">
         <?php if ($user['Maintainer1']!=null || $user['Maintainer2']!=null || $user['Maintainer3']!=null){ ?>
         <select id="maintainerselect" name="maintainerselect">
-            <?php if ($user['Maintainer1']!=null){?>
-            <option><?php echo getMaintainerById($user['Maintainer1'])['FirstName'].' '.getMaintainerById($user['Maintainer1'])['LastName'];?></option>
-            <?php } if ($user['Maintainer2']!=null){ ?>
-            <option><?php echo getMaintainerById($user['Maintainer2'])['FirstName'].' '.getMaintainerById($user['Maintainer2'])['LastName'];?></option>
-            <?php } if ($user['Maintainer3']!=null){?>
-            <option><?php echo getMaintainerById($user['Maintainer3'])['FirstName'].' '.getMaintainerById($user['Maintainer3'])['LastName'];?></option>
+            <?php if ($user['Maintainer1']!=""){?>
+            <option><?php echo $user['Maintainer1'];?></option>
+            <?php } if ($user['Maintainer2']!=""){ ?>
+            <option><?php echo $user['Maintainer2'];?></option>
+            <?php } if ($user['Maintainer3']!=""){?>
+            <option><?php echo $user['Maintainer3'];?></option>
             <?php } ?>
         </select>
         <?php } else {?>

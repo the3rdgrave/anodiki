@@ -21,9 +21,9 @@ if($_SESSION['role']!=1){
 
 if (isset($_POST['newhotelbutton'])){
 
-  $newhotel=addHotel($_POST['hotelname'],$_POST['address'],$_POST['maintainer1']==""?null:getMaintainerId($_POST['maintainer1'])['Id'], $_POST['maintainer2']==""?null:getMaintainerId($_POST['maintainer2'])['Id'],
-    $_POST['maintainer3']==""?null:getMaintainerId($_POST['maintainer3'])['Id'], $_POST['phone1'],$_POST['phone2'], $_POST['emailreport'],$_POST['emailreport2'], $_POST['date'],$_POST['un'],
-    $_POST['pw'],$_POST['rpw']);
+  $newhotel=addHotel(trim($_POST['hotelname']),trim($_POST['address']),trim($_POST['maintainer1']), trim($_POST['maintainer2']),
+    trim($_POST['maintainer3']), trim($_POST['phone1']),trim($_POST['phone2']), trim($_POST['emailreport']),trim($_POST['emailreport2']), $_POST['date'],trim($_POST['un']),
+    trim($_POST['pw']),trim($_POST['rpw']));
   echo $newhotel.'<br>'; ?>
   <?php if($newhotel!="Hotel added"){?>
   <a href="addHotel.php">Νέα προσπάθεια</a><br>
@@ -56,9 +56,9 @@ if($newhotel!="Hotel added"){
 } else if (isset($_POST['updatehotelbutton'])) {
   // echo 'Entry edited';
   $hotel=getHotelById($_GET['id']);
-  $updatedhotel=updateHotel($_GET['id'], $_POST['hotelname'],$_POST['address'],$_POST['maintainer1']==""?null:getMaintainerId($_POST['maintainer1'])['Id'], $_POST['maintainer2']==""?null:getMaintainerId($_POST['maintainer2'])['Id'],
-    $_POST['maintainer3']==""?null:getMaintainerId($_POST['maintainer3'])['Id'], $_POST['phone1'], $_POST['phone2'], $_POST['emailreport'], $_POST['emailreport2'], $_POST['date'], $_POST['un'],
-    $_POST['pw'],$_POST['rpw']);
+  $updatedhotel=updateHotel($_GET['id'], trim($_POST['hotelname']),trim($_POST['address']),trim($_POST['maintainer1']), trim($_POST['maintainer2']),
+    trim($_POST['maintainer3']), trim($_POST['phone1']), trim($_POST['phone2']), trim($_POST['emailreport']), trim($_POST['emailreport2']), $_POST['date'], trim($_POST['un']),
+    trim($_POST['pw']),trim($_POST['rpw']));
   echo $updatedhotel.'<br>';
 
   if($updatedhotel!="Hotel updated"){ ?>

@@ -22,10 +22,10 @@ include 'db/dbfunctions.php';
       <p>ΣΥΝΤΗΡΗΤΗΣ 3</p>
     </td>
     <td>
-      <p>ΤΗΛΕΦΩΝΟ 1</p>
+      <p>ΟΝΟΜΑ ΧΡΗΣΤΗ</p>
     </td>
     <td>
-      <p>ΤΗΛΕΦΩΝΟ 2</p>
+      <p>ΚΩΔΙΚΟΣ</p>
     </td>
     <td>
     </td>
@@ -42,19 +42,19 @@ include 'db/dbfunctions.php';
   <p><?php echo $row['Address'];?></p>
 </td>
 <td>
-  <p><?php echo $row['Maintainer1']==null?"":getMaintainerById($row['Maintainer1'])["FirstName"].' '.getMaintainerById($row['Maintainer1'])["LastName"];?></p>
+  <p><?php echo $row['Maintainer1'];?></p>
 </td>
 <td>
-  <p><?php echo $row['Maintainer2']==null?"":getMaintainerById($row['Maintainer2'])["FirstName"].' '.getMaintainerById($row['Maintainer2'])["LastName"];?></p>
+  <p><?php echo $row['Maintainer2'];?></p>
 </td>
 <td>
-  <p><?php echo $row['Maintainer3']==null?"":getMaintainerById($row['Maintainer3'])["FirstName"].' '.getMaintainerById($row['Maintainer3'])["LastName"];?></p>
+  <p><?php echo $row['Maintainer3'];?></p>
 </td>
 <td>
-  <p><?php echo $row['Phone1'];?></p>
+  <p><?php echo $row['Username'];?></p>
 </td>
 <td>
-  <p><?php echo $row['Phone2'];?><p>
+  <p><?php echo $row['Password'];?><p>
 </td>
 <td>
   <a href="addHotel.php?id=<?php echo $row['Id'];?>">Τροποποίηση</a>
@@ -79,6 +79,9 @@ unset($_SESSION['failedm3']);
 unset($_SESSION['failedun']);
 unset($_SESSION['failedpw']);
 unset($_SESSION['failedrpw']);
+unset($_SESSION['faileddate']);
+unset($_SESSION['faileder1']);
+unset($_SESSION['faileder2']);
 
 
 include 'footer.php'; ?>

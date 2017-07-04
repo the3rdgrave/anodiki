@@ -15,11 +15,11 @@ else{
       if(!isset($_SESSION['failedad']))
         $_SESSION['failedad']=$hotel['Address'];
       if(!isset($_SESSION['failedm1']))
-        $_SESSION['failedm1']=$hotel['Maintainer1']==null?"":getMaintainerById($hotel['Maintainer1'])["FirstName"].' '.getMaintainerById($hotel['Maintainer1'])["LastName"];
+        $_SESSION['failedm1']=$hotel['Maintainer1'];
       if(!isset($_SESSION['failedm2']))
-        $_SESSION['failedm2']=$hotel['Maintainer2']==null?"":getMaintainerById($hotel['Maintainer2'])["FirstName"].' '.getMaintainerById($hotel['Maintainer2'])["LastName"];
+        $_SESSION['failedm2']=$hotel['Maintainer2'];
       if(!isset($_SESSION['failedm3']))
-        $_SESSION['failedm3']=$hotel['Maintainer3']==null?"":getMaintainerById($hotel['Maintainer3'])["FirstName"].' '.getMaintainerById($hotel['Maintainer3'])["LastName"];
+        $_SESSION['failedm3']=$hotel['Maintainer3'];
       if(!isset($_SESSION['failedp1']))
         $_SESSION['failedp1']=$hotel['Phone1'];
       if(!isset($_SESSION['failedp2']))
@@ -71,43 +71,13 @@ else{
       <label for="maintainer1">ΣΥΝΤΗΡΗΤΕΣ</label>
     </td>
     <td style="border: 0">
-      <select id="maintainer1" name="maintainer1">
-        <option></option>
-        <?php $maintainers=getMaintainers();
-        foreach ($maintainers as $row) {?>
-          <option <?php
-          if (isset($_SESSION['failedm1']) && $row['FirstName'].' '.$row['LastName']==$_SESSION['failedm1']){
-             echo 'selected'; } ?>>
-           <?php echo $row['FirstName'].' '.$row['LastName'];?></option>
-          <?php
-          } ?>
-        </select>
+      <input type="text" id="maintainer1" name="maintainer1" value="<?php echo isset($_SESSION['failedm1'])?$_SESSION['failedm1']:"";?>">
     </td>
     <td style="border: 0">
-      <select id="maintainer2" name="maintainer2">
-        <option></option>
-        <?php $maintainers=getMaintainers();
-        foreach ($maintainers as $row) {?>
-          <option <?php
-          if (isset($_SESSION['failedm2']) && $row['FirstName'].' '.$row['LastName']==$_SESSION['failedm2']){
-             echo 'selected'; } ?>>
-           <?php echo $row['FirstName'].' '.$row['LastName'];?></option>
-          <?php
-          } ?>
-        </select>
+      <input type="text" id="maintainer2" name="maintainer2" value="<?php echo isset($_SESSION['failedm2'])?$_SESSION['failedm2']:"";?>">
     </td>
     <td style="border: 0">
-      <select id="maintainer3" name="maintainer3">
-        <option></option>
-        <?php $maintainers=getMaintainers();
-        foreach ($maintainers as $row) {?>
-          <option <?php
-          if (isset($_SESSION['failedm3']) && $row['FirstName'].' '.$row['LastName']==$_SESSION['failedm3']){
-             echo 'selected'; } ?>>
-           <?php echo $row['FirstName'].' '.$row['LastName'];?></option>
-          <?php
-          } ?>
-        </select>
+      <input type="text" id="maintainer3" name="maintainer3" value="<?php echo isset($_SESSION['failedm3'])?$_SESSION['failedm3']:"";?>">
     </td>
     </tr>
     <tr>

@@ -179,12 +179,9 @@ function addPendingWork($workid, $hotelid, $workdate){
     try {
         $results = $db->prepare("insert into pending (WorkId, HotelId, DueDate) values(?,?,?)");
 
-
         $results->bindValue(1, $workid);
         $results->bindValue(2, $hotelid);
         $results->bindValue(3, $workdate);
-
-
         $results->execute();
 
         return "Work added";
@@ -290,18 +287,6 @@ function getPendingWorksByHotel($hotelid){
 }
 
 
-function getHotelsByMaintainer($maintainerid){
-  global $db;
-
-  $results=$db->prepare("Select DISTINCT Hotel,Address from works WHERE MaintainerId=? AND Confirmation=0 AND DATE(Date)=CURDATE()");
-  $results->bindValue(1, $maintainerid);
-  $results->execute();
-  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
-
-  return $resultsArray;
-
-}
-
 function getRoomsByHotel($hotelid){
   global $db;
 
@@ -314,34 +299,11 @@ function getRoomsByHotel($hotelid){
 
 }
 
-function getMaintainers(){
-    global $db;
-
-    $results=$db->prepare("Select * from maintainers");
-    $results->execute();
-    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
-
-    return $resultsArray;
-
-}
-
 function getConfirmationById($confid){
     global $db;
 
     $results=$db->prepare("Select * from confirmation WHERE Id=?");
     $results->bindValue(1, $confid);
-    $results->execute();
-    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
-
-    return $resultsArray[0];
-
-}
-
-function getMaintainerId($fullname){
-    global $db;
-
-    $results=$db->prepare("Select * from maintainers WHERE CONCAT_WS(' ',FirstName,LastName)=?");
-    $results->bindValue(1, $fullname);
     $results->execute();
     $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
@@ -443,85 +405,6 @@ function updateWorkConfirmation($workid){
 
 }
 
-function addMaintainer($firstname, $lastname){
-    global $db;
-    $fullname=$firstname.' '.$lastname;
-    $errormessage="";
-    if(checkMaintainer($fullname)==false){
-        $errormessage .="There is already a maintainer with this name".'<br>';
-    }
-
-    if($errormessage=="")
-    {
-
-
-    try {
-        $results = $db->prepare("insert into maintainers (FirstName, LastName) values(?,?)");
-
-
-        $results->bindValue(1, $firstname);
-        $results->bindValue(2, $lastname);
-
-        $results->execute();
-        return "Maintainer added";
-
-
-
-    }
-    catch(Exception $e) {
-        return "Error creating maintainer. ".$e;
-    }
-
-    }
-
-    else {
-        return $errormessage;
-    }
-
-}
-
-
-function updateMaintainer($maintainerid, $firstname, $lastname){
-    global $db;
-    $fullname=$firstname.' '.$lastname;
-    $errormessage="";
-    if(checkMaintainerOnUpdate($fullname, $maintainerid)==false){
-        $errormessage .="There is already a maintainer with this name".'<br>';
-    }
-
-
-    if($errormessage=="")
-    {
-
-
-    try {
-        $results = $db->prepare("Update maintainers Set FirstName=?, LastName=? WHERE Id=? ");
-
-        $results->bindValue(1, $firstname);
-        $results->bindValue(2, $lastname);
-        $results->bindValue(3, $maintainerid);
-
-
-
-        $results->execute();
-
-        return "Maintainer updated";
-
-
-
-    }
-    catch(Exception $e) {
-        return "Error updating maintainer. ".$e;
-    }
-
-    }
-
-    else {
-        return $errormessage;
-    }
-
-
-}
 
 
 function checkUser($username){
@@ -541,22 +424,6 @@ function checkUser($username){
 
 }
 
-function checkMaintainer($fullname){
-  global $db;
-  $results=$db->prepare("Select * from maintainers");
-  $results->execute();
-
-  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
-  foreach ($resultsArray as $row){
-      if ($fullname==$row["FirstName"].' '.$row["LastName"]){
-          return false;
-      }
-
-  }
-
-  return true;
-
-}
 
 function checkHotel($hotelname, $address, $phone1, $phone2, $emailreport1, $emailreport2, $maintainer1, $maintainer2, $maintainer3){
   global $db;
@@ -565,19 +432,19 @@ function checkHotel($hotelname, $address, $phone1, $phone2, $emailreport1, $emai
 
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
-  if ($maintainer1!=null){
+  if ($maintainer1!=""){
     if ($maintainer1==$maintainer2 || $maintainer1==$maintainer3){
       return false;
     }
   }
 
-  if ($maintainer2!=null){
+  if ($maintainer2!=""){
     if ($maintainer2==$maintainer1 || $maintainer2==$maintainer3){
       return false;
     }
   }
 
-  if ($maintainer3!=null){
+  if ($maintainer3!=""){
     if ($maintainer3==$maintainer1 || $maintainer3==$maintainer2){
       return false;
     }
@@ -618,19 +485,19 @@ function checkHotelOnUpdate($hotelid, $hotelname, $address, $phone1, $phone2, $e
 
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 
-  if ($maintainer1!=null){
+  if ($maintainer1!=""){
     if ($maintainer1==$maintainer2 || $maintainer1==$maintainer3){
       return false;
     }
   }
 
-  if ($maintainer2!=null){
+  if ($maintainer2!=""){
     if ($maintainer2==$maintainer1 || $maintainer2==$maintainer3){
       return false;
     }
   }
 
-  if ($maintainer3!=null){
+  if ($maintainer3!=""){
     if ($maintainer3==$maintainer1 || $maintainer3==$maintainer2){
       return false;
     }
@@ -707,24 +574,6 @@ function checkUserOnUpdate($username, $hotelid){
 
 }
 
-function checkMaintainerOnUpdate($fullname, $maintainerid){
-  global $db;
-  $results=$db->prepare("Select * from maintainers WHERE Id<>?");
-  $results->bindValue(1, $maintainerid);
-  $results->execute();
-
-  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
-  foreach ($resultsArray as $row){
-      if ($fullname==$row['FirstName'].' '.$row['LastName']){
-          return false;
-      }
-
-  }
-
-  return true;
-
-}
-
 function deleteHotel($hotelid){
     global $db;
 
@@ -742,22 +591,6 @@ function deleteHotel($hotelid){
     }
 }
 
-function deleteMaintainer($maintainerid){
-    global $db;
-
-    try {
-
-        $results = $db->prepare("Delete from maintainers WHERE Id=? ");
-        $results->bindValue(1, $maintainerid);
-        $results->execute();
-
-        return "The maintainer was deleted";
-
-    }
-    catch(Exception $e) {
-        return "Error deleting maintainer".$e;
-    }
-}
 
 function deletePendingWork($workid){
     global $db;
@@ -776,22 +609,6 @@ function deletePendingWork($workid){
     }
 }
 
-function deleteWorksByMaintainer($maintainerid){
-    global $db;
-
-    try {
-
-        $results = $db->prepare("Delete from works WHERE MaintainerId=? ");
-        $results->bindValue(1, $maintainerid);
-        $results->execute();
-
-        return "The works were deleted";
-
-    }
-    catch(Exception $e) {
-        return "Error deleting works".$e;
-    }
-}
 
 function deletePendingWorksByHotel($hotelid){
     global $db;

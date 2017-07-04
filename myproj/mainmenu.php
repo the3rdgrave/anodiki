@@ -32,16 +32,6 @@ if($_SESSION['role']!=1){
       </tr>
       <tr>
         <td>
-          <a href="addMaintainer.php">Προσθήκη Συντηρητή</a>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <a href="maintainersList.php">Τροποποίηση Συντηρητή</a>
-        </td>
-      </tr>
-      <tr>
-        <td>
           <a href="logout.php">Έξοδος</a>
         </td>
       </tr>
@@ -62,7 +52,6 @@ if($_SESSION['role']!=1){
   unset($_SESSION['device']);
   unset($_SESSION['work']);
   unset($_SESSION['days']);
-  unset($_SESSION['maintainer']);
   unset($_SESSION['failedhn']);
   unset($_SESSION['failedad']);
   unset($_SESSION['failedp1']);

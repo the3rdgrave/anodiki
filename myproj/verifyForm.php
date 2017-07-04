@@ -50,7 +50,6 @@ if(isset($_POST['submitreport'])){
             <th>
               <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
             </th>
-
             <th>
               <p>ΣΗΜΕΙΩΣΕΙΣ</p>
             </th>
