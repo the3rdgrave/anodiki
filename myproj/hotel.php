@@ -12,9 +12,9 @@ if ($_SESSION['role']==2){
   <form id="hotelform" action="verifyForm.php" method="post">
 
   <table id="workshoteltable" style="width:96%" align="center" frame="void" border="2px solid black">
-    <?php if ($works!=null) {?>
+
     <tr>
-      <td>
+      <td style="width:25%">
         <p>ΣΤΟΙΧΕΙΑ ΞΕΝΟΔΟΧΕΙΟΥ</p>
       </td>
       <td colspan ="5">
@@ -26,7 +26,7 @@ if ($_SESSION['role']==2){
         <p></p>
       </td>
     </tr>
-
+    <?php if ($works!=null) {?>
     <tr>
       <td>
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
@@ -38,8 +38,8 @@ if ($_SESSION['role']==2){
     <tr>
       <?php
       $rooms=getRoomsByHotel($user['Id']); ?>
-      <td rowspan="<?php echo sizeof($works)+1;?>" valign="top" style="border: 0">
-        <p><?php echo date("j/n/Y");?></p>
+      <td valign="top" style="border: 0">
+        <?php echo date("j/n/Y");?>
         <br>
           <button class="roomselect" id=<?php echo date('Y-m-d');?> type="button" name="ΟΛΑ">ΟΛΑ</button>
         <?php
@@ -67,6 +67,9 @@ if ($_SESSION['role']==2){
     <?php
     foreach($works as $row) { ?>
     <tr class="work <?php echo date('Y-m-d').' '.$row['Room'];?>">
+      <td style="border: 0">
+        <p></p>
+      </td>
       <td>
         <p><?php echo $row['Room'];?></p>
       </td>
@@ -107,7 +110,7 @@ if ($_SESSION['role']==2){
       <td>
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
       </td>
-      <td colspan="5" style="text-align: center">
+      <td colspan="6" style="text-align: center">
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ ΓΙΑ <?php echo date('j/n/Y', strtotime($date));?></p>
       </td>
     </tr>
@@ -115,8 +118,8 @@ if ($_SESSION['role']==2){
     <tr>
       <?php
       $rooms=getUpcomingRoomsByHotel($user['Id'], $date); ?>
-      <td rowspan="<?php echo sizeof($upcomingworks)+1;?>" valign="top" style="border: 0">
-        <p><?php echo date("j/n/Y", strtotime($date));?></p>
+      <td valign="top" style="border: 0">
+        <?php echo date("j/n/Y", strtotime($date));?>
         <br>
           <button class="roomselect" id=<?php echo $date;?> type="button" name="ΟΛΑ">ΟΛΑ</button>
         <?php
@@ -138,6 +141,10 @@ if ($_SESSION['role']==2){
 
     foreach($upcomingworks as $row) { ?>
     <tr class="work <?php echo $date.' '.$row['Room'];?>">
+      <td style="border: 0">
+        <p>
+        </p>
+      </td>
       <td>
         <p><?php echo $row['Room'];?></p>
       </td>
@@ -150,7 +157,7 @@ if ($_SESSION['role']==2){
     </tr>
     <?php } ?>
     <tr>
-      <td colspan="5" style="border: 0">
+      <td colspan="6" style="border: 0">
         <p></p>
       </td>
     </tr>

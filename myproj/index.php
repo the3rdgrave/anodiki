@@ -56,7 +56,7 @@ $a=1;
 if(isset($_SESSION['role']) && $_SESSION['role']==1){
     header('Location: mainmenu.php');
 } else if (isset($_SESSION['role']) && $_SESSION['role']==2){
-    header('Location: maintainer.php');
+    header('Location: hotel.php');
 }
 else {
  ?>
