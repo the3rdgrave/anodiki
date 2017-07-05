@@ -63,6 +63,8 @@ if($_SESSION['role']!=1){
   unset($_SESSION['failedpw']);
   unset($_SESSION['failedrpw']);
   unset($_SESSION['faileddate']);
+  unset($_SESSION['clonehn']);
+  unset($_SESSION['cloneroom']);
 
 }
 include 'footer.php';

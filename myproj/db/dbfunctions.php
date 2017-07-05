@@ -203,6 +203,18 @@ function getWorks(){
     return $resultsArray;
 }
 
+function getWorksByRoom($room,$hotelid){
+    global $db;
+    $results=$db->prepare("SELECT * from works WHERE Room=? AND HotelId=?");
+    $results->bindValue(1, $room);
+    $results->bindValue(2, $hotelid);
+    $results->execute();
+
+    $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultsArray;
+}
+
 function getHotels(){
     global $db;
     $results=$db->prepare("Select * from hotels WHERE Role=2");
@@ -305,6 +317,17 @@ function getRoomsByHotel($hotelid){
 
   $results=$db->prepare("Select DISTINCT Room from works WHERE HotelId=? AND Confirmation=0 AND DATE(Date)=CURDATE()");
   $results->bindValue(1, $hotelid);
+  $results->execute();
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+  return $resultsArray;
+
+}
+
+function getAllRooms(){
+  global $db;
+
+  $results=$db->prepare("Select DISTINCT Room, HotelId from works");
   $results->execute();
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 

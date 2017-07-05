@@ -144,6 +144,7 @@ else{
         <?php } ?>
       </td>
     </tr>
+
     <tr>
       <td colspan="4" style="text-align: center; border: 0">
         <?php if(isset($_GET['id']) && $_GET['id']!=0){?>
@@ -170,5 +171,7 @@ else{
     unset($_SESSION['faileddate']);
     unset($_SESSION['faileder1']);
     unset($_SESSION['faileder2']);
+    unset($_SESSION['clonehn']);
+    unset($_SESSION['cloneroom']);
 
     ?>

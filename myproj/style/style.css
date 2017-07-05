@@ -26,6 +26,14 @@ body {
   padding: .5%;
 }
 
+#roomstable td {
+  padding: .5%;
+}
+
+#roomworkstable td {
+  padding: .5%;
+}
+
 #hoteltable td {
   padding: .5%;
 }

@@ -103,6 +103,15 @@ if(isset($_GET['id']) && $_GET['id']!=0){
       <?php } ?>
     </td>
   </tr>
+
+  <?php if (!isset($_GET['id']) || $_GET['id']==0){ ?>
+  <tr>
+    <td colspan="4" style="text-align: center; border: 0">
+        <button type="submit" name="cloneroombutton">Κλωνοποίηση δωματίου</button>
+    </td>
+  </tr>
+  <?php } ?>
+
   <tr>
     <td colspan="3" style="text-align: center; border: 0">
       <?php if(isset($_GET['id']) && $_GET['id']!=0){?>
@@ -131,6 +140,8 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   unset($_SESSION['device']);
   unset($_SESSION['work']);
   unset($_SESSION['days']);
+  unset($_SESSION['clonehn']);
+  unset($_SESSION['cloneroom']);
 }
 
   include 'footer.php';

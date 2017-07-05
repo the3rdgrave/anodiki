@@ -25,20 +25,33 @@ if (isset($_POST['newworkbutton'])){
   <a href="mainmenu.php">Επιστροφή στο βασικό μενού</a>
 <?php
 } else if (isset($_POST['updateworkbutton'])) {
-  // echo 'Entry edited';
+  $startingdate=getHotelId($_POST['hotelname'])['StartingDate'];
   $work=getWorkById($_GET['id']);
   if (trim($_POST['room'])!="" && trim($_POST['device'][0])!="" && trim($_POST['work'][0])!="" && $_POST['days'][0]>0){
-  echo updateWork($_GET['id'], getHotelId($_POST['hotelname'])['Id'], $_POST['room'],$_POST['device'][0],$_POST['work'][0],
-  $_POST['days'][0], $work['Date'], $work['Confirmation'], $work['Notes']);?><br>
+  echo updateWork($_GET['id'], getHotelId($_POST['hotelname'])['Id'], $_POST['room'],$_POST['device'][0],$_POST['work'][0], $_POST['days'][0],
+  date('Y-m-d', strtotime($startingdate))==date('Y-m-d')?date('Y-m-d'):date("Y-m-d", strtotime("-".$_POST['days'][0]." day", strtotime($startingdate))),
+  $work['Confirmation'], $work['Notes']);?><br>
   <?php } else {
     echo 'Ελλειπή στοιχεία. Η εργασία δεν τροποποιήθηκε.<br>';?>
     <a href="mainpage.php?id=<?php echo $_GET['id'];?>">Νέα προσπάθεια</a><br>
  <?php }?>
   <a href="worklist.php">Πίσω στις εργασίες</a>
-<?php }
-else{
-  header('Location: mainpage.php');
-}
-}
 
-include 'footer.php'; ?>
+<?php } else if (isset($_POST['cloneroombutton'])){
+  if (trim($_POST['room'])==""){?>
+    Δεν εισήχθη χώρος/δωμάτιο
+    <br>
+    <a href="mainpage.php">Πίσω</a>
+    <?php
+      } else {
+      $_SESSION['clonehn']=$_POST['hotelname'];
+      $_SESSION['cloneroom']=trim($_POST['room']);
+      header('Location: roomsList.php');
+
+        }
+    } else {
+        header('Location: mainpage.php');
+    }
+  }
+
+    include 'footer.php'; ?>
