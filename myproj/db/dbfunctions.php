@@ -274,6 +274,19 @@ function getWorksByHotel($hotelid){
 
 }
 
+function getUpcomingWorksByHotel($hotelid,$date){
+  global $db;
+
+  $results=$db->prepare("Select * from works WHERE HotelId=? AND Days=DATEDIFF(?, Date)");
+  $results->bindValue(1, $hotelid);
+  $results->bindValue(2, $date);
+  $results->execute();
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+  return $resultsArray;
+
+}
+
 function getPendingWorksByHotel($hotelid){
   global $db;
 
@@ -292,6 +305,19 @@ function getRoomsByHotel($hotelid){
 
   $results=$db->prepare("Select DISTINCT Room from works WHERE HotelId=? AND Confirmation=0 AND DATE(Date)=CURDATE()");
   $results->bindValue(1, $hotelid);
+  $results->execute();
+  $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
+
+  return $resultsArray;
+
+}
+
+function getUpcomingRoomsByHotel($hotelid, $date){
+  global $db;
+
+  $results=$db->prepare("Select DISTINCT Room from works WHERE HotelId=? AND Days=DATEDIFF(?, Date)");
+  $results->bindValue(1, $hotelid);
+  $results->bindValue(2, $date);
   $results->execute();
   $resultsArray = $results->fetchAll(PDO::FETCH_ASSOC);
 

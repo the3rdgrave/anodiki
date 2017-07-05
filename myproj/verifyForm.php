@@ -56,7 +56,8 @@ if(isset($_POST['submitreport'])){
             </th>
 
       <?php
-  foreach(array_keys($_POST['notes']) as $row){
+      if(!empty($_POST['notes'])){
+      foreach(array_keys($_POST['notes']) as $row){
     // echo array_search($row, $_POST['notes']);
     $work=getWorkById($row);
     updateWork($work['Id'], $work['HotelId'], $work['Room'], $work['Device'], $work['Work'], $work['Days'],
@@ -84,7 +85,7 @@ if(isset($_POST['submitreport'])){
     </tr>
 
   <?php
-  }
+  } }
   ?>
   <tr>
     <td colspan="5" style="text-align: center; border: 0">

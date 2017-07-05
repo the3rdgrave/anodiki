@@ -10,8 +10,9 @@ if ($_SESSION['role']==2){
   $works=getWorksByHotel($user['Id']);
   ?>
   <form id="hotelform" action="verifyForm.php" method="post">
-  <table id="workshoteltable" style="width:96%" align="center" frame="void" border="2px solid black">
 
+  <table id="workshoteltable" style="width:96%" align="center" frame="void" border="2px solid black">
+    <?php if ($works!=null) {?>
     <tr>
       <td>
         <p>ΣΤΟΙΧΕΙΑ ΞΕΝΟΔΟΧΕΙΟΥ</p>
@@ -25,7 +26,7 @@ if ($_SESSION['role']==2){
         <p></p>
       </td>
     </tr>
-    <?php if ($works!=null) {?>
+
     <tr>
       <td>
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
@@ -37,15 +38,14 @@ if ($_SESSION['role']==2){
     <tr>
       <?php
       $rooms=getRoomsByHotel($user['Id']); ?>
-      <td rowspan="<?php echo sizeof($rooms)+1;?>" valign="top" style="border: 0">
+      <td rowspan="<?php echo sizeof($works)+1;?>" valign="top" style="border: 0">
         <p><?php echo date("j/n/Y");?></p>
         <br>
-          <button class="roomselect" type="button" name="ΟΛΑ">ΟΛΑ</button>
+          <button class="roomselect" id=<?php echo date('Y-m-d');?> type="button" name="ΟΛΑ">ΟΛΑ</button>
         <?php
           foreach ($rooms as $row2){ ?>
-              <button class="roomselect" type="button" name="<?php echo $row2['Room'];?>"><?php echo $row2['Room'];?></button>
+              <button class="roomselect" type="button" id=<?php echo date('Y-m-d');?> name="<?php echo $row2['Room'];?>"><?php echo $row2['Room'];?></button>
           <?php } ?>
-        </select>
 
       </td>
       <td>
@@ -66,7 +66,7 @@ if ($_SESSION['role']==2){
     </tr>
     <?php
     foreach($works as $row) { ?>
-    <tr class="work <?php echo $row['Room'];?>">
+    <tr class="work <?php echo date('Y-m-d').' '.$row['Room'];?>">
       <td>
         <p><?php echo $row['Room'];?></p>
       </td>
@@ -93,6 +93,74 @@ if ($_SESSION['role']==2){
 
     <?php
   }
+
+
+
+
+
+  for ($i=1; $i<8; ++$i){
+    $date=date("Y-m-d", strtotime("+".$i." day", strtotime("now")));
+    $upcomingworks=getUpcomingWorksByHotel($user["Id"],$date);
+    // var_dump($upcomingworks);
+    if(!empty($upcomingworks)){ ?>
+    <tr>
+      <td>
+        <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
+      </td>
+      <td colspan="5" style="text-align: center">
+        <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ ΓΙΑ <?php echo date('j/n/Y', strtotime($date));?></p>
+      </td>
+    </tr>
+
+    <tr>
+      <?php
+      $rooms=getUpcomingRoomsByHotel($user['Id'], $date); ?>
+      <td rowspan="<?php echo sizeof($upcomingworks)+1;?>" valign="top" style="border: 0">
+        <p><?php echo date("j/n/Y", strtotime($date));?></p>
+        <br>
+          <button class="roomselect" id=<?php echo $date;?> type="button" name="ΟΛΑ">ΟΛΑ</button>
+        <?php
+          foreach ($rooms as $row2){ ?>
+              <button class="roomselect" type="button" id=<?php echo $date;?> name="<?php echo $row2['Room'];?>"><?php echo $row2['Room'];?></button>
+          <?php } ?>
+      </td>
+      <td>
+        <p>ΔΩΜΑΤΙΟ</p>
+      </td>
+      <td>
+        <p>ΣΥΣΚΕΥΗ</p>
+      </td>
+      <td colspan="3">
+        <p>ΕΡΓΑΣΙΑ</p>
+      </td>
+    </tr>
+    <?php
+
+    foreach($upcomingworks as $row) { ?>
+    <tr class="work <?php echo $date.' '.$row['Room'];?>">
+      <td>
+        <p><?php echo $row['Room'];?></p>
+      </td>
+      <td>
+        <p><?php echo $row['Device'];?></p>
+      </td>
+      <td colspan="3">
+        <p><?php echo $row['Work'];?></p>
+      </td>
+    </tr>
+    <?php } ?>
+    <tr>
+      <td colspan="5" style="border: 0">
+        <p></p>
+      </td>
+    </tr>
+
+    <?php
+    }
+  }
+
+
+
     $pendingworks=getPendingWorksByHotel($user['Id']);
 
     if($pendingworks!=null){ ?>
@@ -191,7 +259,6 @@ if ($_SESSION['role']==2){
     </tr>
   </table>
   </form>
-  <!-- <button id="tablegone">Εξαφάνιση</button> -->
   <?php } else {
     header('Location: index.php');
   }

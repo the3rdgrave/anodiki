@@ -10,10 +10,12 @@ if($_SESSION['role']!=1){
 $_SESSION['hotelname']=$_POST['hotelname'];
 
 if (isset($_POST['newworkbutton'])){
+  $startingdate=getHotelId($_POST['hotelname'])['StartingDate'];
   for($i = 0; $i < sizeof($_POST['device']); ++$i){
   if (trim($_POST['room'])!="" && trim($_POST['device'][$i])!="" && trim($_POST['work'][$i])!="" && $_POST['days'][$i]>0){
-  echo addWork(getHotelId($_POST['hotelname'])['Id'], $_POST['room'],$_POST['device'][$i],$_POST['work'][$i],
-  $_POST['days'][$i], getHotelId($_POST['hotelname'])['StartingDate']);?> : <?php echo $_POST['work'][$i];?><br>
+  echo addWork(getHotelId($_POST['hotelname'])['Id'], $_POST['room'],$_POST['device'][$i],$_POST['work'][$i], $_POST['days'][$i],
+  date('Y-m-d', strtotime($startingdate))==date('Y-m-d')?date('Y-m-d'):date("Y-m-d", strtotime("-".$_POST['days'][$i]." day", strtotime($startingdate))));
+  ?> : <?php echo $_POST['work'][$i];?><br>
   <?php
 } else if(trim($_POST['device'][$i])!="" || trim($_POST['work'][$i])!=""|| $_POST['days'][$i]>0){
   echo 'Ελλειπή στοιχεία. Η εργασία '.($i+1).' δεν προστέθηκε.<br>';

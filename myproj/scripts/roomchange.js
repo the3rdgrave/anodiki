@@ -1,11 +1,12 @@
 $(".roomselect").click(function() {
+  var date=this.id;
   var room= $(this).text();
   // alert(sel);
   if (room!="ΟΛΑ"){
-  $('#workshoteltable .work:not(.'+room+')').hide();
-  $('#workshoteltable .work.'+room).show();
+  $('#workshoteltable .work.'+date+':not(.'+room+')').hide();
+  $('#workshoteltable .work.'+date+'.'+room).show();
 }
 else {
-  $('#workshoteltable .work').show();
+  $('#workshoteltable .work.'+date).show();
 }
 });

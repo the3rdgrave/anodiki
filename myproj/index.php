@@ -11,8 +11,10 @@ foreach ($works as $row) {
 
 
   // if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+".$row['Days']." days"))){
-if(strtotime(date('Y/n/j', strtotime("now")))>=strtotime(date('Y/n/j', strtotime($row['Date'])))){
+$hotelstartingdate=getHotelById($row['HotelId'])['StartingDate'];
 
+if(strtotime(date('Y/n/j', strtotime("now")))>=strtotime(date('Y/n/j', strtotime($hotelstartingdate)))){
+// echo $row["Id"].' :yes'.'<br>';
 $a=1;
   while(true){
     // echo $a;
