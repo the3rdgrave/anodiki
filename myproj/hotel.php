@@ -38,13 +38,13 @@ if ($_SESSION['role']==2){
     <tr>
       <?php
       $rooms=getRoomsByHotel($user['Id']); ?>
-      <td valign="top" style="border: 0">
+      <td valign="top" style="border: 0" id="<?php echo sizeof($works)+1;?>">
         <?php echo date("j/n/Y");?>
         <br>
-          <button class="roomselect" id=<?php echo date('Y-m-d');?> type="button" name="ΟΛΑ">ΟΛΑ</button>
+          <button class="roomselect" id="<?php echo date('Y-m-d');?>" type="button" name="ΟΛΑ">ΟΛΑ</button>
         <?php
           foreach ($rooms as $row2){ ?>
-              <button class="roomselect" type="button" id=<?php echo date('Y-m-d');?> name="<?php echo $row2['Room'];?>"><?php echo $row2['Room'];?></button>
+              <button class="roomselect" type="button" id="<?php echo date('Y-m-d');?>" name="<?php echo $row2['Room'];?>"><?php echo $row2['Room'];?></button>
           <?php } ?>
 
       </td>
@@ -98,9 +98,6 @@ if ($_SESSION['role']==2){
   }
 
 
-
-
-
   for ($i=1; $i<8; ++$i){
     $date=date("Y-m-d", strtotime("+".$i." day", strtotime("now")));
     $upcomingworks=getUpcomingWorksByHotel($user["Id"],$date);
@@ -118,13 +115,13 @@ if ($_SESSION['role']==2){
     <tr>
       <?php
       $rooms=getUpcomingRoomsByHotel($user['Id'], $date); ?>
-      <td valign="top" style="border: 0">
+      <td valign="top" rowspan="<?php echo sizeof($upcomingworks)+1;?>" id="<?php echo sizeof($upcomingworks)+1;?>">
         <?php echo date("j/n/Y", strtotime($date));?>
         <br>
-          <button class="roomselect" id=<?php echo $date;?> type="button" name="ΟΛΑ">ΟΛΑ</button>
+          <button class="roomselect" id="<?php echo $date;?>" type="button" name="ΟΛΑ">ΟΛΑ</button>
         <?php
           foreach ($rooms as $row2){ ?>
-              <button class="roomselect" type="button" id=<?php echo $date;?> name="<?php echo $row2['Room'];?>"><?php echo $row2['Room'];?></button>
+              <button class="roomselect" type="button" id="<?php echo $date;?>" name="<?php echo $row2['Room'];?>"><?php echo $row2['Room'];?></button>
           <?php } ?>
       </td>
       <td>
@@ -141,10 +138,10 @@ if ($_SESSION['role']==2){
 
     foreach($upcomingworks as $row) { ?>
     <tr class="work <?php echo $date.' '.$row['Room'];?>">
-      <td style="border: 0">
+      <!-- <td style="border: 0">
         <p>
         </p>
-      </td>
+      </td> -->
       <td>
         <p><?php echo $row['Room'];?></p>
       </td>
@@ -165,6 +162,7 @@ if ($_SESSION['role']==2){
     <?php
     }
   }
+
 
 
 
@@ -244,7 +242,7 @@ if ($_SESSION['role']==2){
         <button name="submitreport" type="submit">Αποστολή Αναφοράς</button>
         <?php } ?>
       </td>
-      <td style="text-align: left; border: 0">
+      <td style="text-align: left; border: 0" colspan="2">ΣΥΝΤΗΡΗΤΗΣ:
         <?php if ($user['Maintainer1']!=null || $user['Maintainer2']!=null || $user['Maintainer3']!=null){ ?>
         <select id="maintainerselect" name="maintainerselect">
             <?php if ($user['Maintainer1']!=""){?>
