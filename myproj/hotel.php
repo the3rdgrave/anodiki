@@ -10,13 +10,13 @@ if ($_SESSION['role']==2){
   $works=getWorksByHotel($user['Id']);
   ?>
   <form id="hotelform" action="verifyForm.php" method="post">
-  <table id="workshoteltable" style="width:90%" align="center" frame="void" border="2px solid black">
+  <table id="workshoteltable" style="width:96%" align="center" frame="void" border="2px solid black">
 
     <tr>
       <td>
         <p>ΣΤΟΙΧΕΙΑ ΞΕΝΟΔΟΧΕΙΟΥ</p>
       </td>
-      <td colspan ="4">
+      <td colspan ="5">
         <p><?php echo $user['HotelName'].', '.$user['Address'];?></p>
       </td>
     </tr>
@@ -30,23 +30,26 @@ if ($_SESSION['role']==2){
       <td>
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
       </td>
-      <td colspan="4" style="text-align: center">
+      <td colspan="5" style="text-align: center">
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ ΣΗΜΕΡΑ</p>
       </td>
     </tr>
     <tr>
-      <td>
-        <?php echo date("j/n/Y"); ?>
+      <?php
+      $rooms=getRoomsByHotel($user['Id']); ?>
+      <td rowspan="<?php echo sizeof($rooms)+1;?>" valign="top" style="border: 0">
+        <p><?php echo date("j/n/Y");?></p>
         <br>
-        ΔΩΜΑΤΙΟ:
-        <select id="roomselect">
-          <option>ΟΛΑ</option>
-          <?php $rooms=getRoomsByHotel($user['Id']);
+          <button class="roomselect" type="button" name="ΟΛΑ">ΟΛΑ</button>
+        <?php
           foreach ($rooms as $row2){ ?>
-              <option><?php echo $row2['Room'];?></option>
+              <button class="roomselect" type="button" name="<?php echo $row2['Room'];?>"><?php echo $row2['Room'];?></button>
           <?php } ?>
         </select>
 
+      </td>
+      <td>
+        <p>ΔΩΜΑΤΙΟ</p>
       </td>
       <td>
         <p>ΣΥΣΚΕΥΗ</p>
@@ -55,7 +58,7 @@ if ($_SESSION['role']==2){
         <p>ΕΡΓΑΣΙΑ</p>
       </td>
       <td>
-        <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
+        <p>ΕΠΙΒΕΒ.</p>
       </td>
       <td>
         <p>ΣΗΜΕΙΩΣΕΙΣ</p>
@@ -64,9 +67,9 @@ if ($_SESSION['role']==2){
     <?php
     foreach($works as $row) { ?>
     <tr class="work <?php echo $row['Room'];?>">
-        <td>
-            <p><?php echo 'ΔΩΜΑΤΙΟ: '.$row['Room'];?></p>
-        </td>
+      <td>
+        <p><?php echo $row['Room'];?></p>
+      </td>
       <td>
         <p><?php echo $row['Device'];?></p>
       </td>
@@ -78,7 +81,7 @@ if ($_SESSION['role']==2){
       </td>
 
       <td>
-          <input type="text" name="notes[<?php echo $row['Id'];?>]" placeholder="ΣΗΜΕΙΩΣΕΙΣ">
+          <input type="text" style="width:100%" name="notes[<?php echo $row['Id'];?>]" placeholder="ΣΗΜΕΙΩΣΕΙΣ">
       </td>
     </tr>
     <?php } ?>
@@ -91,6 +94,7 @@ if ($_SESSION['role']==2){
     <?php
   }
     $pendingworks=getPendingWorksByHotel($user['Id']);
+
     if($pendingworks!=null){ ?>
       <tr>
         <td style="border: 0">
@@ -101,13 +105,16 @@ if ($_SESSION['role']==2){
         <td>
           <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
         </td>
-        <td colspan="4" style="text-align: center">
+        <td colspan="5" style="text-align: center">
           <p>ΗΜΕΡΟΛΟΓΙΟ ΠΕΡΑΣΜΕΝΩΝ ΕΡΓΑΣΙΩΝ</p>
         </td>
       </tr>
       <tr>
         <td>
-          <br>ΗΜΕΡΟΜΗΝΙΑ (ΔΩΜΑΤΙΟ)
+          <p>ΗΜΕΡΟΜΗΝΙΑ</p>
+        </td>
+        <td>
+          <p>ΔΩΜΑΤΙΟ</p>
         </td>
         <td>
           <p>ΣΥΣΚΕΥΗ</p>
@@ -116,7 +123,7 @@ if ($_SESSION['role']==2){
           <p>ΕΡΓΑΣΙΑ</p>
         </td>
         <td>
-          <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
+          <p>ΕΠΙΒΕΒ.</p>
         </td>
         <td>
           <p>ΣΗΜΕΙΩΣΕΙΣ</p>
@@ -128,7 +135,10 @@ if ($_SESSION['role']==2){
     foreach ($pendingworks as $row1) { ?>
       <tr>
         <td>
-          <p><?php echo date("j/n/Y", strtotime($row1['DueDate'])).' ('.getWorkById($row1['WorkId'])['Room'].')';?></p>
+          <p><?php echo date("j/n/Y", strtotime($row1['DueDate']));?></p>
+        </td>
+        <td>
+          <p><?php echo getWorkById($row1['WorkId'])['Room'];?></p>
         </td>
       <td>
         <p><?php echo getWorkById($row1['WorkId'])['Device'];?></p>
@@ -148,7 +158,7 @@ if ($_SESSION['role']==2){
 
     <?php } ?>
     <tr>
-      <td colspan="5" style="border: 0">
+      <td colspan="6" style="border: 0">
         <p></p>
       </td>
     </tr>

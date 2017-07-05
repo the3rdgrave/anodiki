@@ -6,7 +6,8 @@ include 'db/dbfunctions.php';
 
 if(isset($_POST['submitreport'])){
 
-  // if(!empty($_POST['notes'])){
+
+    // if(!empty($_POST['notes'])){
   //
   // foreach($_POST['notes'] as $row1){
   //   $work1=getWorkById(array_search($row1, $_POST['notes']));
@@ -55,15 +56,15 @@ if(isset($_POST['submitreport'])){
             </th>
 
       <?php
-  foreach($_POST['notes'] as $row){
+  foreach(array_keys($_POST['notes']) as $row){
     // echo array_search($row, $_POST['notes']);
-    $work=getWorkById(array_search($row, $_POST['notes']));
+    $work=getWorkById($row);
     updateWork($work['Id'], $work['HotelId'], $work['Room'], $work['Device'], $work['Work'], $work['Days'],
-    $work['Date'], !empty($_POST['confirmed']) && in_array($work['Id'], $_POST['confirmed'])?1:0, $_POST['notes'][$work['Id']]);
-    if(checkPendingByWorkId($work['Id'])==true){
+    $work['Date'], !empty($_POST['confirmed']) && in_array($work['Id'],$_POST['confirmed'])?1:0, $_POST['notes'][$work['Id']]);
+    if(!empty($_POST['confirmed']) && in_array($work['Id'],$_POST['confirmed']) && checkPendingByWorkId($work['Id'])==true){
       deletePendingWork($work['Id']);
     }
-    $work=getWorkById(array_search($row, $_POST['notes']));?>
+    $work=getWorkById($row);?>
     <tr>
       <td>
         <p><?php echo $work['Device'];?></p>
@@ -86,14 +87,12 @@ if(isset($_POST['submitreport'])){
   }
   ?>
   <tr>
-    <td colspan="4" style="text-align: center; border: 0">
+    <td colspan="5" style="text-align: center; border: 0">
        <a href="hotel.php">Επιστροφή στις εργασίες</a>
      </td>
    </tr>
   </table> <?php
   // }
-
-
 }
 
 include 'footer.php';

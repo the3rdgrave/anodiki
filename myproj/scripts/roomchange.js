@@ -1,9 +1,9 @@
-$("#roomselect").change(function() {
-  var sel=$("#roomselect option:selected" ).text();
+$(".roomselect").click(function() {
+  var room= $(this).text();
   // alert(sel);
-  if (sel!="ΟΛΑ"){
-  $('#workshoteltable .work:not(.'+sel+')').hide();
-  $('#workshoteltable .work.'+sel).show();
+  if (room!="ΟΛΑ"){
+  $('#workshoteltable .work:not(.'+room+')').hide();
+  $('#workshoteltable .work.'+room).show();
 }
 else {
   $('#workshoteltable .work').show();
