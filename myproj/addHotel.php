@@ -171,7 +171,5 @@ else{
     unset($_SESSION['faileddate']);
     unset($_SESSION['faileder1']);
     unset($_SESSION['faileder2']);
-    unset($_SESSION['clonehn']);
-    unset($_SESSION['cloneroom']);
 
     ?>

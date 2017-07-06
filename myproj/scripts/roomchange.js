@@ -18,3 +18,7 @@ else {
 
 }
 });
+
+$("#clearfields").click(function() {
+  $('.workfield').val('');
+});

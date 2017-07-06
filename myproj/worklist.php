@@ -9,6 +9,10 @@ $works=isset($_GET['searchfield']) && $_GET['searchfield']!=""?searchWork($_GET[
 ?>
 <table id="worktable" style="width: 96%" align="center" frame="void" border="2px solid black">
   <tr>
+    <td colspan="8" style="text-align: center; border: 0">
+      <a href="mainmenu.php">Πίσω</a>
+  </tr>
+  <tr>
     <td>
       <p>ΞΕΝΟΔΟΧΕΙΟ</p>
     </td>
@@ -30,7 +34,7 @@ $works=isset($_GET['searchfield']) && $_GET['searchfield']!=""?searchWork($_GET[
     <td>
       <form method="get" action="worklist.php">
       <input type="text" id="searchfield" name="searchfield" placeholder = "ΑΝΑΖΗΤΗΣΗ">
-      <button id = "searchbutton" name="searchbutton" type="submit"><img src="images/lens1.png" id="lens"></button >
+      <button id = "searchbutton" name="searchbutton" type="submit"><img src="images/lens1.png" id="lens"></button>
       </form>
     </td>
 

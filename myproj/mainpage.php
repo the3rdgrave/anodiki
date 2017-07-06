@@ -13,9 +13,9 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   if ($work!=null){
     $_SESSION['hotelname']=getHotelById($work['HotelId'])['HotelName'];
     $_SESSION['room']=$work['Room'];
-    $_SESSION['device']=$work['Device'];
-    $_SESSION['work']=$work['Work'];
-    $_SESSION['days']=$work['Days'];
+    $_SESSION['device'][0]=$work['Device'];
+    $_SESSION['work'][0]=$work['Work'];
+    $_SESSION['days'][0]=$work['Days'];
   }
 }
 
@@ -82,13 +82,13 @@ if(isset($_GET['id']) && $_GET['id']!=0){
     while($loop<=$numberofworks){?>
   <tr>
     <td>
-      <input type="text" id="device" name="device[]" value="<?php echo (isset($_SESSION['device'])?$_SESSION['device']:"");?>">
+      <input class="workfield" type="text" id="device" name="device[]" value="<?php echo (isset($_SESSION['device'])?$_SESSION['device'][$loop-1]:"");?>">
     </td>
     <td>
-      <input type="text" id="work" name="work[]" value="<?php echo (isset($_SESSION['work'])?$_SESSION['work']:"");?>">
+      <input class="workfield" type="text" id="work" name="work[]" value="<?php echo (isset($_SESSION['work'])?$_SESSION['work'][$loop-1]:"");?>">
     </td>
     <td>
-      <input type="text" id="days" name="days[]" value="<?php echo (isset($_SESSION['days'])?$_SESSION['days']:"");?>">
+      <input class="workfield" type="text" id="days" name="days[]" value="<?php echo (isset($_SESSION['days'])?$_SESSION['days'][$loop-1]:"");?>">
     </td>
   </tr>
   <?php
@@ -114,6 +114,12 @@ if(isset($_GET['id']) && $_GET['id']!=0){
 
   <tr>
     <td colspan="3" style="text-align: center; border: 0">
+        <button id="clearfields" type="button">Εκκαθάριση</button>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="3" style="text-align: center; border: 0">
       <?php if(isset($_GET['id']) && $_GET['id']!=0){?>
         <a href="worklist.php">Πίσω</a>
        <?php } else {?>
@@ -121,6 +127,7 @@ if(isset($_GET['id']) && $_GET['id']!=0){
         <?php } ?>
     </td>
   </tr>
+
     <?php if(isset($_GET['id']) && $_GET['id']!=0){?>
       <tr>
         <td colspan="3" style="text-align: center; border: 0">

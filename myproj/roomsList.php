@@ -6,7 +6,8 @@ include 'db/dbfunctions.php';
 if($_SESSION['role']!=1){
   header('Location: index.php');
 } else {
-  $rooms=getAllRooms();
+
+  $rooms=isset($_GET['searchroomfield']) && $_GET['searchroomfield']!=""?searchRoom($_GET['searchroomfield']):getAllRooms();
 ?>
 <table id="roomstable" align="center" frame="void" border="2px solid black" style="width: 50%">
   <tr>
@@ -16,11 +17,11 @@ if($_SESSION['role']!=1){
     <td>
       <p>ΔΩΜΑΤΙΟ</p>
     </td>
-    <td>
-      <p></p>
-    </td>
-    <td>
-      <p></p>
+    <td colspan="2">
+      <form>
+      <input type="text" id="searchroomfield" name="searchroomfield" placeholder = "ΑΝΑΖΗΤΗΣΗ">
+      <button id = "searchroombutton" name="searchroombutton" type="submit"><img src="images/lens1.png" id="lens"></button >
+      </form>
     </td>
   </tr>
 <?php foreach ($rooms as $row){?>
