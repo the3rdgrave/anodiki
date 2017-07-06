@@ -38,7 +38,7 @@ if ($_SESSION['role']==2){
     <tr>
       <?php
       $rooms=getRoomsByHotel($user['Id']); ?>
-      <td valign="top" style="border: 0" rowspan="<?php echo sizeof($works)+1;?>" id="<?php echo sizeof($works)+1;?>">
+      <td valign="top" rowspan="<?php echo sizeof($works)+1;?>" id="<?php echo sizeof($works)+1;?>">
         <?php echo date("j/n/Y");?>
         <br>
           <button class="roomselect" id="<?php echo date('Y-m-d');?>" type="button" name="ΟΛΑ">ΟΛΑ</button>
@@ -67,7 +67,7 @@ if ($_SESSION['role']==2){
     <?php
     foreach($works as $row) { ?>
     <tr class="work <?php echo date('Y-m-d').' '.$row['Room'];?>">
-      
+
       <td>
         <p><?php echo $row['Room'];?></p>
       </td>
@@ -99,6 +99,7 @@ if ($_SESSION['role']==2){
   for ($i=1; $i<8; ++$i){
     $date=date("Y-m-d", strtotime("+".$i." day", strtotime("now")));
     $upcomingworks=getUpcomingWorksByHotel($user["Id"],$date);
+
     // var_dump($upcomingworks);
     if(!empty($upcomingworks)){ ?>
     <tr>

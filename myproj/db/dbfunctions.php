@@ -289,7 +289,7 @@ function getWorksByHotel($hotelid){
 function getUpcomingWorksByHotel($hotelid,$date){
   global $db;
 
-  $results=$db->prepare("Select * from works WHERE HotelId=? AND Days=DATEDIFF(?, Date)");
+  $results=$db->prepare("Select * from works WHERE HotelId=? AND DATEDIFF(?, Date)%Days=0");
   $results->bindValue(1, $hotelid);
   $results->bindValue(2, $date);
   $results->execute();
@@ -338,7 +338,7 @@ function getAllRooms(){
 function getUpcomingRoomsByHotel($hotelid, $date){
   global $db;
 
-  $results=$db->prepare("Select DISTINCT Room from works WHERE HotelId=? AND Days=DATEDIFF(?, Date)");
+  $results=$db->prepare("Select DISTINCT Room from works WHERE HotelId=? AND DATEDIFF(?, Date)%Days=0");
   $results->bindValue(1, $hotelid);
   $results->bindValue(2, $date);
   $results->execute();
