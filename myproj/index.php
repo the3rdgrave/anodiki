@@ -17,7 +17,6 @@ if(strtotime(date('Y/n/j', strtotime("now")))>=strtotime(date('Y/n/j', strtotime
 // echo $row["Id"].' :yes'.'<br>';
 $a=1;
   while(true){
-    // echo $a;
   // while (strtotime(date('Y/n/j', strtotime("now")))>=strtotime(date('Y/n/j', strtotime($row['Date'])))+intval($a*$row['Days']*86400)){
    if(strtotime(date('Y/n/j', strtotime("now")))==strtotime(date('Y/n/j', strtotime($row['Date']))) + intval($a*$row['Days']*86400)){
     resetWorkDate($row['Id'], date('Y/m/d'));
@@ -39,10 +38,10 @@ $a=1;
 
 }
 
-  if(strtotime(date('Y/n/j', strtotime("now")))!=strtotime(date('Y/n/j',strtotime($row['Date'])))) {
+  if(strtotime(date('Y/n/j', strtotime("now")))!=strtotime(date('Y/n/j',strtotime(getWorkById($row['Id'])['Date'])))) {
     // updateWorkConfirmation($row['Id']);
     if($row['Confirmation']==0 && checkPending($row['Id'])==null) {
-      addPendingWork($row['Id'],$row['HotelId'], $row['Date']);
+      addPendingWork($row['Id'],$row['HotelId'], getWorkById($row['Id'])['Date']);
     }
   }
   else {

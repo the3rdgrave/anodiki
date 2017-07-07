@@ -26,7 +26,7 @@ if ($_SESSION['role']==2){
         <p></p>
       </td>
     </tr>
-    <?php if ($works!=null) {?>
+    <?php if ($works!=null && strtotime(date('Y-m-d', strtotime($user['StartingDate'])))<=strtotime(date('Y-m-d',strtotime("now")))) {?>
     <tr>
       <td>
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
@@ -101,7 +101,7 @@ if ($_SESSION['role']==2){
     $upcomingworks=getUpcomingWorksByHotel($user["Id"],$date);
 
     // var_dump($upcomingworks);
-    if(!empty($upcomingworks)){ ?>
+    if(!empty($upcomingworks && strtotime(date('Y-m-d', strtotime($user['StartingDate'])))<=strtotime(date('Y-m-d',strtotime($date))))){ ?>
     <tr>
       <td>
         <p>ΗΜΕΡΟΛΟΓΙΟ ΕΡΓΑΣΙΩΝ</p>
