@@ -39,7 +39,7 @@ if (isset($_POST['newworkbutton'])){
   $work=getWorkById($_GET['id']);
   if (trim($_POST['room'])!="" && trim($_POST['device'][0])!="" && trim($_POST['work'][0])!="" && $_POST['days'][0]>0){
   echo updateWork($_GET['id'], getHotelId($_POST['hotelname'])['Id'], $_POST['room'],$_POST['device'][0],$_POST['work'][0], $_POST['days'][0],
-  $work['Date'], $work['Confirmation'], $work['Notes']);?><br>
+  $startingdate, $work['Confirmation'], $work['Notes']);?><br>
   <?php } else {
     echo 'Ελλειπή στοιχεία. Η εργασία δεν τροποποιήθηκε.<br>';?>
     <a href="mainpage.php?id=<?php echo $_GET['id'];?>">Νέα προσπάθεια</a><br>
