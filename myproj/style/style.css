@@ -62,3 +62,7 @@ body {
 .deleteButton:active, .deleteButton:visited:active {
     color: white;
 }
+
+.roomselect:focus {
+  background-color: yellow;
+}
