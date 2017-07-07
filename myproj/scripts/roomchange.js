@@ -7,7 +7,7 @@ $(".roomselect").click(function() {
   $('#workshoteltable .work.'+date+':not(.'+room+')').hide();
   $('#workshoteltable .work.'+date+'.'+room).show();
 
-  hidden=$('#workshoteltable tr:hidden').length;
+  hidden=$('#workshoteltable .'+date+':hidden').length;
   // alert(hidden);
   rowspan-=hidden;
   $(this).closest("td").attr('rowspan', rowspan);
