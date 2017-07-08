@@ -3,7 +3,9 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
-
+if($_SESSION['role']!=2){
+  header('Location: index.php');
+} else {
 if(isset($_POST['submitreport'])){
 
 
@@ -95,6 +97,6 @@ if(isset($_POST['submitreport'])){
   </table> <?php
   // }
 }
-
+}
 include 'footer.php';
 ?>

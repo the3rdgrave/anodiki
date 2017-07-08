@@ -10,7 +10,7 @@ if($_SESSION['role']!=1){
 ?>
 <table id="roomworkstable" align="center" frame="void" border="2px solid black" style="width: 50%">
   <tr>
-    <td colspan="2" style="text-align: center">
+    <td colspan="3" style="text-align: center">
       <p><?php echo $_GET['room'].'/'.getHotelById($_GET['hotelid'])['HotelName'];?></p>
     </td>
   <tr>
@@ -19,6 +19,9 @@ if($_SESSION['role']!=1){
     </td>
     <td>
       <p>ΕΡΓΑΣΙΑ</p>
+    </td>
+    <td>
+      <p>ΗΜΕΡΕΣ</p>
     </td>
   </tr>
 <?php foreach ($worksPerRoom as $row){?>
@@ -29,15 +32,18 @@ if($_SESSION['role']!=1){
     <td>
       <p><?php echo $row['Work'];?></p>
     </td>
+    <td>
+      <p><?php echo $row['Days'];?></p>
+    </td>
   </tr>
 <?php } ?>
   <tr>
-    <td colspan="2" style="text-align: center; border:0">
+    <td colspan="3" style="text-align: center; border:0">
       <a href="cloneRoom.php?id=<?php echo $row["Id"];?>">Κλωνοποίηση για <?php echo $_SESSION['cloneroom'].'/'.$_SESSION['clonehn'];?></a>
     </td>
   </tr>
   <tr>
-    <td colspan="2" style="text-align: center; border:0">
+    <td colspan="3" style="text-align: center; border:0">
       <a href="roomsList.php">Επιστροφή στη λίστα</a>
     </td>
   </tr>

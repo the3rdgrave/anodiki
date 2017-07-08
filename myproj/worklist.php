@@ -3,6 +3,9 @@ session_start();
 include 'header.php';
 include 'db/dbfunctions.php';
 
+if($_SESSION['role']!=1){
+  header('Location: index.php');
+} else {
 
 $works=isset($_GET['searchfield']) && $_GET['searchfield']!=""?searchWork($_GET['searchfield']):getWorks();
 
@@ -72,4 +75,5 @@ $works=isset($_GET['searchfield']) && $_GET['searchfield']!=""?searchWork($_GET[
     <a href="mainmenu.php">Πίσω</a>
 </tr>
   <table>
-<?php include 'footer.php'; ?>
+<?php }
+include 'footer.php'; ?>

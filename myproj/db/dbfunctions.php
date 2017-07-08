@@ -716,7 +716,7 @@ function searchRoom($key)
     global $db;
 
     $key = '%' . $key . '%';
-    $results = $db->prepare("SELECT t1.* from works t1 JOIN hotels t2 ON t1.HotelId=t2.Id WHERE Room LIKE ? OR HotelName LIKE ? OR CONCAT_WS(' ',Room,HotelName) LIKE ? OR CONCAT_WS(' ',HotelName, Room) LIKE ?");
+    $results = $db->prepare("SELECT DISTINCT t1.Room, t1.HotelId from works t1 JOIN hotels t2 ON t1.HotelId=t2.Id WHERE Room LIKE ? OR HotelName LIKE ? OR CONCAT_WS(' ',Room,HotelName) LIKE ? OR CONCAT_WS(' ',HotelName, Room) LIKE ?");
     $results->bindValue(1, $key);
     $results->bindValue(2, $key);
     $results->bindValue(3, $key);

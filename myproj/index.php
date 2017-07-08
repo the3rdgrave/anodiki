@@ -7,14 +7,10 @@ include 'db/dbfunctions.php';
 $works=getWorks();
 foreach ($works as $row) {
 
-  // echo $row['Id'].' '.strtotime("now").' '.strtotime(date('Y/n/j', strtotime("now"))).' '.strtotime(date('Y/n/j', strtotime($row['Date']))).' '.strtotime($row['Date']).'<br>';
-
-
   // if(date("j/n/Y")==date('j/n/Y', strtotime($row['Date']."+".$row['Days']." days"))){
 $hotelstartingdate=getHotelById($row['HotelId'])['StartingDate'];
 
 if(strtotime(date('Y/n/j', strtotime("now")))>=strtotime(date('Y/n/j', strtotime($hotelstartingdate)))){
-// echo $row["Id"].' :yes'.'<br>';
 $a=1;
   while(true){
   // while (strtotime(date('Y/n/j', strtotime("now")))>=strtotime(date('Y/n/j', strtotime($row['Date'])))+intval($a*$row['Days']*86400)){
@@ -30,8 +26,6 @@ $a=1;
       resetWorkDate($row['Id'], date('Y/m/d', strtotime($row['Date']."+".intval(($a-1)*$row['Days'])." days")));
  }
    break;
-
-
 
  }
   $a++;
