@@ -57,7 +57,7 @@ if ($_SESSION['role']==2){
       <td>
         <p>ΕΡΓΑΣΙΑ</p>
       </td>
-      <td>
+      <td style="width: 5%">
         <p>ΕΠΙΒΕΒ.</p>
       </td>
       <td>
@@ -66,7 +66,7 @@ if ($_SESSION['role']==2){
     </tr>
     <?php
     foreach($works as $row) { ?>
-    <tr class="work <?php echo date('Y-m-d').' '.$row['Room'];?>">
+    <tr class="work <?php echo date('Y-m-d').' '.str_replace(' ', '', $row['Room'])?>">
 
       <td>
         <p><?php echo $row['Room'];?></p>
@@ -136,7 +136,7 @@ if ($_SESSION['role']==2){
     <?php
 
     foreach($upcomingworks as $row) { ?>
-    <tr class="work <?php echo $date.' '.$row['Room'];?>">
+    <tr class="work <?php echo $date.' '.str_replace(' ', '', $row['Room']);?>">
       <!-- <td style="border: 0">
         <p>
         </p>

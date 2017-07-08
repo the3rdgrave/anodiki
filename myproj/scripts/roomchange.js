@@ -1,6 +1,7 @@
 $(".roomselect").click(function() {
   var date=this.id;
-  var room= $(this).text();
+  // var room= $(this).text();
+  var room = $(this).text().replace(/\s/g, '');
   rowspan=$(this).closest("td").attr("id");
   // alert(sel);
   if (room!="ΟΛΑ"){
