@@ -54,7 +54,7 @@ include 'db/dbfunctions.php';
   <p><?php echo $row['Username'];?></p>
 </td>
 <td>
-  <p><?php echo $row['Password'];?><p>
+  <p><?php echo $row['Password'];?></p>
 </td>
 <td>
   <a href="addHotel.php?id=<?php echo $row['Id'];?>">Τροποποίηση</a>

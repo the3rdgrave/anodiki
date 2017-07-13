@@ -719,6 +719,23 @@ function deleteWork($workid){
     }
 }
 
+function deleteWorksByHotel($hotelid){
+    global $db;
+
+    try {
+
+        $results = $db->prepare("Delete from works WHERE HotelId=? ");
+        $results->bindValue(1, $hotelid);
+        $results->execute();
+
+        return "The works are deleted";
+
+    }
+    catch(Exception $e) {
+        return "Error deleting works".$e;
+    }
+}
+
 function searchWork($key)
 {
     global $db;

@@ -154,7 +154,16 @@ else{
         <?php } ?>
       </td>
     </tr>
+
     </table>
+
+    <?php if(isset($_GET['id']) && $_GET['id']!=0){?>
+      <div style="margin-top:15%; text-align:center">
+          <a class="deleteButton"  href="deleteHotel.php?id=<?php echo $hotel['Id'];?>">Διαγραφή</a>
+        </div>
+      <?php } ?>
+
+
   </form>
     <?php }
 
