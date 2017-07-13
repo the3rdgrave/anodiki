@@ -23,21 +23,27 @@ if(isset($_POST['submitreport'])){
   $mins=intval($durationleft/60);
   $secs=$durationleft-$mins*60;
 
+	$table="";
+
   // if(!empty($_POST['confirmed'])){
   ?>
     <table id="reporttable" style="width: 80%" frame="void" border="2px solid black" align="center">
       <tr>
         <td colspan="2">
-          <p><?php echo $_POST['maintainerselect'];?></p>
+          <p><?php echo $_POST['maintainerselect'];
+			  $table.=$_POST['maintainerselect'].' '; ?></p>
         </td>
         <td>
-          <p><?php echo $_SESSION['hotname'];?></p>
+          <p><?php echo $_SESSION['hotname'];
+			  $table.=$_SESSION['hotname'].' '; ?></p>
         </td>
         <td>
-          <?php echo date("j/n/Y");?>
+          <?php echo date("j/n/Y");
+			$table.=date("j/n/Y").' ';?>
         </td>
         <td>
-          <p><?php echo $hours.' hours '.$mins.' mins '.$secs.' secs';?></p>
+          <p><?php echo $hours.' hours '.$mins.' mins '.$secs.' secs';
+			  $table.=$hours." hours ".$mins.' mins '.$secs." secs\n"?></p>
         </td>
       </tr>
           <tr>
@@ -53,7 +59,7 @@ if(isset($_POST['submitreport'])){
             <th>
               <p>ΕΠΙΒΕΒΑΙΩΣΗ</p>
             </th>
-            <th>
+            <th style="width:50% ; word-wrap: break-all">
               <p>ΣΗΜΕΙΩΣΕΙΣ</p>
             </th>
 
@@ -70,19 +76,24 @@ if(isset($_POST['submitreport'])){
     $work=getWorkById($row);?>
     <tr>
       <td>
-        <p><?php echo $work['Device'];?></p>
+        <p><?php echo $work['Device'];
+			$table.=$work['Device'].' ';?></p>
       </td>
       <td>
-        <p><?php echo $work['Work'];?></p>
+        <p><?php echo $work['Work'];
+			$table.=$work['Work'].' ';?></p>
       </td>
       <td>
-        <p><?php echo $work['Room'];?></p>
+        <p><?php echo $work['Room'];
+			$table.=$work['Room'].' ';?></p>
       </td>
       <td>
-        <p><?php echo getConfirmationById($work['Confirmation'])['Confirmation'];?></p>
+        <p><?php echo getConfirmationById($work['Confirmation'])['Confirmation'];
+			$table.=getConfirmationById($work['Confirmation'])['Confirmation'].' ';?></p>
       </td>
       <td>
-        <p><?php echo $work['Notes'];?></p>
+        <p><?php echo $work['Notes'];
+			$table.=$work['Notes']."\n"?></p>
       </td>
     </tr>
 
@@ -96,6 +107,56 @@ if(isset($_POST['submitreport'])){
    </tr>
   </table> <?php
   // }
+
+  // echo $table;
+
+  file_put_contents("test.txt",$table);
+
+
+   $file = 'test.txt';
+	$filename='test.txt';
+
+    $mailto = 'aposdida@yahoo.gr';
+    $subject = $_SESSION['hotname'].', '.date('j/n/Y');
+    $message = 'Αναφορά για ξενοδοχείο '.$_SESSION['hotname'].', '.date('j/n/Y');
+
+    $content = file_get_contents($file);
+    $content = chunk_split(base64_encode($content));
+
+    // a random hash will be necessary to send mixed content
+    $separator = md5(time());
+
+    // carriage return type (RFC)
+    $eol = "\r\n";
+
+    // main header (multipart mandatory)
+    $headers = "From: name <test@test.com>" . $eol;
+    $headers .= "MIME-Version: 1.0" . $eol;
+    $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol;
+    $headers .= "Content-Transfer-Encoding: 7bit" . $eol;
+    $headers .= "This is a MIME encoded message." . $eol;
+
+    // message
+    $body = "--" . $separator . $eol;
+    $body .= "Content-Type: text/plain; charset=\"iso-8859-1\"" . $eol;
+    $body .= "Content-Transfer-Encoding: 8bit" . $eol;
+    $body .= $message . $eol;
+
+    // attachment
+    $body .= "--" . $separator . $eol;
+    $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
+    $body .= "Content-Transfer-Encoding: base64" . $eol;
+    $body .= "Content-Disposition: attachment" . $eol;
+    $body .= $content . $eol;
+    $body .= "--" . $separator . "--";
+
+    //SEND Mail
+    if (mail($mailto, $subject, $body, $headers)) {
+        echo "mail send ... OK"; // or use booleans here
+    } else {
+        echo "mail send ... ERROR!";
+        print_r( error_get_last() );
+    }
 }
 }
 include 'footer.php';

@@ -81,8 +81,8 @@ if ($_SESSION['role']==2){
           <input type="checkbox" name="confirmed[]" value="<?php echo $row['Id'];?>"><br>
       </td>
 
-      <td>
-          <input type="text" style="width:100%" name="notes[<?php echo $row['Id'];?>]" placeholder="ΣΗΜΕΙΩΣΕΙΣ">
+      <td valign="top">
+          <textarea type="text" style="width:100%; height: 100%" name="notes[<?php echo $row['Id'];?>]" placeholder="ΣΗΜΕΙΩΣΕΙΣ"></textarea>
       </td>
     </tr>
     <?php } ?>
@@ -194,7 +194,7 @@ if ($_SESSION['role']==2){
         <td>
           <p>ΕΡΓΑΣΙΑ</p>
         </td>
-        <td>
+        <td style="width: 5%">
           <p>ΕΠΙΒΕΒ.</p>
         </td>
         <td>
@@ -222,8 +222,8 @@ if ($_SESSION['role']==2){
           <input type="checkbox" name="confirmed[]" value="<?php echo $row1['WorkId'];?>"><br>
       </td>
 
-      <td>
-          <input type="text" name="notes[<?php echo $row1['WorkId'];?>]" placeholder="ΣΗΜΕΙΩΣΕΙΣ">
+      <td valign="top">
+          <textarea type="text" style="width:100%; height: 100%" name="notes[<?php echo $row1['WorkId'];?>]" placeholder="ΣΗΜΕΙΩΣΕΙΣ"></textarea>
       </td>
     </tr>
 

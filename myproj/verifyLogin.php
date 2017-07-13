@@ -13,6 +13,8 @@ include 'db/dbfunctions.php';
     $_SESSION['hotname']=$user['HotelName'];
     $_SESSION['password']=$user['Password'];
     $_SESSION['role']=$user['Role'];
+    $_SESSION['emailreport1']=$user['EmailReport1'];
+    $_SESSION['emailreport2']=$user['EmailReport2'];
 
 
     if (date('Y/n/j', strtotime($user['LoginTime']))!=date('Y/n/j', strtotime("now"))){
