@@ -59,6 +59,9 @@ if($newhotel!="Hotel added"){
   $updatedhotel=updateHotel($_GET['id'], trim($_POST['hotelname']),trim($_POST['address']),trim($_POST['maintainer1']), trim($_POST['maintainer2']),
     trim($_POST['maintainer3']), trim($_POST['phone1']), trim($_POST['phone2']), trim($_POST['emailreport']), trim($_POST['emailreport2']), $_POST['date'], trim($_POST['un']),
     trim($_POST['pw']),trim($_POST['rpw']));
+  if ($updatedhotel=="Hotel updated"){
+    updateWorkDateByHotel($_GET['id'], $_POST['date']);
+  }
   echo $updatedhotel.'<br>';
 
   if($updatedhotel!="Hotel updated"){ ?>

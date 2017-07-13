@@ -41,10 +41,10 @@ if ($_SESSION['role']==2){
       <td valign="top" rowspan="<?php echo sizeof($works)+1;?>" id="<?php echo sizeof($works)+1;?>">
         <?php echo date("j/n/Y");?>
         <br>
-          <button class="roomselect" id="<?php echo date('Y-m-d');?>" type="button" name="ΟΛΑ">ΟΛΑ</button>
+          <button class="roomselect" id="<?php echo date('Y-m-d');?>" type="button" name="ΟΛΑ" style="margin-bottom: 3%">ΟΛΑ</button>
         <?php
           foreach ($rooms as $row2){ ?>
-              <button class="roomselect" type="button" id="<?php echo date('Y-m-d');?>" name="<?php echo $row2['Room'];?>"><?php echo $row2['Room'];?></button>
+              <button class="roomselect" type="button" id="<?php echo date('Y-m-d');?>" name="<?php echo $row2['Room'];?>" style="margin-bottom: 3%"><?php echo $row2['Room'];?></button>
           <?php } ?>
 
       </td>
@@ -117,10 +117,10 @@ if ($_SESSION['role']==2){
       <td valign="top" rowspan="<?php echo sizeof($upcomingworks)+1;?>" id="<?php echo sizeof($upcomingworks)+1;?>">
         <?php echo date("j/n/Y", strtotime($date));?>
         <br>
-          <button class="roomselect" id="<?php echo $date;?>" type="button" name="ΟΛΑ">ΟΛΑ</button>
+          <button class="roomselect" id="<?php echo $date;?>" type="button" name="ΟΛΑ" style="margin-bottom: 3%">ΟΛΑ</button>
         <?php
           foreach ($rooms as $row2){ ?>
-              <button class="roomselect" type="button" id="<?php echo $date;?>" name="<?php echo $row2['Room'];?>"><?php echo $row2['Room'];?></button>
+              <button class="roomselect" type="button" id="<?php echo $date;?>" name="<?php echo $row2['Room'];?>" style="margin-bottom: 3%"><?php echo $row2['Room'];?></button>
           <?php } ?>
       </td>
       <td>

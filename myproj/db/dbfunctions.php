@@ -420,6 +420,23 @@ function resetWorkDate($workid, $date){
 
 }
 
+function updateWorkDateByHotel($hotelid, $date){
+    global $db;
+
+    try {
+        $results = $db->prepare("Update works Set Date=? WHERE HotelId=?");
+        $results->bindValue(1, $date);
+        $results->bindValue(2, $hotelid);
+        $results->execute();
+        return "Works updated";
+
+
+    } catch (Exception $e) {
+        return "Error updating works" . $e;
+    }
+
+
+}
 function updateLoginTime($userid){
     global $db;
 

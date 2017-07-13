@@ -17,6 +17,7 @@ include 'db/dbfunctions.php';
     $_SESSION['emailreport2']=$user['EmailReport2'];
 
 
+
     if (date('Y/n/j', strtotime($user['LoginTime']))!=date('Y/n/j', strtotime("now"))){
       updateLoginTime($user['Id']);
     }

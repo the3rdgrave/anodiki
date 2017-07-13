@@ -34,7 +34,7 @@ $a=1;
 
   if(strtotime(date('Y/n/j', strtotime("now")))!=strtotime(date('Y/n/j',strtotime(getWorkById($row['Id'])['Date'])))) {
     // updateWorkConfirmation($row['Id']);
-    if(getWorkById($row['Id'])['Confirmation']==0 && checkPending($row['Id'])==null) {
+    if($row['Confirmation']==0 && checkPending($row['Id'])==null) {
       addPendingWork($row['Id'],$row['HotelId'], getWorkById($row['Id'])['Date']);
     }
   }
