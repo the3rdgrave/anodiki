@@ -57,6 +57,17 @@ function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3
         $errormessage .="Username must be between 5 and 12 characters".'<br>';
     }
 
+    if (checkHotel($hotelname, $address, $phone1, $phone2, $emailreport1, $emailreport2, $maintainer1, $maintainer2, $maintainer3)==false){
+      $errormessage .="Invalid entries".'<br>';
+    }
+
+    if(checkUser($username)==false){
+      $errormessage .="Username already exists".'<br>';
+    }
+
+    if ($date==null || strtotime(date('Y/n/j', strtotime("now")))>strtotime(date('Y/n/j', strtotime($date)))){
+      $errormessage .="Invalid date".'<br>';
+    }
 
     if($password1!=$password2){
         $errormessage .="Passwords don't match".'<br>';
@@ -67,13 +78,6 @@ function addHotel($hotelname, $address, $maintainer1, $maintainer2, $maintainer3
     }
 
 
-    if (checkHotel($hotelname, $address, $phone1, $phone2, $emailreport1, $emailreport2, $maintainer1, $maintainer2, $maintainer3)==false){
-      $errormessage .="Invalid entries".'<br>';
-    }
-
-    if(checkUser($username)==false){
-      $errormessage .="Username already exists".'<br>';
-    }
 
     if ($errormessage==""){
 
@@ -125,6 +129,10 @@ function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2,
         $errormessage .="Username must be between 5 and 12 characters".'<br>';
     }
 
+    if ($date==null || strtotime(date('Y/n/j', strtotime("now")))>strtotime(date('Y/n/j', strtotime($date)))){
+      $errormessage .="Invalid date".'<br>';
+    }
+
     if($password1!=$password2){
         $errormessage .="Passwords don't match".'<br>';
 
@@ -132,6 +140,7 @@ function updateHotel($hotelid, $hotelname, $address, $maintainer1, $maintainer2,
     else if(strlen($password1)<3 || strlen($password1)>15) {
         $errormessage .="Password must be between 3 and 15 characters".'<br>';
     }
+
 
 
     if ($errormessage==""){
