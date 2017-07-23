@@ -97,9 +97,9 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   <tr>
     <td colspan="3" style="text-align: center; border: 0">
       <?php if(isset($_GET['id']) && $_GET['id']!=0){ ?>
-      <button type="submit" name="updateworkbutton">Υποβολή</button>
+      <button class="btn btn-default" type="submit" name="updateworkbutton">Υποβολή</button>
       <?php } else { ?>
-        <button type="submit" name="newworkbutton">Υποβολή</button>
+        <button class="btn btn-default" type="submit" name="newworkbutton">Υποβολή</button>
       <?php } ?>
     </td>
   </tr>
@@ -107,14 +107,14 @@ if(isset($_GET['id']) && $_GET['id']!=0){
   <?php if (!isset($_GET['id']) || $_GET['id']==0){ ?>
   <tr>
     <td colspan="4" style="text-align: center; border: 0">
-        <button type="submit" name="cloneroombutton">Κλωνοποίηση δωματίου</button>
+        <button class="btn btn-default" type="submit" name="cloneroombutton">Κλωνοποίηση δωματίου</button>
     </td>
   </tr>
   <?php } ?>
 
   <tr>
     <td colspan="3" style="text-align: center; border: 0">
-        <button id="clearfields" type="button">Εκκαθάριση</button>
+        <button class="btn btn-default" id="clearfields" type="button">Εκκαθάριση</button>
     </td>
   </tr>
 

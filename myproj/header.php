@@ -8,7 +8,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+
+
+  <!-- <link href="gentelella-master/documentation/css/bootstrap.min.css" rel="stylesheet"> -->
+
   <link href="style/style.css" rel="stylesheet">
+
+
+
 </head>
 <body>
 

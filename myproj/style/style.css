@@ -1,5 +1,9 @@
 body {
+    /*background-image: url("../images/2898.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;*/
     background-color: lightblue;
+
 }
 
 #logintable {
@@ -49,6 +53,7 @@ body {
 #maintainerstable td{
   padding: .5%;
 }
+
 
 .deleteButton:link, .deleteButton:visited {
     color: white;
